@@ -290,4 +290,14 @@ public class DelegatingStatement implements Statement
     {
         return delegate.unwrap(iface);
     }
+
+    @Override
+    public void closeOnCompletion() throws SQLException {
+        delegate.closeOnCompletion();
+    }
+
+    @Override
+    public boolean isCloseOnCompletion() throws SQLException {
+        return delegate.isCloseOnCompletion();
+    }
 }

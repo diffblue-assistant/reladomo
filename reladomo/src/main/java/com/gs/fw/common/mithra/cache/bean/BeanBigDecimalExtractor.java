@@ -30,7 +30,6 @@ public abstract class BeanBigDecimalExtractor extends AbstractBigDecimalExtracto
         throw new RuntimeException("not implemented");
     }
 
-    @Override
     public void setValue(Object o, Object newValue)
     {
         throw new RuntimeException("not implemented");
@@ -42,7 +41,6 @@ public abstract class BeanBigDecimalExtractor extends AbstractBigDecimalExtracto
         throw new RuntimeException("not implemented");
     }
 
-    @Override
     public void setValueUntil(Object o, Object newValue, Timestamp exclusiveUntil)
     {
         throw new RuntimeException("not implemented");

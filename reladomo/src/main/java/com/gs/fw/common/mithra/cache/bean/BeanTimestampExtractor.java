@@ -35,7 +35,6 @@ public abstract class BeanTimestampExtractor extends AbstractTimestampExtractor
         return this.timestampValueOf(o).getTime();
     }
 
-    @Override
     public void setValue(Object o, Object newValue)
     {
         throw new RuntimeException("not implemented");

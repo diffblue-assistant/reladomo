@@ -33,7 +33,6 @@ public abstract class BeanIntExtractor extends AbstractIntExtractor
         return false;
     }
 
-    @Override
     public void setValue(Object o, Object newValue)
     {
         throw new RuntimeException("not implemented");

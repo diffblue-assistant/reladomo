@@ -672,4 +672,16 @@ public class PrintablePreparedStatement implements PreparedStatement
     {
         return false;
     }
+
+    @Override
+    public boolean isCloseOnCompletion()
+    {
+        return false;
+    }
+
+    @Override
+    public void closeOnCompletion()
+    {
+        throw new UnsupportedOperationException();
+    }
 }

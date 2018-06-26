@@ -27,7 +27,6 @@ public abstract class BeanByteExtractor extends AbstractByteExtractor
         throw new RuntimeException("not implemented");
     }
 
-    @Override
     public void setValue(Object o, Object newValue)
     {
         throw new RuntimeException("not implemented");

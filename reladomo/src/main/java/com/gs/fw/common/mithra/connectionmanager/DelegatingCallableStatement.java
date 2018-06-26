@@ -702,4 +702,26 @@ public class DelegatingCallableStatement extends DelegatingPreparedStatement imp
     {
         return getDelegate().wasNull();
     }
+
+    @Override
+    public void closeOnCompletion() throws SQLException {
+        getDelegate().closeOnCompletion();
+    }
+
+    @Override
+    public boolean isCloseOnCompletion() throws SQLException {
+        return getDelegate().isCloseOnCompletion();
+    }
+
+    @Override
+    public <T> T getObject(int parameterIndex, Class<T> type)
+        throws SQLException {
+        return getDelegate().getObject(parameterIndex, type);
+    }
+
+    @Override
+    public <T> T getObject(String parameterName, Class<T> type)
+        throws SQLException {
+        return getDelegate().getObject(parameterName, type);
+    }
 }

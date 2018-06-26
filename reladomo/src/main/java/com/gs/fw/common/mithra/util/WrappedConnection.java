@@ -19,6 +19,7 @@ package com.gs.fw.common.mithra.util;
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Executor;
 
 
 /**
@@ -327,5 +328,35 @@ public class WrappedConnection implements Connection
             throws SQLException
     {
         return getUnderlyingConnection().createSQLXML();
+    }
+
+    @Override
+    public int getNetworkTimeout()
+    {
+        return 0;
+    }
+
+    @Override
+    public void setNetworkTimeout(Executor executor, int milliseconds)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void abort(Executor executor)
+    {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public String getSchema()
+    {
+        return null;
+    }
+
+    @Override
+    public void setSchema(String schema)
+    {
+        throw new UnsupportedOperationException();
     }
 }
