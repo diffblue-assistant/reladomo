@@ -363,10 +363,7 @@ public abstract class TransactionalUniqueIndex implements PrimaryKeyIndex, Trans
         {
             return putIntoPerThread(businessObject, tx);
         }
-        else
-        {
-            return this.mainIndex.putWeak(businessObject);
-        }
+        return this.mainIndex.putWeak(businessObject);
     }
 
     public Object putWeakUsingUnderlying(Object businessObject, Object underlying)
@@ -381,10 +378,7 @@ public abstract class TransactionalUniqueIndex implements PrimaryKeyIndex, Trans
         {
             return putIntoPerThread(businessObject, tx);
         }
-        else
-        {
-            return this.mainIndex.put(businessObject);
-        }
+        return this.mainIndex.put(businessObject);
     }
 
     private Object putIntoPerThread(Object businessObject, MithraTransaction tx)
@@ -618,10 +612,7 @@ public abstract class TransactionalUniqueIndex implements PrimaryKeyIndex, Trans
         {
             return this.mainIndex.putWeakUsingUnderlying(object, newData);
         }
-        else
-        {
-            return this.mainIndex.putUsingUnderlying(object, newData);
-        }
+        return this.mainIndex.putUsingUnderlying(object, newData);
     }
 
     public Object preparePut(Object object)

@@ -73,10 +73,7 @@ public abstract class JmsTopicConfig
         {
             return xaConnectionFactory.createXAConnection();
         }
-        else
-        {
-            return xaConnectionFactory.createXAConnection(this.getUserName(), this.getPassword());
-        }
+        return xaConnectionFactory.createXAConnection(this.getUserName(), this.getPassword());
     }
 
     public boolean isOutGoingAsync()

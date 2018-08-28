@@ -84,8 +84,7 @@ public class DuoSetLikeIdentityList<T> extends AbstractSetLikeIdentityList<T>
         {
             return second;
         }
-        else if (toRemove == second)
-        {
+        if (toRemove == second) {
             return first;
         }
         return this;

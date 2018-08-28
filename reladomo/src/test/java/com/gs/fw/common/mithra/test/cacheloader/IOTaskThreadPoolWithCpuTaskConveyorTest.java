@@ -146,12 +146,9 @@ public class IOTaskThreadPoolWithCpuTaskConveyorTest extends TestCase
             {
                 return null;
             }
-            else
-            {
-                int n = currentState;
-                currentState = 0;
-                return new IoTask(n);
-            }
+            int n = currentState;
+            currentState = 0;
+            return new IoTask(n);
         }
     }
 

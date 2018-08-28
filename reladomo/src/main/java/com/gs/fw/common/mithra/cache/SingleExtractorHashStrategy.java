@@ -79,10 +79,7 @@ public class SingleExtractorHashStrategy extends ExtractorBasedHashStrategy
         {
             return extractor.valueEquals(original, newObject, updateWrapper);
         }
-        else
-        {
-            return extractor.valueEquals(original, newObject);
-        }
+        return extractor.valueEquals(original, newObject);
     }
 
     @Override

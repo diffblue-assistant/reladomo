@@ -35,10 +35,7 @@ public class ByteArrayOrderBy extends AttributeBasedOrderBy
         {
             return compareWith(leftValue, rightValue);
         }
-        else
-        {
-            return compareWith(rightValue, leftValue);
-        }
+        return compareWith(rightValue, leftValue);
     }
 
     private int compareWith(byte[] rightValue, byte[] leftValue)

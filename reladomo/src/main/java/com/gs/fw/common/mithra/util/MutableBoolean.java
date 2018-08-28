@@ -63,10 +63,7 @@ public final class MutableBoolean implements java.io.Serializable,
         {
             return -1;
         }
-        else
-        {
-            return (b == value ? 0 : (value ? 1 : -1));
-        }
+        return (b == value ? 0 : (value ? 1 : -1));
     }
 
     public void replace(boolean value)

@@ -170,8 +170,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.intValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.intValueOf(getOne(cur))) {
             return getCompactList(cur);
         }
         return null;
@@ -230,8 +229,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.charValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.charValueOf(getOne(cur))) {
             return getCompactList(cur);
         }
         return null;
@@ -258,8 +256,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, key);
         }
-        else if (cur != null && key.equals(indexExtractors[0].valueOf(getOne(cur))))
-        {
+        if (cur != null && key.equals(indexExtractors[0].valueOf(getOne(cur)))) {
             return getCompactList(cur);
         }
         return null;
@@ -286,8 +283,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, key);
         }
-        else if (cur != null && Arrays.equals(key, (byte[]) indexExtractors[0].valueOf(getOne(cur))))
-        {
+        if (cur != null && Arrays.equals(key, (byte[]) indexExtractors[0].valueOf(getOne(cur)))) {
             return getCompactList(cur);
         }
         return null;
@@ -315,8 +311,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.longValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.longValueOf(getOne(cur))) {
             return getCompactList(cur);
         }
         return null;
@@ -344,8 +339,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.doubleValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.doubleValueOf(getOne(cur))) {
             return getCompactList(cur);
         }
         return null;
@@ -373,8 +367,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.floatValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.floatValueOf(getOne(cur))) {
             return getCompactList(cur);
         }
         return null;
@@ -402,8 +395,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.booleanValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.booleanValueOf(getOne(cur))) {
             return getCompactList(cur);
         }
         return null;
@@ -430,8 +422,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, valueHolder, extractors);
         }
-        else if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors))
-        {
+        if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors)) {
             return getCompactList(cur);
         }
         return null;
@@ -463,8 +454,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getFromChained((ChainedBucket) cur, valueHolder, extractors);
         }
-        else if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors))
-        {
+        if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors)) {
             return getCompactList(cur);
         }
         return null;
@@ -491,8 +481,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return containsInChained((ChainedBucket) cur, keyHolder, extractors, filter);
         }
-        else if (cur != null && hashStrategy.equals(getOne(cur), keyHolder, extractors))
-        {
+        if (cur != null && hashStrategy.equals(getOne(cur), keyHolder, extractors)) {
             return containsInList(cur, keyHolder, filter);
         }
         return false;
@@ -584,8 +573,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
                 }
                 return null;
             }
-            else if (cur != key)
-            {
+            if (cur != key) {
                 set = new DuoSetLikeIdentityList(cur, key);
                 this.table[index] = set;
                 uniqueSize++;
@@ -862,8 +850,7 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
         {
             return getNullsFromChained((ChainedBucket) cur);
         }
-        else if (cur != null && indexExtractors[0].isAttributeNull(getOne(cur)))
-        {
+        if (cur != null && indexExtractors[0].isAttributeNull(getOne(cur))) {
             return getCompactList(cur);
         }
         return null;
@@ -892,23 +879,17 @@ public class NonUniqueIdentityIndex implements IterableNonUniqueIndex, Underlyin
             {
                 return removeFromChain((ChainedBucket) cur, key, index);
             }
-            else if (hashStrategy.equals(getOne(cur), key))
-            {
+            if (hashStrategy.equals(getOne(cur), key)) {
                 uniqueSize--;
                 Object removed = null;
-                if (cur instanceof SetLikeIdentityList)
-                {
+                if (cur instanceof SetLikeIdentityList) {
                     SetLikeIdentityList set = (SetLikeIdentityList) cur;
                     table[index] = set.removeAndShrink(key);
-                    if (max == set && set.size() - 1 <= this.getAverageReturnSize())
-                    {
+                    if (max == set && set.size() - 1 <= this.getAverageReturnSize()) {
                         max = null;
                     }
-                }
-                else
-                {
-                    if (cur == key)
-                    {
+                } else {
+                    if (cur == key) {
                         removed = cur;
                         table[index] = null;
                     }

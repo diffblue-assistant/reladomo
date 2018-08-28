@@ -244,13 +244,10 @@ public class AsOfEdgePointOperation extends AtomicEqualityOperation implements A
             asOfDates[asOfDatePosition] = (Timestamp) this.getEdgeAttribute().valueOf(inflatedData);
             return 0;
         }
-        else
-        {
-            TimestampAttribute edgeAttribute = (TimestampAttribute) this.getEdgeAttribute();
-            Timestamp timestamp = edgeAttribute.zReadTimestampFromResultSet(resultSetPosition, rs, databaseTimeZone, dt);
-            asOfDates[asOfDatePosition] = timestamp;
-            return 1;
-        }
+        TimestampAttribute edgeAttribute = (TimestampAttribute) this.getEdgeAttribute();
+        Timestamp timestamp = edgeAttribute.zReadTimestampFromResultSet(resultSetPosition, rs, databaseTimeZone, dt);
+        asOfDates[asOfDatePosition] = timestamp;
+        return 1;
     }
 
     public int setSqlParameters(PreparedStatement pstmt, int startIndex, SqlQuery query) throws SQLException

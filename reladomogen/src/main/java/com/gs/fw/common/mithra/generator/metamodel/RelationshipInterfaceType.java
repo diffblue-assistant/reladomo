@@ -42,10 +42,7 @@ public class RelationshipInterfaceType extends RelationshipInterfaceTypeAbstract
         {
             return super.getParameters();
         }
-        else
-        {
-            return "";
-        }
+        return "";
     }
 
     public void resolveRelatedObject(Map<String, MithraInterfaceType> mithraInterfaces,
@@ -72,16 +69,11 @@ public class RelationshipInterfaceType extends RelationshipInterfaceTypeAbstract
             {
                 return relatedObj.getClassName() + "Finder." + relatedObj.getClassName() + "SingleFinderForRelatedClasses";
             }
-            else
-            {
-                return relatedObj.getClassName() + "Finder." + relatedObj.getClassName() + "CollectionFinderForRelatedClasses";
-            }
+            return relatedObj.getClassName() + "Finder." + relatedObj.getClassName()
+                    + "CollectionFinderForRelatedClasses";
         }
-        else
-        {
-            MithraInterfaceType relatedObj = (MithraInterfaceType) relatedMithraObject;
-            return relatedObj.getClassName() + "Finder";
-        }
+        MithraInterfaceType relatedObj = (MithraInterfaceType) relatedMithraObject;
+        return relatedObj.getClassName() + "Finder";
     }
 
     public CommonWrapper getRelatedMithraObject()
@@ -100,21 +92,21 @@ public class RelationshipInterfaceType extends RelationshipInterfaceTypeAbstract
                     + " but does not define the relationship - " + this.getName());
             return false;
         }
-        else if (!(isRelatedObjectAssignableFrom(localRelationshipAttribute.getRelatedObject(), mithraInterfaces, mithraObjectClassname, errors)))
-        {
+        if (!(isRelatedObjectAssignableFrom(localRelationshipAttribute.getRelatedObject(), mithraInterfaces,
+                mithraObjectClassname, errors))) {
             return false;
         }
-        else if (!this.getCardinalityObject().equals(localRelationshipAttribute.getCardinality()))
-        {
-            errors.add("Object " + mithraObjectClassname + " has a relationship " + this.getName() + " with cardinality " + localRelationshipAttribute.getCardinality() +
-                    "which is not equal with the cardinality " + this.getCardinalityObject() + "of the mithrainterface " + mithraInterfaceName);
-
+        if (!this.getCardinalityObject().equals(localRelationshipAttribute.getCardinality())) {
+            errors.add(
+                    "Object " + mithraObjectClassname + " has a relationship " + this.getName() + " with cardinality "
+                            + localRelationshipAttribute.getCardinality() + "which is not equal with the cardinality "
+                            + this.getCardinalityObject() + "of the mithrainterface " + mithraInterfaceName);
             return false;
         }
-        else if (!this.getParameters().equals(localRelationshipAttribute.getParameters()))
-        {
-            errors.add("Object " + mithraObjectClassname + " has a relationship " + this.getName() + " with parameters " + localRelationshipAttribute.getParameters() +
-                    "and is not equal to the parameters " + this.getParameters() + "of the mithrainterface " + mithraInterfaceName);
+        if (!this.getParameters().equals(localRelationshipAttribute.getParameters())) {
+            errors.add("Object " + mithraObjectClassname + " has a relationship " + this.getName() + " with parameters "
+                    + localRelationshipAttribute.getParameters() + "and is not equal to the parameters "
+                    + this.getParameters() + "of the mithrainterface " + mithraInterfaceName);
             return false;
         }
         return true;
@@ -169,17 +161,16 @@ public class RelationshipInterfaceType extends RelationshipInterfaceTypeAbstract
                     "SuperInterface RelatedObject : " + superRelationshipType.getRelatedObject());
             return false;
         }
-        else if (!this.getCardinalityObject().equals(superRelationshipType.getCardinalityObject()))
-        {
-            errors.add("Inconsistent Relationship. The Relationship cardinality " + this.getCardinalityObject() + " does not match the cardinality in SuperInterface. " +
-                    "SuperInterface cardinality : " + superRelationshipType.getCardinalityObject());
-
+        if (!this.getCardinalityObject().equals(superRelationshipType.getCardinalityObject())) {
+            errors.add("Inconsistent Relationship. The Relationship cardinality " + this.getCardinalityObject()
+                    + " does not match the cardinality in SuperInterface. " + "SuperInterface cardinality : "
+                    + superRelationshipType.getCardinalityObject());
             return false;
         }
-        else if (!this.getParameters().equals(superRelationshipType.getParameters()))
-        {
-            errors.add("Inconsistent Relationship. The Relationship parameters " + this.getParameters() + " does not match the parameters in SuperInterface. " +
-                    "SuperInterface parameters : " + superRelationshipType.getParameters());
+        if (!this.getParameters().equals(superRelationshipType.getParameters())) {
+            errors.add("Inconsistent Relationship. The Relationship parameters " + this.getParameters()
+                    + " does not match the parameters in SuperInterface. " + "SuperInterface parameters : "
+                    + superRelationshipType.getParameters());
             return false;
         }
 

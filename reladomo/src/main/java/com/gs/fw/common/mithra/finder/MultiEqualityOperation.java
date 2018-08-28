@@ -506,11 +506,9 @@ public class MultiEqualityOperation implements Operation, EqualityOperation
             }
             return result;
         }
-        else
-        {
-            if (cache.isDated()) return null;
-            return this.applyOperation(cache.getAll());
-        }
+        if (cache.isDated())
+            return null;
+        return this.applyOperation(cache.getAll());
     }
 
     public void filterResultsInPlace(boolean[] applied, List list)
@@ -548,22 +546,18 @@ public class MultiEqualityOperation implements Operation, EqualityOperation
             filterResultsInPlace(applied, result);
             return result;
         }
-        else if (result instanceof MithraCompositeList)
-        {
-            parallelFilter(applied, (MithraCompositeList)result);
+        if (result instanceof MithraCompositeList) {
+            parallelFilter(applied, (MithraCompositeList) result);
             return result;
         }
-        else
-        {
-            MithraFastList newResult = new MithraFastList(result.size());
-            for(int i=0;i<result.size();i++)
-            {
-                Object o = result.get(i);
-                if (matchesUnapplied(applied, o)) newResult.add(o);
-            }
-            result = newResult;
-            return result;
+        MithraFastList newResult = new MithraFastList(result.size());
+        for (int i = 0; i < result.size(); i++) {
+            Object o = result.get(i);
+            if (matchesUnapplied(applied, o))
+                newResult.add(o);
         }
+        result = newResult;
+        return result;
     }
 
     private void parallelFilter(final boolean[] applied, MithraCompositeList mithraCompositeList)
@@ -806,10 +800,7 @@ public class MultiEqualityOperation implements Operation, EqualityOperation
                         {
                             return combined;
                         }
-                        else
-                        {
-                            return this;
-                        }
+                        return this;
                     }
                 }
             }
@@ -888,8 +879,7 @@ public class MultiEqualityOperation implements Operation, EqualityOperation
             }
             return true;
         }
-        else if (obj instanceof RelationshipMultiEqualityOperation)
-        {
+        if (obj instanceof RelationshipMultiEqualityOperation) {
             RelationshipMultiEqualityOperation other = (RelationshipMultiEqualityOperation) obj;
             return equalsExtractorBased(other);
         }
@@ -1083,8 +1073,7 @@ public class MultiEqualityOperation implements Operation, EqualityOperation
                     {
                         return new SuperMatchSmr(existingOperation, this, atomicOperations[i], this); //todo: can optimize filterOperation
                     }
-                    else if (shapeMatchResult.isSuperMatch())
-                    {
+                    if (shapeMatchResult.isSuperMatch()) {
                         SuperMatchSmr superMatchSmr = (SuperMatchSmr) shapeMatchResult;
                         return new SuperMatchSmr(existingOperation, this, superMatchSmr.getLookUpOperation(), this);
                     }
@@ -1149,10 +1138,8 @@ public class MultiEqualityOperation implements Operation, EqualityOperation
         {
             return new SuperMatchSmr(existingOperation, newOperation, new MultiEqualityOperation(forLookup), forFilter[0]);
         }
-        else
-        {
-            return new SuperMatchSmr(existingOperation, newOperation, new MultiEqualityOperation(forLookup), new MultiEqualityOperation(forFilter));
-        }
+        return new SuperMatchSmr(existingOperation, newOperation, new MultiEqualityOperation(forLookup),
+                new MultiEqualityOperation(forFilter));
     }
 
     public static ShapeMatchResult createSuperMatchSmr(Operation existingOperation, RelationshipMultiEqualityOperation relationshipMultiEqualityOperation,

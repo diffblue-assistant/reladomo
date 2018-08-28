@@ -37,11 +37,8 @@ public class SourceAttributeType
         {
             return (SourceAttributeType) pool.get(temp);
         }
-        else
-        {
-            pool.put(temp, temp);
-            return temp;
-        }
+        pool.put(temp, temp);
+        return temp;
     }
 
     protected SourceAttributeType(String sourceAttributeName, Class sourceAttributeClass)

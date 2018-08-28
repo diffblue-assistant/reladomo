@@ -35,8 +35,7 @@ public class JmsUtil
             bytesMessage.readBytes(messageBytes);
             return messageBytes;
         }
-        else if (message instanceof TextMessage)
-        {
+        if (message instanceof TextMessage) {
             TextMessage textMessage = (TextMessage) message;
             return textMessage.getText().getBytes();
         }
@@ -99,13 +98,11 @@ public class JmsUtil
             copyProperties(original, bytesMessage);
             return new JmsUtil.MessageHolder(bytesMessage, messageBytes, original);
         }
-        else if (original instanceof TextMessage)
-        {
+        if (original instanceof TextMessage) {
             TextMessage textMessage = session.createTextMessage();
             TextMessage originalTextMessage = (TextMessage) original;
             String originalText = originalTextMessage.getText();
             textMessage.setText(originalText);
-
             copyProperties(original, textMessage);
             return new JmsUtil.MessageHolder(textMessage, originalText.getBytes(), original);
         }

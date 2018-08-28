@@ -65,12 +65,9 @@ public class XAConnectionManager extends AbstractConnectionManager
             return new DriverConnectionFactoryWithSchema(this.getDriver(), this.getJdbcConnectionString(),
                     loginProperties, this.getDefaultSchemaName(), this.getDatabaseType());
         }
-        else
-        {
-            DataSource ds = createDataSource(loginProperties);
-            return new DataSourceConnectionFactoryWithSchema(ds, this.getJdbcUser(),
-                    this.getJdbcPassword(), this.getDefaultSchemaName(), this.getDatabaseType(), this.getLdapName());
-        }
+        DataSource ds = createDataSource(loginProperties);
+        return new DataSourceConnectionFactoryWithSchema(ds, this.getJdbcUser(), this.getJdbcPassword(),
+                this.getDefaultSchemaName(), this.getDatabaseType(), this.getLdapName());
     }
 
     protected DataSource recreateDataSource()
@@ -193,10 +190,7 @@ public class XAConnectionManager extends AbstractConnectionManager
             {
                 return dataSource.getConnection();
             }
-            else
-            {
-                return dataSource.getConnection(user, password);
-            }
+            return dataSource.getConnection(user, password);
         }
 
         public Connection createConnection() throws SQLException

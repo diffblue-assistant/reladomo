@@ -1086,12 +1086,11 @@ public class LinkedBlockingDeque<E>
                 Node<E> s = nextNode(n);
                 if (s == null)
                     return null;
-                else if (s.item != null)
+                if (s.item != null)
                     return s;
-                else if (s == n)
+                if (s == n)
                     return firstNode();
-                else
-                    n = s;
+                n = s;
             }
         }
 

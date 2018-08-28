@@ -329,10 +329,7 @@ public class MithraTransactionalPortal extends MithraAbstractObjectPortal
         {
             return this.findInCacheForNoTransaction(op, analyzedOperation, orderby, forRelationship);
         }
-        else
-        {
-            return this.findInCacheForTransaction(analyzedOperation, orderby, tx, forRelationship, op);
-        }
+        return this.findInCacheForTransaction(analyzedOperation, orderby, tx, forRelationship, op);
     }
 
     protected CachedQuery findInCacheForTransaction(AnalyzedOperation analyzedOperation, OrderBy orderby,
@@ -396,22 +393,15 @@ public class MithraTransactionalPortal extends MithraAbstractObjectPortal
         {
             return super.getAsOneFromCache(srcObject, srcData, relationshipHashStrategy, asOfDate0, asOfDate1);
         }
-        else
-        {
-            boolean oldEvaluationMode = tx.zIsInOperationEvaluationMode();
-            try
-            {
-                tx.zSetOperationEvaluationMode(true);
-                MithraTransactionalObject result = (MithraTransactionalObject)
-                        this.getCache().getAsOne(srcObject, srcData, relationshipHashStrategy, asOfDate0, asOfDate1);
-
-                result = checkObjectForTransactionParticipation(result, tx);
-                return result;
-            }
-            finally
-            {
-                tx.zSetOperationEvaluationMode(oldEvaluationMode);
-            }
+        boolean oldEvaluationMode = tx.zIsInOperationEvaluationMode();
+        try {
+            tx.zSetOperationEvaluationMode(true);
+            MithraTransactionalObject result = (MithraTransactionalObject) this.getCache().getAsOne(srcObject, srcData,
+                    relationshipHashStrategy, asOfDate0, asOfDate1);
+            result = checkObjectForTransactionParticipation(result, tx);
+            return result;
+        } finally {
+            tx.zSetOperationEvaluationMode(oldEvaluationMode);
         }
     }
 
@@ -423,22 +413,15 @@ public class MithraTransactionalPortal extends MithraAbstractObjectPortal
         {
             return super.getAsOneByIndexFromCache(srcObject, srcData, relationshipHashStrategy, asOfDate0, asOfDate1, indexRef);
         }
-        else
-        {
-            boolean oldEvaluationMode = tx.zIsInOperationEvaluationMode();
-            try
-            {
-                tx.zSetOperationEvaluationMode(true);
-                MithraTransactionalObject result = (MithraTransactionalObject)
-                        this.getCache().getAsOneByIndex(indexRef, srcObject, srcData, relationshipHashStrategy, asOfDate0, asOfDate1);
-
-                result = checkObjectForTransactionParticipation(result, tx);
-                return result;
-            }
-            finally
-            {
-                tx.zSetOperationEvaluationMode(oldEvaluationMode);
-            }
+        boolean oldEvaluationMode = tx.zIsInOperationEvaluationMode();
+        try {
+            tx.zSetOperationEvaluationMode(true);
+            MithraTransactionalObject result = (MithraTransactionalObject) this.getCache().getAsOneByIndex(indexRef,
+                    srcObject, srcData, relationshipHashStrategy, asOfDate0, asOfDate1);
+            result = checkObjectForTransactionParticipation(result, tx);
+            return result;
+        } finally {
+            tx.zSetOperationEvaluationMode(oldEvaluationMode);
         }
     }
 

@@ -87,24 +87,18 @@ public abstract class AsOfAttributeInfiniteNull<T> extends AsOfAttribute<T>
             whereClause.append(" = ? or "+this.getToAttribute().getColumnName()+" is null)");
             return 1;
         }
-        else
-        {
-            if (this.isToIsInclusive())
-            {
-                whereClause.append(this.getFromAttribute().getColumnName());
-                whereClause.append(" < ? and ");
-                whereClause.append("("+this.getToAttribute().getColumnName());
-                whereClause.append(" >= ? or "+this.getToAttribute().getColumnName()+" is null)");
-            }
-            else
-            {
-                whereClause.append(this.getFromAttribute().getColumnName());
-                whereClause.append(" <= ? and ");
-                whereClause.append("("+this.getToAttribute().getColumnName());
-                whereClause.append(" > ? or "+this.getToAttribute().getColumnName()+" is null)");
-            }
-            return 2;
+        if (this.isToIsInclusive()) {
+            whereClause.append(this.getFromAttribute().getColumnName());
+            whereClause.append(" < ? and ");
+            whereClause.append("(" + this.getToAttribute().getColumnName());
+            whereClause.append(" >= ? or " + this.getToAttribute().getColumnName() + " is null)");
+        } else {
+            whereClause.append(this.getFromAttribute().getColumnName());
+            whereClause.append(" <= ? and ");
+            whereClause.append("(" + this.getToAttribute().getColumnName());
+            whereClause.append(" > ? or " + this.getToAttribute().getColumnName() + " is null)");
         }
+        return 2;
     }
 
     public void appendInfinityWhereClause(StringBuffer whereClause)

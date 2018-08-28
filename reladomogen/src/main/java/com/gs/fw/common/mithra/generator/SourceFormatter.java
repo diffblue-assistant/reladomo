@@ -265,15 +265,11 @@ public class SourceFormatter
                                 processingState.formatState = LONG_COMMENT_STATE;
                                 return processingState;
                             }
-                            else if (nextChar == '/')
-                            {
-                                processingState.appendRemainingLineWithEndOfLine();
-                                return processingState;
-                            }
-                            else
-                            {
-                                processingState.emitChar(c);
-                            }
+                        if (nextChar == '/') {
+                            processingState.appendRemainingLineWithEndOfLine();
+                            return processingState;
+                        }
+                        processingState.emitChar(c);
                         }
                         break;
                     default:
@@ -310,11 +306,8 @@ public class SourceFormatter
                 processingState.formatState = NORMAL_STATE;
                 return processingState;
             }
-            else
-            {
-                processingState.appendRemainingLineWithEndOfLine();
-                return processingState;
-            }
+            processingState.appendRemainingLineWithEndOfLine();
+            return processingState;
         }
     }
 
@@ -342,17 +335,13 @@ public class SourceFormatter
                     processingState.formatState = NORMAL_STATE;
                     return processingState;
                 }
-                else if (c == '\\')
-                {
+                if (c == '\\') {
                     processingState.emitChar(c);
-                    if(processingState.offset < processingState.end - 1)
-                    {
+                    if (processingState.offset < processingState.end - 1) {
                         processingState.offset++;
                         processingState.emitChar(processingState.line.charAt(processingState.offset));
                     }
-                }
-                else
-                {
+                } else {
                     processingState.emitChar(c);
                 }
             }

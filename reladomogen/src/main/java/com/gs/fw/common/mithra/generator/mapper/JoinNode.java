@@ -238,13 +238,10 @@ public class JoinNode
             builder.append(variable).append("Mapper.setName(\"").append(name).append("\");\n");
             return builder.append("return ").append(variable).append("Mapper;").toString();
         }
-        else
-        {
-            String assignment = "Mapper " + variable + "Mapper =";
-            int start = builder.lastIndexOf(assignment);
-            builder.replace(start, start +(assignment.length()), "return");
-            return builder.toString();
-        }
+        String assignment = "Mapper " + variable + "Mapper =";
+        int start = builder.lastIndexOf(assignment);
+        builder.replace(start, start + (assignment.length()), "return");
+        return builder.toString();
     }
 
     private void constructReverseMapper(String variable, boolean pure, StringBuilder builder)

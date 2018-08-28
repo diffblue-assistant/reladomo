@@ -257,7 +257,7 @@ public abstract class MithraDatedTransactionalObjectImpl implements MithraDatedT
             threadTx.enrollReadLocked(this);
             return true;
         }
-        else return false;
+        return false;
     }
 
     public void zLockForTransaction()

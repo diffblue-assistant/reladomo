@@ -179,42 +179,34 @@ public class ControllerPanel extends VerticalPanel
             });
             return button;
         }
-        else if (data.isSqlOn())
-        {
-            RolloverButton button = new RolloverButton("SQL is On", ui.getImages().sqlIsOnOn(), ui.getImages().sqlIsOnOff());
-            button.addClickHandler(new ClickHandler()
-            {
-                public void onClick(ClickEvent sender)
-                {
-                    ui.getAsyncService().turnSqlMaxOn(ui.getMithraManagerLocation(), data.getClassName(), new AbstractAsyncCallback<CachedClassData>()
-                    {
-                        public void onSuccess(CachedClassData result)
-                        {
-                            updateData(result);
-                        }
-                    });
+        if (data.isSqlOn()) {
+            RolloverButton button = new RolloverButton("SQL is On", ui.getImages().sqlIsOnOn(),
+                    ui.getImages().sqlIsOnOff());
+            button.addClickHandler(new ClickHandler() {
+                public void onClick(ClickEvent sender) {
+                    ui.getAsyncService().turnSqlMaxOn(ui.getMithraManagerLocation(), data.getClassName(),
+                            new AbstractAsyncCallback<CachedClassData>() {
+                                public void onSuccess(CachedClassData result) {
+                                    updateData(result);
+                                }
+                            });
                 }
             });
             return button;
         }
-        else
-        {
-            RolloverButton button = new RolloverButton("SQL is Max On", ui.getImages().sqlIsMaxOnOn(), ui.getImages().sqlIsMaxOnOff());
-            button.addClickHandler(new ClickHandler()
-            {
-                public void onClick(ClickEvent sender)
-                {
-                    ui.getAsyncService().turnSqlOff(ui.getMithraManagerLocation(), data.getClassName(), new AbstractAsyncCallback<CachedClassData>()
-                    {
-                        public void onSuccess(CachedClassData result)
-                        {
-                            updateData(result);
-                        }
-                    });
-                }
-            });
-            return button;
-        }
+        RolloverButton button = new RolloverButton("SQL is Max On", ui.getImages().sqlIsMaxOnOn(),
+                ui.getImages().sqlIsMaxOnOff());
+        button.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent sender) {
+                ui.getAsyncService().turnSqlOff(ui.getMithraManagerLocation(), data.getClassName(),
+                        new AbstractAsyncCallback<CachedClassData>() {
+                            public void onSuccess(CachedClassData result) {
+                                updateData(result);
+                            }
+                        });
+            }
+        });
+        return button;
     }
 
     private void updateData(CachedClassData cachedClassData)
@@ -246,18 +238,14 @@ public class ControllerPanel extends VerticalPanel
             });
             return clearButton;
         }
-        else
-        {
-            RolloverButton clearButton = new RolloverButton("Reload Cache", ui.getImages().reloadCacheOn(), ui.getImages().reloadCacheOff());
-            clearButton.addClickHandler(new ClickHandler()
-            {
-                public void onClick(ClickEvent sender)
-                {
-                    reloadCache(data.getClassName());
-                }
-            });
-            return clearButton;
-        }
+        RolloverButton clearButton = new RolloverButton("Reload Cache", ui.getImages().reloadCacheOn(),
+                ui.getImages().reloadCacheOff());
+        clearButton.addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent sender) {
+                reloadCache(data.getClassName());
+            }
+        });
+        return clearButton;
     }
 
     public void setFilter(String filter)

@@ -123,10 +123,7 @@ public class MutableBigDecimal extends MutableNumber
         {
            return -1;
         }
-        else
-        {
-           return value.compareTo(otherBigDecimal);
-        }
+        return value.compareTo(otherBigDecimal);
     }
 
     @Override

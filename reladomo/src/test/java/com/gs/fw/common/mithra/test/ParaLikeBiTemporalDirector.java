@@ -70,10 +70,7 @@ public class ParaLikeBiTemporalDirector extends GenericBiTemporalDirector
         {
             return cbdDate;
         }
-        else
-        {
-            return this.getDateWith1830(new Timestamp(System.currentTimeMillis()));
-        }
+        return this.getDateWith1830(new Timestamp(System.currentTimeMillis()));
     }
 
     public static void setCbdDate(Timestamp cbdDate)

@@ -71,12 +71,9 @@ public class DualNotificationClient implements ClientNotificationHandler
                 LOGGER.debug("Duplicate/redundant message received: " + key);
                 return false;
             }
-            else
-            {
-                LOGGER.debug("New/unseen message received: " + key);
-                this.messagesWeHaveSeenBefore.add(key);
-                return true;
-            }
+            LOGGER.debug("New/unseen message received: " + key);
+            this.messagesWeHaveSeenBefore.add(key);
+            return true;
         }
     }
 

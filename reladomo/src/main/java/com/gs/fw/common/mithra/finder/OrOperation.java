@@ -275,10 +275,7 @@ public class OrOperation implements Operation
         {
             return applyToLargeResultsInParallel(list);
         }
-        else
-        {
-            return applyOperationSerially(list);
-        }
+        return applyOperationSerially(list);
     }
 
     private List applyToLargeResultsInParallel(List list)
@@ -914,9 +911,9 @@ public class OrOperation implements Operation
                 {
                     return new SuperMatchSmr(this, newOperation, constructNewOr(i, newOperation), newOperation);
                 }
-                else if (shapeMatchResult.isSuperMatch())
-                {
-                    return new SuperMatchSmr(this, newOperation, constructNewOr(i, ((SuperMatchSmr) shapeMatchResult).getLookUpOperation()), newOperation);
+                if (shapeMatchResult.isSuperMatch()) {
+                    return new SuperMatchSmr(this, newOperation,
+                            constructNewOr(i, ((SuperMatchSmr) shapeMatchResult).getLookUpOperation()), newOperation);
                 }
             }
         }

@@ -413,10 +413,7 @@ public class ReladomoDeserializer<T extends MithraObject>
             {
                 return findAndDeserializeSingleObject();
             }
-            else
-            {
-                return deserializeSingleObjectAsUnconfigured();
-            }
+            return deserializeSingleObjectAsUnconfigured();
         }
         catch (DeserializationException e)
         {
@@ -432,10 +429,7 @@ public class ReladomoDeserializer<T extends MithraObject>
             {
                 return findAndDeserializeList();
             }
-            else
-            {
-                return deserializeListAsUnconfigured();
-            }
+            return deserializeListAsUnconfigured();
         }
         catch (DeserializationException e)
         {
@@ -724,27 +718,18 @@ public class ReladomoDeserializer<T extends MithraObject>
         {
             return null;
         }
-        else if (o instanceof ReladomoDeserializer.PartialDeserialized)
-        {
+        if (o instanceof ReladomoDeserializer.PartialDeserialized) {
             return (PartialDeserialized) o;
         }
-        else // a List<PartialDeserialzied)
-        {
-            List<PartialDeserialized> list = (List<PartialDeserialized>) o;
-            if (list.size() == 0)
-            {
-                return null;
-            }
-            if (list.size() == 1)
-            {
-                return list.get(0);
-            }
-            else
-            {
-                throw new DeserializationException("Cannot set a list for a to-one relationship in object "+
-                        partialDeserialized.dataObject.zGetPrintablePrimaryKey()+" and relationship "+name);
-            }
+        List<PartialDeserialized> list = (List<PartialDeserialized>) o;
+        if (list.size() == 0) {
+            return null;
         }
+        if (list.size() == 1) {
+            return list.get(0);
+        }
+        throw new DeserializationException("Cannot set a list for a to-one relationship in object "
+                + partialDeserialized.dataObject.zGetPrintablePrimaryKey() + " and relationship " + name);
     }
 
     protected void setToOneRelationship(String name, DeserializationClassMetaData metaData, PartialDeserialized partialDeserialized, PartialDeserialized toSet) throws IllegalAccessException, InvocationTargetException
@@ -779,10 +764,7 @@ public class ReladomoDeserializer<T extends MithraObject>
         {
             return map.valuesAsList();
         }
-        else
-        {
-            return ListFactory.create(dbLookUp);
-        }
+        return ListFactory.create(dbLookUp);
     }
 
     protected void resolveList(DeserializationClassMetaData metaData, List<PartialDeserialized> listToResolve) throws DeserializationException
@@ -1341,11 +1323,8 @@ public class ReladomoDeserializer<T extends MithraObject>
                     deserializer.data.currentState = InToOneRelationshipState.INSTANCE;
                     return FieldOrRelation.ToOneRelationship;
                 }
-                else
-                {
-                    deserializer.data.currentState = InToManyRelationshipState.INSTANCE;
-                    return FieldOrRelation.ToManyRelationship;
-                }
+                deserializer.data.currentState = InToManyRelationshipState.INSTANCE;
+                return FieldOrRelation.ToManyRelationship;
             }
             Method annotatedMethod = deserializer.data.metaData.getAnnotatedMethodByName(name);
             if (annotatedMethod != null)
@@ -1386,11 +1365,8 @@ public class ReladomoDeserializer<T extends MithraObject>
                     deserializer.data.currentState = InToOneRelationshipState.INSTANCE;
                     return FieldOrRelation.ToOneRelationship;
                 }
-                else
-                {
-                    deserializer.data.currentState = InToManyRelationshipState.INSTANCE;
-                    return FieldOrRelation.ToManyRelationship;
-                }
+                deserializer.data.currentState = InToManyRelationshipState.INSTANCE;
+                return FieldOrRelation.ToManyRelationship;
             }
             deserializer.data.currentState = deserializer.unknownState;
             return FieldOrRelation.Unknown;

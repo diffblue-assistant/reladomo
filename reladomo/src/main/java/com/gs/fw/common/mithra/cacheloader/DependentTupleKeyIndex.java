@@ -103,12 +103,8 @@ public final class DependentTupleKeyIndex extends DependentKeyIndex
                         resultListHolder[0] = list;
                         return true;
                     }
-                    else
-                    {
-                        if (resultListHolder[0].size() < DependentLoadingTaskSpawner.TASK_SIZE)
-                        {
-                            resultListHolder[0].addAll (list);
-                        }
+                    if (resultListHolder[0].size() < DependentLoadingTaskSpawner.TASK_SIZE) {
+                        resultListHolder[0].addAll(list);
                     }
                 }
                 else

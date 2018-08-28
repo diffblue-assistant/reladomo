@@ -641,8 +641,7 @@ public class MappedOperation implements Operation
         {
             return this.getMapper().equalitySubstituteWithAtomic(this, (AtomicOperation) other);
         }
-        else if (other instanceof MultiEqualityOperation)
-        {
+        if (other instanceof MultiEqualityOperation) {
             return this.getMapper().equalitySubstituteWithMultiEquality(this, (MultiEqualityOperation) other);
         }
         throw new RuntimeException("can only equality substitute with atomic or multi-equality");

@@ -54,26 +54,19 @@ public class MithraTestDataRowFormatter implements Function<Object, String>
         {
             return NULL;
         }
-        else if (object instanceof Boolean)
-        {
+        if (object instanceof Boolean) {
             return object.toString();
         }
-        else if (object instanceof Number)
-        {
+        if (object instanceof Number) {
             return NUMBER_FORMAT.format(Double.valueOf(object.toString()));
         }
-        else if (object instanceof Timestamp)
-        {
-            return QUOTE + DATE_FORMAT.print(((Timestamp)object).getTime()) + QUOTE;
+        if (object instanceof Timestamp) {
+            return QUOTE + DATE_FORMAT.print(((Timestamp) object).getTime()) + QUOTE;
         }
-        else if (object instanceof byte[])
-        {
+        if (object instanceof byte[]) {
             return printHexBinaryWithQuotes((byte[]) object);
         }
-        else
-        {
-            return QUOTE + escapedString(object) + QUOTE;
-        }
+        return QUOTE + escapedString(object) + QUOTE;
 
     }
 

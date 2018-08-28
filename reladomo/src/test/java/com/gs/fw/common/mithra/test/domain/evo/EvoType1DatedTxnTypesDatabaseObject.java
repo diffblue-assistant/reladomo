@@ -30,13 +30,9 @@ public class EvoType1DatedTxnTypesDatabaseObject extends EvoType1DatedTxnTypesDa
         {
             return new EvoType1DatedTxnTypesA(businessDate, processingDate);
         }
-        else if (typesData.getPkCharAttribute() == EvoType1DatedTxnTypes.TYPE_B)
-        {
+        if (typesData.getPkCharAttribute() == EvoType1DatedTxnTypes.TYPE_B) {
             return new EvoType1DatedTxnTypesB(businessDate, processingDate);
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }

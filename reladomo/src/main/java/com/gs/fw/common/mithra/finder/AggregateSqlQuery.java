@@ -120,10 +120,7 @@ public class AggregateSqlQuery extends SqlQuery
         {
             return super.getIdExtractor();
         }
-        else
-        {
-            return this.aggrIdExtractor;
-        }
+        return this.aggrIdExtractor;
     }
 
     @Override
@@ -246,15 +243,13 @@ public class AggregateSqlQuery extends SqlQuery
         {
            return super.getDatabaseAlias(objectPortal);
         }
-        else
-        {
-            Mapper lastMapper = this.aggrIdExtractor.getCurrentMapperList().getLastMapper();
-            if (objectPortal != lastMapper.getFromPortal())
-            {
-                throw new RuntimeException("unexpected operation on object "+objectPortal.getFinder().getClass().getName());
-            }
-            return ((JoinClause) this.aggrIdExtractor.getRawMapperStackToJoinClauseMap().get(this.aggrIdExtractor.getCurrentMapperList())).getTableAlias();
+        Mapper lastMapper = this.aggrIdExtractor.getCurrentMapperList().getLastMapper();
+        if (objectPortal != lastMapper.getFromPortal()) {
+            throw new RuntimeException(
+                    "unexpected operation on object " + objectPortal.getFinder().getClass().getName());
         }
+        return ((JoinClause) this.aggrIdExtractor.getRawMapperStackToJoinClauseMap()
+                .get(this.aggrIdExtractor.getCurrentMapperList())).getTableAlias();
     }
 
     protected boolean isDoneWithWhereClause()

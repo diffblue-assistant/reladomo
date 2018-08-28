@@ -106,21 +106,15 @@ public abstract class JsonDeserializerState
             {
                 return ClassNameState.INSTANCE;
             }
-            else if (fieldName.equals(ReladomoSerializationContext.RELADOMO_STATE))
-            {
+            if (fieldName.equals(ReladomoSerializationContext.RELADOMO_STATE)) {
                 return ObjectStateState.INSTANCE;
             }
-            else
-            {
-                ReladomoDeserializer.FieldOrRelation fieldOrRelation = deserializer.startFieldOrRelationship(fieldName);
-                if (ReladomoDeserializer.FieldOrRelation.Unknown.equals(fieldOrRelation))
-                {
-                    return this;
-                }
-                else if (ReladomoDeserializer.FieldOrRelation.ToManyRelationship.equals(fieldOrRelation))
-                {
-                    return new ToManyState(this);
-                }
+            ReladomoDeserializer.FieldOrRelation fieldOrRelation = deserializer.startFieldOrRelationship(fieldName);
+            if (ReladomoDeserializer.FieldOrRelation.Unknown.equals(fieldOrRelation)) {
+                return this;
+            }
+            if (ReladomoDeserializer.FieldOrRelation.ToManyRelationship.equals(fieldOrRelation)) {
+                return new ToManyState(this);
             }
             
             return this;
@@ -214,8 +208,7 @@ public abstract class JsonDeserializerState
             {
                 return new ClassNameStateWithPrevious(this);
             }
-            else if (fieldName.equals("elements"))
-            {
+            if (fieldName.equals("elements")) {
                 return new InListState(this);
             }
             return this;

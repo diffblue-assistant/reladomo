@@ -30,13 +30,9 @@ public class EvoType1DatedReadOnlyTypesDatabaseObject extends EvoType1DatedReadO
         {
             return new EvoType1DatedReadOnlyTypesA(businessDate, processingDate);
         }
-        else if (typesData.getPkCharAttribute() == EvoType1DatedReadOnlyTypes.TYPE_B)
-        {
+        if (typesData.getPkCharAttribute() == EvoType1DatedReadOnlyTypes.TYPE_B) {
             return new EvoType1DatedReadOnlyTypesB(businessDate, processingDate);
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }

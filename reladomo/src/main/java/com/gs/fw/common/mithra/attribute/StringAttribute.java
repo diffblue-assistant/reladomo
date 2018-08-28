@@ -180,16 +180,13 @@ public abstract class StringAttribute<Owner> extends NonPrimitiveAttribute<Owner
         {
             return this.eq(pattern);
         }
-        else if (wildcardPattern.getContains() != null)
-        {
+        if (wildcardPattern.getContains() != null) {
             return this.contains(wildcardPattern.getContains().iterator().next());
         }
-        else if (wildcardPattern.getEndsWith() != null)
-        {
+        if (wildcardPattern.getEndsWith() != null) {
             return this.endsWith(wildcardPattern.getEndsWith().iterator().next());
         }
-        else if (wildcardPattern.getSubstring() != null)
-        {
+        if (wildcardPattern.getSubstring() != null) {
             Iterator<Set<String>> intObjectIterator = wildcardPattern.getSubstring().iterator();
             return this.startsWith(intObjectIterator.next().iterator().next());
         }
@@ -257,16 +254,13 @@ public abstract class StringAttribute<Owner> extends NonPrimitiveAttribute<Owner
         {
             return this.notEq(pattern);
         }
-        else if (wildcardPattern.getContains() != null)
-        {
+        if (wildcardPattern.getContains() != null) {
             return this.notContains(wildcardPattern.getContains().iterator().next());
         }
-        else if (wildcardPattern.getEndsWith() != null)
-        {
+        if (wildcardPattern.getEndsWith() != null) {
             return this.notEndsWith(wildcardPattern.getEndsWith().iterator().next());
         }
-        else if (wildcardPattern.getSubstring() != null)
-        {
+        if (wildcardPattern.getSubstring() != null) {
             Iterator<Set<String>> intObjectIterator = wildcardPattern.getSubstring().iterator();
             return this.notStartsWith(intObjectIterator.next().iterator().next());
         }

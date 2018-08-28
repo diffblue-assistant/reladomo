@@ -427,10 +427,7 @@ public class H2DatabaseType extends AbstractDatabaseType
         {
             return (schema == null ? '"' + tableName + '"' : schema + '.' + '"' + tableName + '"');
         }
-        else
-        {
-            return super.getFullyQualifiedTableName(schema, tableName);
-        }
+        return super.getFullyQualifiedTableName(schema, tableName);
     }
 
     @Override

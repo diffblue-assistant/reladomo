@@ -91,10 +91,7 @@ public abstract class CooperativeCpuTaskFactory implements TaskFactory
             }
             return true;
         }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     @Override

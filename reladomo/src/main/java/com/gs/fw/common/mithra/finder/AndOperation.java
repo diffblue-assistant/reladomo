@@ -81,11 +81,8 @@ public class AndOperation implements Operation
             operands.addAll(index, otherOperands);
             return otherOperands.size();
         }
-        else
-        {
-            operands.set(index, operand); // implicit remove
-            return 1;
-        }
+        operands.set(index, operand);
+        return 1;
     }
 
     public boolean usesUniqueIndex()
@@ -1011,14 +1008,10 @@ public class AndOperation implements Operation
         {
             return zShapeMatchAnd((AndOperation) existingOperation);
         }
-        else if (existingOperation instanceof OrOperation)
-        {
+        if (existingOperation instanceof OrOperation) {
             return ((OrOperation) existingOperation).oneAtATimeReverseShapeMatch(this);
         }
-        else
-        {
-            return zShapeMatchOneAtATime(existingOperation);
-        }
+        return zShapeMatchOneAtATime(existingOperation);
     }
 
     public ShapeMatchResult reverseShapeMatch(MultiEqualityOperation op, AtomicOperation[] atomicOperations)
@@ -1083,11 +1076,8 @@ public class AndOperation implements Operation
                 {
                     return NoMatchRequiresExactSmr.INSTANCE;
                 }
-                else
-                {
-                    lookupOperands.add(operand);
-                    matchedSlots.set(matchedIndex);
-                }
+                lookupOperands.add(operand);
+                matchedSlots.set(matchedIndex);
             }
             else
             {
@@ -1128,9 +1118,9 @@ public class AndOperation implements Operation
             {
                 return createSuperMatchWithout(i, operand, existingOperation);
             }
-            else if (shapeMatchResult.isSuperMatch())
-            {
-                return new SuperMatchSmr(existingOperation, this, ((SuperMatchSmr) shapeMatchResult).getLookUpOperation(), this);
+            if (shapeMatchResult.isSuperMatch()) {
+                return new SuperMatchSmr(existingOperation, this,
+                        ((SuperMatchSmr) shapeMatchResult).getLookUpOperation(), this);
             }
         }
         return NoMatchSmr.INSTANCE;
@@ -1153,31 +1143,20 @@ public class AndOperation implements Operation
             {
                 return new SuperMatchSmr(existingOperation, this, lookup, filter);
             }
-            else
-            {
-                return NoMatchRequiresExactSmr.INSTANCE;
-            }
+            return NoMatchRequiresExactSmr.INSTANCE;
         }
-        else
-        {
-            InternalList filterOperands = new InternalList(this.operands.size() - 1);
-            for(int i=0;i<this.operands.size();i++)
-            {
-                if (i != indexToOmit)
-                {
-                    Operation op = (Operation) this.operands.get(i);
-                    if (op.zCanFilterInMemory())
-                    {
-                        filterOperands.add(op);
-                    }
-                    else
-                    {
-                        return NoMatchRequiresExactSmr.INSTANCE;
-                    }
+        InternalList filterOperands = new InternalList(this.operands.size() - 1);
+        for (int i = 0; i < this.operands.size(); i++) {
+            if (i != indexToOmit) {
+                Operation op = (Operation) this.operands.get(i);
+                if (op.zCanFilterInMemory()) {
+                    filterOperands.add(op);
+                } else {
+                    return NoMatchRequiresExactSmr.INSTANCE;
                 }
             }
-            return new SuperMatchSmr(existingOperation, this, lookup, new AndOperation(filterOperands));
         }
+        return new SuperMatchSmr(existingOperation, this, lookup, new AndOperation(filterOperands));
     }
 
     public ShapeMatchResult reverseShapeMatch(AtomicEqualityOperation atomicEqualityOperation)

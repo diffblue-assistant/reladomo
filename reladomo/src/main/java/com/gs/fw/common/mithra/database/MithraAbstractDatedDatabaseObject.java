@@ -178,10 +178,7 @@ public abstract class MithraAbstractDatedDatabaseObject
             returnDataArray(dataArray);
             return false;
         }
-        else
-        {
-            return processResultSetOneByOne(res, result, source, asOfOpWithStacks, cache, dt, rowcount, timeZone);
-        }
+        return processResultSetOneByOne(res, result, source, asOfOpWithStacks, cache, dt, rowcount, timeZone);
     }
 
     private void getManyObjects(Cache cache, Object[] dataArray, int len, MithraFastList result, ObjectWithMapperStack[] asOfOpWithStacks)

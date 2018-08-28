@@ -29,8 +29,7 @@ public class TimestampPrecisionType extends TimestampPrecisionTypeAbstract
         {
             return "(byte) 1";
         }
-        else if (this.isNanosecond())
-        {
+        if (this.isNanosecond()) {
             return "(byte) 0";
         }
         throw new RuntimeException("should not get here");

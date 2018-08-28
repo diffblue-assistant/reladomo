@@ -552,15 +552,11 @@ public class JtdsBcpBulkLoader implements BulkLoader, ConnectionFactory
         {
             return new SkippingNullAttribute(columnName);
         }
-        else if(SybaseDatabaseType.isColumnTypeNumeric(columnInfo.getType()))
-        {
+        if (SybaseDatabaseType.isColumnTypeNumeric(columnInfo.getType())) {
             return new SkippingIntegerAttribute(columnName);
         }
-        else
-        {
-            throw new BulkLoaderException("could not initialize attribute for a NOT nullable column " +
-                    columnName + " of type " + SybaseDatabaseType.getColumnType(columnInfo.getType()));
-        }
+        throw new BulkLoaderException("could not initialize attribute for a NOT nullable column " + columnName
+                + " of type " + SybaseDatabaseType.getColumnType(columnInfo.getType()));
     }
 
     @Override

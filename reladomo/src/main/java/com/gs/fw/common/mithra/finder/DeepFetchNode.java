@@ -67,10 +67,7 @@ public class DeepFetchNode implements Serializable, DeepFetchTree
             {
                 return o1.getAttributeName().compareTo(o2.getAttributeName());
             }
-            else
-            {
-                return leftRank - rightRank;
-            }
+            return leftRank - rightRank;
         }
     };
 
@@ -388,10 +385,7 @@ public class DeepFetchNode implements Serializable, DeepFetchTree
         {
             return this.parent.getResolvedList();
         }
-        else
-        {
-            return chainedResults[chainPosition - 1];
-        }
+        return chainedResults[chainPosition - 1];
     }
 
     private void incrementalDeepFetchStartingFromSelf(boolean bypassCache, boolean forceImplicitJoin)
@@ -735,10 +729,7 @@ public class DeepFetchNode implements Serializable, DeepFetchTree
         {
             return map.valuesAsList();
         }
-        else
-        {
-            return ListFactory.create(resolvedList);
-        }
+        return ListFactory.create(resolvedList);
     }
 
     private void removeConstants(Set<Attribute> leftAttributeSet, List resolvedBySourceList, Set<Attribute> constantSet, Set<Attribute> nonConstantSet)

@@ -527,11 +527,8 @@ public class RelationshipAttribute implements CommonAttribute
                     this.getRelatedObject().getClassName()+
                     StringUtility.firstLetterToUpper(this.reverseName)+"Mapper";
         }
-        else
-        {
-            return this.fromObject.getClassName() +"Finder.zGet"+this.fromObject.getClassName()+
-                    StringUtility.firstLetterToUpper(this.getName())+"ReverseMapper";
-        }
+        return this.fromObject.getClassName() + "Finder.zGet" + this.fromObject.getClassName()
+                + StringUtility.firstLetterToUpper(this.getName()) + "ReverseMapper";
     }
 
     public String getMapperName()
@@ -542,11 +539,8 @@ public class RelationshipAttribute implements CommonAttribute
                     this.getRelatedObject().getClassName()+
                     StringUtility.firstLetterToUpper(this.reverseName)+"ReverseMapper";
         }
-        else
-        {
-            return this.fromObject.getClassName() +"Finder.zGet"+
-                   this.fromObject.getClassName()+StringUtility.firstLetterToUpper(this.getName())+"Mapper";
-        }
+        return this.fromObject.getClassName() + "Finder.zGet" + this.fromObject.getClassName()
+                + StringUtility.firstLetterToUpper(this.getName()) + "Mapper";
     }
 
     public boolean isBidirectional()
@@ -893,9 +887,7 @@ public class RelationshipAttribute implements CommonAttribute
             {
                 return !this.getMapperVisitor().needsParametersOperationForPrimaryKey();
             }
-            else if (this.getMapperVisitor().getUniqueMatchingIndex() != null)
-            {
-                // by some other unique index
+            if (this.getMapperVisitor().getUniqueMatchingIndex() != null) {
                 return !this.getMapperVisitor().needsParametersOperationForUniqueIndex();
             }
         }
@@ -1114,10 +1106,7 @@ public class RelationshipAttribute implements CommonAttribute
         {
             return this.getMapperVisitor().hasDifferentOffHeapHashForPk();
         }
-        else
-        {
-            return this.getMapperVisitor().hasDifferentOffHeapHash(index.getAttributes());
-        }
+        return this.getMapperVisitor().hasDifferentOffHeapHash(index.getAttributes());
     }
 
     public String getHashCodeComputation()
@@ -1127,10 +1116,7 @@ public class RelationshipAttribute implements CommonAttribute
         {
             return this.getMapperVisitor().getHashCodeComputationForPk(false);
         }
-        else
-        {
-            return this.getMapperVisitor().getHashCodeComputation(index.getAttributes(), false);
-        }
+        return this.getMapperVisitor().getHashCodeComputation(index.getAttributes(), false);
     }
 
     public String getOffHeapHashCodeComputation()
@@ -1140,10 +1126,7 @@ public class RelationshipAttribute implements CommonAttribute
         {
             return this.getMapperVisitor().getHashCodeComputationForPk(true);
         }
-        else
-        {
-            return this.getMapperVisitor().getHashCodeComputation(index.getAttributes(), true);
-        }
+        return this.getMapperVisitor().getHashCodeComputation(index.getAttributes(), true);
     }
 
     public boolean requiresSrcObjectForEquals()
@@ -1298,7 +1281,7 @@ public class RelationshipAttribute implements CommonAttribute
         {
             return "_from"+this.getName();
         }
-        else return "null";
+        return "null";
     }
 
     public String getDirectRefToExtractorName()
@@ -1307,7 +1290,7 @@ public class RelationshipAttribute implements CommonAttribute
         {
             return "_to"+this.getName();
         }
-        else return "null";
+        return "null";
     }
 
     public String getGetterForDirectRef()

@@ -134,10 +134,7 @@ public abstract class AbstractLoaderFactory implements TopLevelLoaderFactory
         {
             return DateClusterCreator.createSingleDateClusters(businessDates);
         }
-        else
-        {
-            return DateClusterCreator.createMultiDateClusters(businessDates);
-        }
+        return DateClusterCreator.createMultiDateClusters(businessDates);
     }
 
     public boolean areAllAdditionalOperationBuildersDateInvariant(String classToLoad, CacheLoaderContext context)
@@ -320,18 +317,14 @@ public abstract class AbstractLoaderFactory implements TopLevelLoaderFactory
         {
             return ((SourcelessConnectionManager) connectionManager).getDatabaseIdentifier();
         }
-        else if (connectionManager instanceof ObjectSourceConnectionManager)
-        {
-            if (!CacheLoaderConfig.isSourceAttribute(sourceAttribute))
-            {
+        if (connectionManager instanceof ObjectSourceConnectionManager) {
+            if (!CacheLoaderConfig.isSourceAttribute(sourceAttribute)) {
                 throw new RuntimeException("Factory must define sourceAttributes (" + this + ").");
             }
             return ((ObjectSourceConnectionManager) connectionManager).getDatabaseIdentifier(sourceAttribute);
         }
-        else
-        {
-            throw new RuntimeException("Cannot handle ConnectionManager class: " + connectionManager.getClass() + " factory: " + this);
-        }
+        throw new RuntimeException(
+                "Cannot handle ConnectionManager class: " + connectionManager.getClass() + " factory: " + this);
     }
 
     public void setParams(List<ConfigParameter> params)

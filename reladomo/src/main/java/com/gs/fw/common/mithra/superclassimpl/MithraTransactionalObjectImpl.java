@@ -213,7 +213,7 @@ public abstract class MithraTransactionalObjectImpl implements MithraTransaction
             threadTx.enrollReadLocked(this);
             return true;
         }
-        else return false;
+        return false;
     }
 
     public void zPrepareForRemoteInsert()

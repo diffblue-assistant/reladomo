@@ -662,47 +662,35 @@ public class FullUniqueIndex<T> implements PrimaryKeyIndex, UnderlyingObjectGett
         {
             return index;
         }
-        else if (cur != REMOVED && hashStrategy.equals(this.underlyingObjectGetter.getUnderlyingObject(cur), obj))
-        {
+        if (cur != REMOVED && hashStrategy.equals(this.underlyingObjectGetter.getUnderlyingObject(cur), obj)) {
             return -index - 1;
         }
-        else
-        {
-            int probe = 0;
-
-            int removedCount = 0;
-            if (cur != REMOVED)
-            {
-                do
-                {
-                    removedCount += (cur == REMOVED) ? 1 : 0;
-                    hash += (probe += 17);
-                    index = hash & length;
-                    cur = set[index];
-                } while (cur != FREE
-                        && cur != REMOVED
-                        && !hashStrategy.equals(this.underlyingObjectGetter.getUnderlyingObject(cur), obj));
-            }
-
-            if (cur == REMOVED)
-            {
-                int firstRemoved = index;
-                while (cur != FREE
-                        && (cur == REMOVED || !hashStrategy.equals(this.underlyingObjectGetter.getUnderlyingObject(cur), obj)))
-                {
-                    removedCount += (cur == REMOVED) ? 1 : 0;
-                    hash += (probe += 17);
-                    index = hash & length;
-                    cur = set[index];
-                }
-                return cur != FREE ? -index - 1 : firstRemoved;
-            }
-            if (removedCount > REMOVE_RESIZE_THRESHOLD)
-            {
-                this.rehashForUnderlying(this.capacity(), null, null);
-            }
-            return cur != FREE ? -index - 1 : index;
+        int probe = 0;
+        int removedCount = 0;
+        if (cur != REMOVED) {
+            do {
+                removedCount += (cur == REMOVED) ? 1 : 0;
+                hash += (probe += 17);
+                index = hash & length;
+                cur = set[index];
+            } while (cur != FREE && cur != REMOVED
+                    && !hashStrategy.equals(this.underlyingObjectGetter.getUnderlyingObject(cur), obj));
         }
+        if (cur == REMOVED) {
+            int firstRemoved = index;
+            while (cur != FREE && (cur == REMOVED
+                    || !hashStrategy.equals(this.underlyingObjectGetter.getUnderlyingObject(cur), obj))) {
+                removedCount += (cur == REMOVED) ? 1 : 0;
+                hash += (probe += 17);
+                index = hash & length;
+                cur = set[index];
+            }
+            return cur != FREE ? -index - 1 : firstRemoved;
+        }
+        if (removedCount > REMOVE_RESIZE_THRESHOLD) {
+            this.rehashForUnderlying(this.capacity(), null, null);
+        }
+        return cur != FREE ? -index - 1 : index;
     }
 
     protected int updatedInsertionIndex(Object obj, AttributeUpdateWrapper updateWrapper)
@@ -717,40 +705,30 @@ public class FullUniqueIndex<T> implements PrimaryKeyIndex, UnderlyingObjectGett
         {
             return index;
         }
-        else if (cur != REMOVED && hashStrategy.equalsIncludingUpdate(this.underlyingObjectGetter.getUnderlyingObject(cur), obj, updateWrapper))
-        {
+        if (cur != REMOVED && hashStrategy.equalsIncludingUpdate(this.underlyingObjectGetter.getUnderlyingObject(cur),
+                obj, updateWrapper)) {
             return -index - 1;
         }
-        else
-        {
-            int probe = 0;
-
-            if (cur != REMOVED)
-            {
-                do
-                {
-                    hash += (probe += 17);
-                    index = hash & length;
-                    cur = set[index];
-                } while (cur != FREE
-                        && cur != REMOVED
-                        && !hashStrategy.equalsIncludingUpdate(this.underlyingObjectGetter.getUnderlyingObject(cur), obj, updateWrapper));
-            }
-
-            if (cur == REMOVED)
-            {
-                int firstRemoved = index;
-                while (cur != FREE
-                        && (cur == REMOVED || !hashStrategy.equalsIncludingUpdate(this.underlyingObjectGetter.getUnderlyingObject(cur), obj, updateWrapper)))
-                {
-                    hash += (probe += 17);
-                    index = hash & length;
-                    cur = set[index];
-                }
-                return cur != FREE ? -index - 1 : firstRemoved;
-            }
-            return cur != FREE ? -index - 1 : index;
+        int probe = 0;
+        if (cur != REMOVED) {
+            do {
+                hash += (probe += 17);
+                index = hash & length;
+                cur = set[index];
+            } while (cur != FREE && cur != REMOVED && !hashStrategy
+                    .equalsIncludingUpdate(this.underlyingObjectGetter.getUnderlyingObject(cur), obj, updateWrapper));
         }
+        if (cur == REMOVED) {
+            int firstRemoved = index;
+            while (cur != FREE && (cur == REMOVED || !hashStrategy
+                    .equalsIncludingUpdate(this.underlyingObjectGetter.getUnderlyingObject(cur), obj, updateWrapper))) {
+                hash += (probe += 17);
+                index = hash & length;
+                cur = set[index];
+            }
+            return cur != FREE ? -index - 1 : firstRemoved;
+        }
+        return cur != FREE ? -index - 1 : index;
     }
 
     public T putWeak(Object key)

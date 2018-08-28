@@ -364,22 +364,18 @@ public class MultiEqualityMapper extends AbstractMapper
             }
             return constants.and(tupleAttribute.inIgnoreNulls(parentList, extractors));
         }
-        else
-        {
-            Operation op = constants;
-            for(int i=0;i<needsInClause.length;i++)
-            {
-                if (needsInClause[i])
-                {
-                    EqualityMapper mapper = (EqualityMapper) this.equalityMappers.get(i);
-                    Operation localOp = mapper.getSimplifiedJoinOp(parentList, maxInClause, node, useTuple);
-                    if (localOp == null) return null;
-                    op = op.and(localOp);
-                    break;
-                }
+        Operation op = constants;
+        for (int i = 0; i < needsInClause.length; i++) {
+            if (needsInClause[i]) {
+                EqualityMapper mapper = (EqualityMapper) this.equalityMappers.get(i);
+                Operation localOp = mapper.getSimplifiedJoinOp(parentList, maxInClause, node, useTuple);
+                if (localOp == null)
+                    return null;
+                op = op.and(localOp);
+                break;
             }
-            return op;
         }
+        return op;
     }
 
     public Operation getOperationFromResult(Object result, Map<Attribute, Object> tempOperationPool)
@@ -532,13 +528,11 @@ public class MultiEqualityMapper extends AbstractMapper
         {
             return this.getCache().getAverageReturnSize(indexRef, 1);
         }
-        else
-        {
-            double leftSize = this.getAnyLeftAttribute().getOwnerPortal().getCache().estimateQuerySize();
-            double rightSize = this.getAnyRightAttribute().getOwnerPortal().getCache().estimateQuerySize();
-            if (rightSize == 0) return 0;
-            return leftSize / rightSize;
-        }
+        double leftSize = this.getAnyLeftAttribute().getOwnerPortal().getCache().estimateQuerySize();
+        double rightSize = this.getAnyRightAttribute().getOwnerPortal().getCache().estimateQuerySize();
+        if (rightSize == 0)
+            return 0;
+        return leftSize / rightSize;
     }
 
     @Override
@@ -549,13 +543,11 @@ public class MultiEqualityMapper extends AbstractMapper
         {
             return this.getCache().getMaxReturnSize(indexRef, multiplier);
         }
-        else
-        {
-            double leftSize = this.getAnyLeftAttribute().getOwnerPortal().getCache().estimateQuerySize();
-            double rightSize = this.getAnyRightAttribute().getOwnerPortal().getCache().estimateQuerySize();
-            if (rightSize == 0) return 0;
-            return (int) Math.min(leftSize  * multiplier/ rightSize, this.getCache().estimateQuerySize());
-        }
+        double leftSize = this.getAnyLeftAttribute().getOwnerPortal().getCache().estimateQuerySize();
+        double rightSize = this.getAnyRightAttribute().getOwnerPortal().getCache().estimateQuerySize();
+        if (rightSize == 0)
+            return 0;
+        return (int) Math.min(leftSize * multiplier / rightSize, this.getCache().estimateQuerySize());
     }
 
     private boolean hasRightAttribute(AsOfAttribute asOfAttribute)
@@ -595,31 +587,21 @@ public class MultiEqualityMapper extends AbstractMapper
             Operation op = getMultiEqualityOperation(joinedList.get(0)).and(extraOperationOnResult);
             return op.getResultObjectPortal().zFindInMemoryWithoutAnalysis(op, true);
         }
-        else
-        {
-            Operation prototype = getMultiEqualityOperation(joinedList.get(0));
-            if (extraOperationOnResult != null)
-            {
-                Operation equalityOperation = extraOperationOnResult.zExtractEqualityOperations();
-                if (equalityOperation != null)
-                {
-                    prototype = prototype.and(equalityOperation);
-                }
-            }
-            if (prototype.usesUniqueIndex() || prototype.usesNonUniqueIndex())
-            {
-                List result = getResultViaMultiIn(joinedList, extraOperationOnResult);
-                if (result == null)
-                {
-                    result = mapReturnNullIfIncompleteIndexHitNonUnique(joinedList, extraOperationOnResult);
-                }
-                return result;
-            }
-            else
-            {
-                return mapReturnNullIfIncompleteIndexHitNonUnique(joinedList, extraOperationOnResult);
+        Operation prototype = getMultiEqualityOperation(joinedList.get(0));
+        if (extraOperationOnResult != null) {
+            Operation equalityOperation = extraOperationOnResult.zExtractEqualityOperations();
+            if (equalityOperation != null) {
+                prototype = prototype.and(equalityOperation);
             }
         }
+        if (prototype.usesUniqueIndex() || prototype.usesNonUniqueIndex()) {
+            List result = getResultViaMultiIn(joinedList, extraOperationOnResult);
+            if (result == null) {
+                result = mapReturnNullIfIncompleteIndexHitNonUnique(joinedList, extraOperationOnResult);
+            }
+            return result;
+        }
+        return mapReturnNullIfIncompleteIndexHitNonUnique(joinedList, extraOperationOnResult);
     }
 
     private List getResultViaMultiIn(List joinedList, Operation extraOperationOnResult)
@@ -635,17 +617,13 @@ public class MultiEqualityMapper extends AbstractMapper
             }
             return op.getResultObjectPortal().zFindInMemoryWithoutAnalysis(op, isTiny);
         }
-        else
-        {
-            MultiInOperation op = createMultiIn(joinedList);
-            Operation leftOver = op.setExtraOperationAndReturnLeftOver(extraOperationOnResult);
-            List list = op.getResultObjectPortal().zFindInMemoryWithoutAnalysis(op, isTiny);
-            if (list != null && leftOver != null)
-            {
-                list = leftOver.applyOperation(list);
-            }
-            return list;
+        MultiInOperation op = createMultiIn(joinedList);
+        Operation leftOver = op.setExtraOperationAndReturnLeftOver(extraOperationOnResult);
+        List list = op.getResultObjectPortal().zFindInMemoryWithoutAnalysis(op, isTiny);
+        if (list != null && leftOver != null) {
+            list = leftOver.applyOperation(list);
         }
+        return list;
     }
 
     private List mapReturnNullIfIncompleteIndexHitNonUnique(List joinedList, Operation extraOperationOnResult)

@@ -141,21 +141,13 @@ public class Time implements Comparable<Time>, Serializable
             {
                 return this;
             }
-            else
-            {
-                if (mod == 2 || mod == 5 || mod == 9)
-                {
-                    newMillis = milliseconds + 1;
-                }
-                else if (mod == 1 || mod == 4)
-                {
-                    newMillis = milliseconds - 1;
-                }
-                else
-                {
-                    int difference = mod - 6;
-                    newMillis = milliseconds - difference;
-                }
+            if (mod == 2 || mod == 5 || mod == 9) {
+                newMillis = milliseconds + 1;
+            } else if (mod == 1 || mod == 4) {
+                newMillis = milliseconds - 1;
+            } else {
+                int difference = mod - 6;
+                newMillis = milliseconds - difference;
             }
         }
         return Time.withMillis(this.hour, this.minute, this.second, newMillis);

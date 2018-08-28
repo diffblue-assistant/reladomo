@@ -104,7 +104,7 @@ public class MithraFastList<T> extends FastList<T>
             this.size += toMoveWithinTarget;
             return toMoveWithinTarget;
         }
-        else return 0;
+        return 0;
     }
 
     public void removeByReplacingFromEnd(int index)

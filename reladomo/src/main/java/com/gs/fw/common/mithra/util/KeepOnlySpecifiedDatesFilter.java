@@ -108,10 +108,7 @@ public class KeepOnlySpecifiedDatesFilter extends AbstractBooleanFilter
 
             return new KeepOnlySpecifiedDatesFilter(this.businessDate, sortedDates);
         }
-        else
-        {
-            return super.and(that);
-        }
+        return super.and(that);
     }
 
     @Override
@@ -150,9 +147,6 @@ public class KeepOnlySpecifiedDatesFilter extends AbstractBooleanFilter
 
             return new KeepOnlySpecifiedDatesFilter(this.businessDate, sortedDates);
         }
-        else
-        {
-            return super.or(that);
-        }
+        return super.or(that);
     }
 }

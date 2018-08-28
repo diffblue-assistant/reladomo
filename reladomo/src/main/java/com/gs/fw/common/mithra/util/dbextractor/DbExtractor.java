@@ -349,8 +349,7 @@ public class DbExtractor
                 LOGGER.info("Loading merged data from memory. Size size of the list is " + this.mergedData.size());
                 return this.loadData(this.mergedData);
             }
-            else if (new File(this.fileName).exists())
-            {
+            if (new File(this.fileName).exists()) {
                 LOGGER.info("Loading existing data from " + this.fileName);
                 return this.loadDataFromFile(this.fileName);
             }

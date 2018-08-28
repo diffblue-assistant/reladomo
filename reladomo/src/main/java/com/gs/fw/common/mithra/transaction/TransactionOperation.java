@@ -108,20 +108,16 @@ public abstract class TransactionOperation
         {
             return combineInsertOperation(op);
         }
-        else if (op.isDelete())
-        {
+        if (op.isDelete()) {
             return combineDeleteOperation(op);
         }
-        else if (op.isUpdate())
-        {
+        if (op.isUpdate()) {
             return combineUpdate(op);
         }
-        else if (op.isMultiUpdate())
-        {
+        if (op.isMultiUpdate()) {
             return combineMultiUpdate(op);
         }
-        else if (op.isBatchUpdate())
-        {
+        if (op.isBatchUpdate()) {
             return combineBatchUpdate(op);
         }
         return null;
@@ -182,12 +178,9 @@ public abstract class TransactionOperation
                 }
                 return COMBINE_DIRECTION_NONE;
             }
-            else return getCombineDirectionWithDependencyCheck(next);
-        }
-        else
-        {
             return getCombineDirectionWithDependencyCheck(next);
         }
+        return getCombineDirectionWithDependencyCheck(next);
     }
 
     protected int getPassThroughForSameDated(TransactionOperation next)
@@ -221,8 +214,7 @@ public abstract class TransactionOperation
         {
             return getCombineDirectionForParent();
         }
-        else if (nextPortal.isParentFinder(thisPortal.getFinder()))
-        {
+        if (nextPortal.isParentFinder(thisPortal.getFinder())) {
             return getCombineDirectionForChild();
         }
         return COMBINE_DIRECTION_FORWARD | COMBINE_DIRECTION_BACKWARD;
@@ -330,13 +322,10 @@ public abstract class TransactionOperation
         {
             return primaryKeyAttributes;
         }
-        else
-        {
-            Extractor[] fullKey = new Extractor[primaryKeyAttributes.length + 1];
-            System.arraycopy(primaryKeyAttributes, 0, fullKey, 0, primaryKeyAttributes.length);
-            fullKey[primaryKeyAttributes.length] = nonProcessingDateAttribute;
-            return fullKey;
-        }
+        Extractor[] fullKey = new Extractor[primaryKeyAttributes.length + 1];
+        System.arraycopy(primaryKeyAttributes, 0, fullKey, 0, primaryKeyAttributes.length);
+        fullKey[primaryKeyAttributes.length] = nonProcessingDateAttribute;
+        return fullKey;
     }
 
 

@@ -391,39 +391,27 @@ public class ConcurrentFullUniqueIndex<T> implements UnderlyingObjectGetter
             {
                 return null;
             }
-            else if (cur == underlying)
-            {
-                if (removeAtIndex(set, index, cur))
-                {
+            if (cur == underlying) {
+                if (removeAtIndex(set, index, cur)) {
                     return (T) cur;
                 }
-            }
-            else
-            {
+            } else {
                 int probe = 17;
-                do
-                {
+                do {
                     hash += probe;
                     probe += 17;
                     index = hash & lengthMask;
                     cur = arrayAt(set, index);
-                    if (cur == RESIZED || cur == RESIZING)
-                    {
+                    if (cur == RESIZED || cur == RESIZING) {
                         helpWithResize(set);
                         continue outer;
                     }
-                } while (cur != null
-                        && cur != underlying);
-                if (cur == null)
-                {
+                } while (cur != null && cur != underlying);
+                if (cur == null) {
                     return null;
                 }
-                else
-                {
-                    if (removeAtIndex(set, index, cur))
-                    {
-                        return (T) cur;
-                    }
+                if (removeAtIndex(set, index, cur)) {
+                    return (T) cur;
                 }
             }
         }
@@ -1125,10 +1113,7 @@ public class ConcurrentFullUniqueIndex<T> implements UnderlyingObjectGetter
             int secondSize = cfui.size();
             return new ConcurrentFullUniqueIndex(extractors, EstimateDistribution.estimateSize(firstSize, secondSize, dataHolders.size()));
         }
-        else
-        {
-            return new ConcurrentFullUniqueIndex(extractors, dataHolders.size());
-        }
+        return new ConcurrentFullUniqueIndex(extractors, dataHolders.size());
     }
 
     private static void addRandomToIndex(List dataHolders, Extractor[] extractors, Random rand, ConcurrentFullUniqueIndex cfui)

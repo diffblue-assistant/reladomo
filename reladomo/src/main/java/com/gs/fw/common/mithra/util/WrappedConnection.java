@@ -241,7 +241,7 @@ public class WrappedConnection implements Connection
             WrappedConnection other = (WrappedConnection) o;
             return this.getUnderlyingConnection().equals(other.getUnderlyingConnection());
         }
-        else return this.getUnderlyingConnection().equals(o);
+        return this.getUnderlyingConnection().equals(o);
     }
 
     public int hashCode()

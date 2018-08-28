@@ -62,10 +62,7 @@ public abstract class PrimitiveNumericAttribute<Owner, V> extends Attribute<Owne
             boolean firstNull = this.isAttributeNull(first);
             return firstNull == this.isAttributeNull(second) && (firstNull || this.primitiveValueEquals(first, second));
         }
-        else
-        {
-            return this.primitiveValueEquals(first, second);
-        }
+        return this.primitiveValueEquals(first, second);
     }
 
     public <O> boolean valueEquals(Owner first, O second, Extractor<O, V> secondExtractor)

@@ -68,15 +68,11 @@ public class MithraTimestamp extends Timestamp
         {
             return DateTimeZone.forTimeZone(tz).getOffset(date.getTime());
         }
-        else
-        {
-            int offset = tz.getRawOffset();
-            if (tz.inDaylightTime(date))
-            {
-                offset += tz.getDSTSavings();
-            }
-            return offset;
+        int offset = tz.getRawOffset();
+        if (tz.inDaylightTime(date)) {
+            offset += tz.getDSTSavings();
         }
+        return offset;
     }
 
     public MithraTimestamp(Timestamp timestamp, boolean timezoneSensitive, TimeZone originalTimeZone)
@@ -283,10 +279,7 @@ public class MithraTimestamp extends Timestamp
             int nanos = in.readInt();
             return new ImmutableTimestamp(time, nanos);
         }
-        else
-        {
-            return new ImmutableTimestamp(time);
-        }
+        return new ImmutableTimestamp(time);
     }
 
     public static void writeTimestampWithInfinity(DataOutput out, Timestamp timestamp, Timestamp infinity) throws IOException

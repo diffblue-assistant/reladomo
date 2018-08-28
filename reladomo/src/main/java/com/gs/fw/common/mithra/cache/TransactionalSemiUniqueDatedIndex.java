@@ -279,10 +279,7 @@ public abstract class TransactionalSemiUniqueDatedIndex implements Transactional
             }
             return perThreadIndex.put(businessObject, nonDatedPkHashCode);
         }
-        else
-        {
-            return this.mainIndex.put(businessObject, nonDatedPkHashCode);
-        }
+        return this.mainIndex.put(businessObject, nonDatedPkHashCode);
     }
 
     public Object putSemiUnique(Object key)
@@ -299,10 +296,7 @@ public abstract class TransactionalSemiUniqueDatedIndex implements Transactional
             }
             return perThreadIndex.putSemiUnique(key);
         }
-        else
-        {
-            return this.mainIndex.putSemiUnique(key);
-        }
+        return this.mainIndex.putSemiUnique(key);
     }
 
     public List removeAll(Filter filter)

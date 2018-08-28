@@ -488,10 +488,7 @@ public class MithraRootTransaction extends MithraLocalTransaction implements Syn
             TxOperationsForIndependentClass ops = getOrCreateIndependentOps(portal);
             return ops.deleteBatchUsingOperation(op, batchSize);
         }
-        else
-        {
-            return this.dependentOperations.deleteBatchUsingOperation(op, batchSize);
-        }
+        return this.dependentOperations.deleteBatchUsingOperation(op, batchSize);
     }
 
     @Override

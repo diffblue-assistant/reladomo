@@ -128,10 +128,7 @@ public class ArraySetLikeIdentityList<T> extends AbstractSetLikeIdentityList<T>
                 {
                     return this;
                 }
-                else
-                {
-                    return new QuadSetLikeIdentityList(table[0], table[1], table[2], table[3]);
-                }
+                return new QuadSetLikeIdentityList(table[0], table[1], table[2], table[3]);
             }
         }
         return this;

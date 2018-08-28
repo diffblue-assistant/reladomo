@@ -148,10 +148,7 @@ public abstract class JavaType
         {
             return value1 + " == " + value2;
         }
-        else
-        {
-            return value1 + ".equals(" + value2 + ")";
-        }
+        return value1 + ".equals(" + value2 + ")";
     }
 
     public String getValueIfNull(String valueIfNull)
@@ -182,10 +179,7 @@ public abstract class JavaType
         {
             return StringUtility.firstLetterToUpper(this.getJavaTypeString())+"OpenHashSet";
         }
-        else
-        {
-            return "HashSet";
-        }
+        return "HashSet";
     }
 
 	public String getConnectionManagerClassName()

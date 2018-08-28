@@ -676,14 +676,11 @@ public class SybaseDatabaseType extends AbstractDatabaseType
         {
             return new BcpBulkLoader(this, user, password);
         }
-        else if (bulkConstructor != null)
-        {
-            try
-            {
-                return (BulkLoader) bulkConstructor.newInstance(user, password, hostName, port, this, dataModelMismatchIsFatal);
-            }
-            catch (Exception e)
-            {
+        if (bulkConstructor != null) {
+            try {
+                return (BulkLoader) bulkConstructor.newInstance(user, password, hostName, port, this,
+                        dataModelMismatchIsFatal);
+            } catch (Exception e) {
                 throw new RuntimeException("Could not instantiate bulk loader", e);
             }
         }
@@ -1122,10 +1119,7 @@ public class SybaseDatabaseType extends AbstractDatabaseType
         {
             return "holdlock";
         }
-        else
-        {
-            return "noholdlock";
-        }
+        return "noholdlock";
     }
 
     public String getTempDbSchemaName()
@@ -1356,26 +1350,20 @@ public class SybaseDatabaseType extends AbstractDatabaseType
                 resultSet.next();
                 return resultSet.getDouble(1) * 100.0 / total;
             }
-            else
-            {
-                String sql = "select sum(a.size) " +
-                        "from master..sysusages a," + syssegmentsFullyQualifiedName + " b " +
-                        "where a.dbid=db_id(" + dbId + ") " +
-                        "and b.name='logsegment' " +
-                        "and (a.segmap & power(2,b.segment)) != 0 ";
-                getLogger().debug(sql);
-                resultSet = statement.executeQuery(sql);
-                resultSet.next();
-                double total = resultSet.getDouble(1);
-                resultSet.close();
-                sql = "select data_pgs(i.id,i.doampg) " +
-                        "from " + sysindexesFullyQualifiedName + " i " +
-                        "where i.id=object_id('" + syslogsFullyQualifiedName + "')";
-                getLogger().debug(sql);
-                resultSet = statement.executeQuery(sql);
-                resultSet.next();
-                return resultSet.getDouble(1) * 100.0 / total;
-            }
+            String sql = "select sum(a.size) " + "from master..sysusages a," + syssegmentsFullyQualifiedName + " b "
+                    + "where a.dbid=db_id(" + dbId + ") " + "and b.name='logsegment' "
+                    + "and (a.segmap & power(2,b.segment)) != 0 ";
+            getLogger().debug(sql);
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            double total = resultSet.getDouble(1);
+            resultSet.close();
+            sql = "select data_pgs(i.id,i.doampg) " + "from " + sysindexesFullyQualifiedName + " i "
+                    + "where i.id=object_id('" + syslogsFullyQualifiedName + "')";
+            getLogger().debug(sql);
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            return resultSet.getDouble(1) * 100.0 / total;
         }
         finally
         {

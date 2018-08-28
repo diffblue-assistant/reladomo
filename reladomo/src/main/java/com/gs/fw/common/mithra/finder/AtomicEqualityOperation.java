@@ -217,16 +217,13 @@ public abstract class AtomicEqualityOperation extends AbstractAtomicOperation im
                     // but it's part of a bigger op, like and/or.
                     return ExactMatchSmr.INSTANCE;
                 }
-                else if (this instanceof IsNullOperation)
-                {
-                    return NoMatchSmr.INSTANCE;// not-in and not-eq imply not-null
-                }
-                else if (this instanceof AsOfEdgePointOperation)
-                {
+                if (this instanceof IsNullOperation) {
                     return NoMatchSmr.INSTANCE;
                 }
-                else if (existingAtomic.matchesWithoutDeleteCheck(this, this.getStaticExtractor()))
-                {
+                if (this instanceof AsOfEdgePointOperation) {
+                    return NoMatchSmr.INSTANCE;
+                }
+                if (existingAtomic.matchesWithoutDeleteCheck(this, this.getStaticExtractor())) {
                     return new SuperMatchSmr(existingOperation, this);
                 }
             }

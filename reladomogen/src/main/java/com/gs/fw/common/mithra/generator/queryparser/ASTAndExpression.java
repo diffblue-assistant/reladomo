@@ -151,10 +151,7 @@ public class ASTAndExpression extends SimpleNode
             and.owner = owner;
             return and;
         }
-        else
-        {
-            return (SimpleNode) ownerExpressions.get(0);
-        }
+        return (SimpleNode) ownerExpressions.get(0);
     }
 
     @Override

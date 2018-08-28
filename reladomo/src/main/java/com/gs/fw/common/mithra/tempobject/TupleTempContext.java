@@ -287,9 +287,9 @@ public class TupleTempContext implements Serializable, CommonTempContext
         {
             return ((Attribute) tupleSourceAttribute).nonPrimitiveEq(source);
         }
-        else if (tupleSourceAttribute instanceof OperationParameterExtractor)
-        {
-            SingleColumnAttribute tupleSrcAttribute = ((SingleColumnAttribute) resultSourceAttribute).createTupleAttribute(persistentTupleAttributes.length, this);
+        if (tupleSourceAttribute instanceof OperationParameterExtractor) {
+            SingleColumnAttribute tupleSrcAttribute = ((SingleColumnAttribute) resultSourceAttribute)
+                    .createTupleAttribute(persistentTupleAttributes.length, this);
             tupleSrcAttribute.setColumnName(null);
             return ((Attribute) tupleSrcAttribute).nonPrimitiveEq(source);
         }

@@ -277,10 +277,7 @@ public class Index
             }
             return result;
         }
-        else
-        {
-            return "true";
-        }
+        return "true";
     }
 
     public String getLookupHashCompute(boolean offHeap)

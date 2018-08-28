@@ -95,10 +95,7 @@ public class DateCluster
         {
             return this.businessDates.get(0);
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     public int size()

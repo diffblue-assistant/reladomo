@@ -37,10 +37,7 @@ public class SmallInstrumentIdsOnlyBeforeMilestoneDateAdditionalOperationBuilder
             IntegerAttribute instrumentId = (IntegerAttribute) relatedFinder.getAttributeByName("instrumentId");
             return instrumentId.lessThan(3);
         }
-        else
-        {
-            return new None(relatedFinder.getPrimaryKeyAttributes()[0]);
-        }
+        return new None(relatedFinder.getPrimaryKeyAttributes()[0]);
     }
 
     @Override

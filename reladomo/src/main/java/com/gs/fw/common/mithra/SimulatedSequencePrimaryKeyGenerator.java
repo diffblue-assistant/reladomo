@@ -334,19 +334,16 @@ public class SimulatedSequencePrimaryKeyGenerator
                 nextIdToGive = end;
                 return ListFactory.create(new BulkSequence(start, end, incrementSize));
             }
-            else
-            {
-                FastList<BulkSequence> result = new FastList<BulkSequence>(2);
-                result.add(new BulkSequence(nextIdToGive, nextLimit, incrementSize));
-                nextIdToGive = nextLimit;
-                numberToGet -= unused;
-                getNextBatch(numberToGet);
-                long start = nextIdToGive;
-                long end = nextIdToGive + numberToGet * incrementSize;
-                nextIdToGive = end;
-                result.add(new BulkSequence(start, end, incrementSize));
-                return result;
-            }
+            FastList<BulkSequence> result = new FastList<BulkSequence>(2);
+            result.add(new BulkSequence(nextIdToGive, nextLimit, incrementSize));
+            nextIdToGive = nextLimit;
+            numberToGet -= unused;
+            getNextBatch(numberToGet);
+            long start = nextIdToGive;
+            long end = nextIdToGive + numberToGet * incrementSize;
+            nextIdToGive = end;
+            result.add(new BulkSequence(start, end, incrementSize));
+            return result;
         }
         finally
         {

@@ -320,10 +320,7 @@ public class FilteredMapper extends AbstractMapper
         {
             return this.leftFilters.applyOperation(objects);
         }
-        else
-        {
-            return objects;
-        }
+        return objects;
     }
 
     @Override

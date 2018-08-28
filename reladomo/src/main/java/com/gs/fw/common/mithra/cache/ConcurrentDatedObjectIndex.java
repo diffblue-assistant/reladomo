@@ -495,10 +495,7 @@ outer:
                         {
                             return candidate;
                         }
-                        else
-                        {
-                            continue outer;
-                        }
+                        continue outer;
                     }
                     else
                     {
@@ -583,10 +580,7 @@ outer:
                             addToSizeReturnLocalSize(-1);
                             return candidate;
                         }
-                        else
-                        {
-                            continue outer;
-                        }
+                        continue outer;
                     }
                     else
                     {

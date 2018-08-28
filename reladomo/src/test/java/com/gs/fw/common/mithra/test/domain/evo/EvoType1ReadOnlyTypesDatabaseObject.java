@@ -28,13 +28,9 @@ public class EvoType1ReadOnlyTypesDatabaseObject extends EvoType1ReadOnlyTypesDa
         {
             return new EvoType1ReadOnlyTypesA();
         }
-        else if (typesData.getPkCharAttribute() == EvoType1ReadOnlyTypes.TYPE_B)
-        {
+        if (typesData.getPkCharAttribute() == EvoType1ReadOnlyTypes.TYPE_B) {
             return new EvoType1ReadOnlyTypesB();
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }

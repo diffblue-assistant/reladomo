@@ -136,9 +136,8 @@ public abstract class SingleColumnByteArrayAttribute<Owner> extends ByteArrayAtt
         {
             return new None(this);
         }
-        else if (set.size() == 1)
-        {
-            return this.eq((byte[])set.iterator().next());
+        if (set.size() == 1) {
+            return this.eq((byte[]) set.iterator().next());
         }
         return new ByteArrayInOperation(this, set);
     }
@@ -149,9 +148,8 @@ public abstract class SingleColumnByteArrayAttribute<Owner> extends ByteArrayAtt
         {
             return new All(this);
         }
-        else if (set.size() == 1)
-        {
-            return this.notEq((byte[])set.iterator().next());
+        if (set.size() == 1) {
+            return this.notEq((byte[]) set.iterator().next());
         }
         return new NonPrimitiveNotInOperation(this, set);
     }

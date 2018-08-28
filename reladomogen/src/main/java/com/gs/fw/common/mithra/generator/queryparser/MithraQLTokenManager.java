@@ -1118,10 +1118,7 @@ public Token getNextToken()
          matchedToken = jjFillToken();
          return matchedToken;
       }
-      else
-      {
-         continue EOFLoop;
-      }
+                continue EOFLoop;
    }
    int error_line = input_stream.getEndLine();
    int error_column = input_stream.getEndColumn();

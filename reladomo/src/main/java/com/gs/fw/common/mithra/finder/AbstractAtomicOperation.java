@@ -125,16 +125,12 @@ public abstract class AbstractAtomicOperation implements AtomicOperation, SqlPar
         {
             return getByIndex();
         }
-        else
-        {
-            if (this.getResultObjectPortal().getClassMetaData().isDated())
-            {
-                return null;
-            }
-            ForAllMatchProcedure procedure = new ForAllMatchProcedure();
-            this.getCache().forAll(procedure);
-            return procedure.getResult();
+        if (this.getResultObjectPortal().getClassMetaData().isDated()) {
+            return null;
         }
+        ForAllMatchProcedure procedure = new ForAllMatchProcedure();
+        this.getCache().forAll(procedure);
+        return procedure.getResult();
     }
 
     protected static MithraFastList allocateResultAndCopyHead(List list, int firstMismatchPosition)
@@ -229,7 +225,7 @@ public abstract class AbstractAtomicOperation implements AtomicOperation, SqlPar
         {
             return this.getCache().getAverageReturnSize(this.indexRef.indexReference, 1);
         }
-        else return this.getCache().estimateQuerySize();
+        return this.getCache().estimateQuerySize();
     }
 
     @Override
@@ -239,7 +235,7 @@ public abstract class AbstractAtomicOperation implements AtomicOperation, SqlPar
         {
             return this.getCache().getAverageReturnSize(this.indexRef.indexReference, 1);
         }
-        else return this.getCache().estimateQuerySize();
+        return this.getCache().estimateQuerySize();
     }
 
     @Override

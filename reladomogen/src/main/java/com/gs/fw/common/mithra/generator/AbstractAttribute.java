@@ -568,10 +568,7 @@ public abstract class AbstractAttribute implements CommonAttribute, Comparable
             {
                 return "convertTimeToString(" + param + ", dt)";
             }
-            else
-            {
-                return "convertDateOnlyToString(" + param + ", dt)";
-            }
+            return "convertDateOnlyToString(" + param + ", dt)";
         }
         return this.getType().convertSqlParameter(param);
     }
@@ -928,18 +925,13 @@ public abstract class AbstractAttribute implements CommonAttribute, Comparable
         {
             return "eqWithSourceAndAsOfCheck";
         }
-        else if (needsSourceAttribute)
-        {
+        if (needsSourceAttribute) {
             return "eqWithSourceCheck";
         }
-        else if (needsAsOfAttribute)
-        {
+        if (needsAsOfAttribute) {
             return "eqWithAsOfCheck";
         }
-        else
-        {
-            throw new IllegalArgumentException("method called but there is no source or asOfAttribute");
-        }
+        throw new IllegalArgumentException("method called but there is no source or asOfAttribute");
     }
 
     public boolean isNullablePrimitive()
@@ -1207,10 +1199,7 @@ public abstract class AbstractAttribute implements CommonAttribute, Comparable
                 return methodStart+"WithInfinity(out, "+"this."+ name +", "+
                         this.getOwner().getFinderClassName()+"."+this.getAsOfAttributeNameForAsOfAttributeTo()+"().getInfinityDate())";
             }
-            else
-            {
-                return methodStart+"(out, "+"this."+ name +")";
-            }
+            return methodStart + "(out, " + "this." + name + ")";
         }
         if (this.isDateAttribute())
         {
@@ -1399,7 +1388,7 @@ public abstract class AbstractAttribute implements CommonAttribute, Comparable
     private String quoteString(String s)
     {
         if (s == null) return "null";
-        else return '"'+s+'"';
+        return '"' + s + '"';
     }
     /*
             String columnName, String uniqueAlias, String attributeName,

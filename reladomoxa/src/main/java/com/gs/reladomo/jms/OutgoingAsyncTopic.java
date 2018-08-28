@@ -114,45 +114,31 @@ public class OutgoingAsyncTopic extends JmsTopic implements OutgoingTopic
                 }
             });
         }
-        else
-        {
-            try
-            {
-                localTransaction.enlistResource(futureXaResource.getDelegated());
-
-                if (listener != null)
-                {
-                    listener.startBatchSend(false);
-                }
-                for (int i = 0; i < messages.size(); i++)
-                {
-                    BytesMessage message = getXaSession().createBytesMessage();
-                    message.writeBytes(messages.get(i));
-                    setMessageProperties(message, msgProperties);
-                    producer.send(message);
-                    if (listener != null)
-                    {
-                        listener.logByteMessage(getTopicName(), message, messages.get(i));
-                    }
-                }
-                localTransaction.delistResource(futureXaResource.getDelegated(), XAResource.TMSUCCESS);
-                if (listener != null)
-                {
-                    listener.endBatchSend();
-                }
-                return new ImmediateFuture<Void>(null, null);
+        try {
+            localTransaction.enlistResource(futureXaResource.getDelegated());
+            if (listener != null) {
+                listener.startBatchSend(false);
             }
-            catch (RollbackException e)
-            {
-                logger.error("Could not send messages, because transaction is rolled back", e);
-                return new ImmediateFuture<Void>("Could not send messages, because transaction is rolled back", e);
+            for (int i = 0; i < messages.size(); i++) {
+                BytesMessage message = getXaSession().createBytesMessage();
+                message.writeBytes(messages.get(i));
+                setMessageProperties(message, msgProperties);
+                producer.send(message);
+                if (listener != null) {
+                    listener.logByteMessage(getTopicName(), message, messages.get(i));
+                }
             }
-            catch (Exception e)
-            {
-                logger.error("unexpected exception", e);
-                //todo: do we need to be more subtle here, instead of asking for a restart?
-                return new ImmediateFuture<Void>("unexpected exception", e);
+            localTransaction.delistResource(futureXaResource.getDelegated(), XAResource.TMSUCCESS);
+            if (listener != null) {
+                listener.endBatchSend();
             }
+            return new ImmediateFuture<Void>(null, null);
+        } catch (RollbackException e) {
+            logger.error("Could not send messages, because transaction is rolled back", e);
+            return new ImmediateFuture<Void>("Could not send messages, because transaction is rolled back", e);
+        } catch (Exception e) {
+            logger.error("unexpected exception", e);
+            return new ImmediateFuture<Void>("unexpected exception", e);
         }
     }
 

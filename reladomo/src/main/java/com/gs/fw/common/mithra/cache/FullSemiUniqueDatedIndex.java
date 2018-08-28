@@ -117,10 +117,7 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return parallelCollectMilestoneOverlap();
         }
-        else
-        {
-            throw new MithraException("Unsupported number of asOfAttributes");
-        }
+        throw new MithraException("Unsupported number of asOfAttributes");
     }
 
     @Override
@@ -865,12 +862,10 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return getFromNonDatedChained((ChainedBucket) e, valueHolder, extractors);
         }
-        else if (e instanceof MultiEntry)
-        {
+        if (e instanceof MultiEntry) {
             return getFromNonDatedMultiEntry((MultiEntry) e, valueHolder, extractors);
         }
-        else if (this.nonDatedHashStrategy.equals(e, valueHolder, extractors))
-        {
+        if (this.nonDatedHashStrategy.equals(e, valueHolder, extractors)) {
             return getFromNonDatedIfMatchAsOfDates(e, valueHolder, extractors);
         }
         return null;
@@ -997,12 +992,10 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return getFromNonDatedChained((ChainedBucket) e, valueHolder, extractors);
         }
-        else if (e instanceof MultiEntry)
-        {
+        if (e instanceof MultiEntry) {
             return getFromNonDatedMultiEntry((MultiEntry) e, valueHolder, extractors);
         }
-        else if (this.nonDatedHashStrategy.equals(e, valueHolder, extractors))
-        {
+        if (this.nonDatedHashStrategy.equals(e, valueHolder, extractors)) {
             return getFromNonDatedIfMatchAsOfDates(e, valueHolder, extractors);
         }
         return null;
@@ -1019,12 +1012,10 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return containsInNonDatedChained((ChainedBucket) e, keyHolder, extractors, filter);
         }
-        else if (e instanceof MultiEntry)
-        {
+        if (e instanceof MultiEntry) {
             return containsInNonDatedMultiEntry((MultiEntry) e, keyHolder, extractors, filter);
         }
-        else if (this.nonDatedHashStrategy.equals(e, keyHolder, extractors))
-        {
+        if (this.nonDatedHashStrategy.equals(e, keyHolder, extractors)) {
             return containsInNonDatedIfMatchAsOfDates(e, keyHolder, extractors, filter);
         }
         return false;
@@ -1315,23 +1306,18 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
             }
             return result.size() > 0 ? result : null;
         }
-        else
-        {
-            for(int i=multiEntry.size - 1;i >= 0;i--)
-            {
-                Object e = multiEntry.list[i];
-                if (!extractorOne.dataMatches(e, extractorOne.timestampValueOf(valueHolder), asOfAttributes[0]))
-                {
-                    continue;
-                }
-                if (extractorTwo != null && !extractorTwo.dataMatches(e, extractorTwo.timestampValueOf(valueHolder), asOfAttributes[1]))
-                {
-                    continue;
-                }
-                return e;
+        for (int i = multiEntry.size - 1; i >= 0; i--) {
+            Object e = multiEntry.list[i];
+            if (!extractorOne.dataMatches(e, extractorOne.timestampValueOf(valueHolder), asOfAttributes[0])) {
+                continue;
             }
-            return null;
+            if (extractorTwo != null
+                    && !extractorTwo.dataMatches(e, extractorTwo.timestampValueOf(valueHolder), asOfAttributes[1])) {
+                continue;
+            }
+            return e;
         }
+        return null;
     }
 
     public PrimaryKeyIndex copy()
@@ -1482,8 +1468,7 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
             MultiEntry multiEntry = (MultiEntry) e;
             return addMultiEntryToContainer(data, container, multiEntry);
         }
-        else if (this.nonDatedHashStrategy.equals(e, data))
-        {
+        if (this.nonDatedHashStrategy.equals(e, data)) {
             container.addCommittedData((MithraDataObject) e);
             return true;
         }
@@ -1673,8 +1658,7 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return getNonDatedMulti((MultiEntry) e, srcObject, srcData, relationshipHashStrategy, asOfDate0, asOfDate1);
         }
-        else if (relationshipHashStrategy.equalsForRelationship(srcObject, srcData, e, asOfDate0, asOfDate1))
-        {
+        if (relationshipHashStrategy.equalsForRelationship(srcObject, srcData, e, asOfDate0, asOfDate1)) {
             return e;
         }
         return null;
@@ -1791,9 +1775,8 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return getNonDatedAsOneWithDatesMulti((MultiEntry) e, valueHolder, extractors, asOfDates);
         }
-        else if (nonDatedHashStrategy.equals(e, valueHolder, extractors) && asOfAttributes[0].dataMatches(e, asOfDates[0]) &&
-                        (asOfAttributes.length == 1 || asOfAttributes[1].dataMatches(e, asOfDates[1])))
-        {
+        if (nonDatedHashStrategy.equals(e, valueHolder, extractors) && asOfAttributes[0].dataMatches(e, asOfDates[0])
+                && (asOfAttributes.length == 1 || asOfAttributes[1].dataMatches(e, asOfDates[1]))) {
             return e;
         }
         return null;
@@ -2949,8 +2932,7 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
                     bucket.one = key;
                     return null;
                 }
-                else if (hashStrategy.equals(bucket.one, key))
-                {
+                if (hashStrategy.equals(bucket.one, key)) {
                     Object removed = bucket.one;
                     bucket.one = key;
                     return removed;
@@ -2960,8 +2942,7 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
                     bucket.two = key;
                     return null;
                 }
-                else if (hashStrategy.equals(bucket.two, key))
-                {
+                if (hashStrategy.equals(bucket.two, key)) {
                     Object removed = bucket.two;
                     bucket.two = key;
                     return removed;
@@ -2976,17 +2957,13 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
                     bucket.three = key;
                     return null;
                 }
-                else if (hashStrategy.equals(bucket.three, key))
-                {
+                if (hashStrategy.equals(bucket.three, key)) {
                     Object removed = bucket.three;
                     bucket.three = key;
                     return removed;
                 }
-                else
-                {
-                    bucket.three = new ChainedBucket(bucket.three, key);
-                    return null;
-                }
+                bucket.three = new ChainedBucket(bucket.three, key);
+                return null;
             }
             while (true);
         }
@@ -3160,11 +3137,8 @@ public class FullSemiUniqueDatedIndex implements SemiUniqueDatedIndex
                     bucket.three = key;
                     return;
                 }
-                else
-                {
-                    bucket.three = new ChainedBucket(bucket.three, key);
-                    return;
-                }
+                bucket.three = new ChainedBucket(bucket.three, key);
+                return;
             }
             while (true);
         }

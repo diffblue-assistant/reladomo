@@ -192,11 +192,8 @@ public class AsOfAttribute extends Attribute
         {
             return "com.gs.fw.common.mithra.util.NullDataTimestamp.getInstance()";
         }
-        else
-        {
-            String original = this.wrapped.getInfinityDate();
-            return createTimestampExpression(original);
-        }
+        String original = this.wrapped.getInfinityDate();
+        return createTimestampExpression(original);
     }
 
     private String createTimestampExpression(String original)
@@ -210,10 +207,7 @@ public class AsOfAttribute extends Attribute
         {
             return original.substring(1, original.length() - 1);
         }
-        else
-        {
-            throw new RuntimeException("timestamp parsing not yet implemented");
-        }
+        throw new RuntimeException("timestamp parsing not yet implemented");
     }
 
     public String getDefaultDateExpression()

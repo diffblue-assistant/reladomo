@@ -42,14 +42,10 @@ public class EvoTypesNested extends EvoTypesNestedAbstract
         {
             return new EvoTypesNestedA(ref, attributes);
         }
-        else if (attributes.charAttribute().charValueOf(ref) == 'B')
-        {
+        if (attributes.charAttribute().charValueOf(ref) == 'B') {
             return new EvoTypesNestedB(ref, attributes);
         }
-        else
-        {
-            return new EvoTypesNested(ref, attributes);
-        }
+        return new EvoTypesNested(ref, attributes);
     }
 
     private EvoTypesNested(Builder builder)

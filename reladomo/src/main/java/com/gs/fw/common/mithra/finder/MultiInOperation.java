@@ -327,11 +327,9 @@ public class MultiInOperation implements Operation, SqlParameterSetter
             }
             return result;
         }
-        else
-        {
-            if (cache.isDated()) return null;
-            return this.applyOperation(cache.getAll());
-        }
+        if (cache.isDated())
+            return null;
+        return this.applyOperation(cache.getAll());
     }
 
     private List getFromCacheAndFilter(boolean returnNullIfNotFoundInIndex, Cache cache,
@@ -341,10 +339,8 @@ public class MultiInOperation implements Operation, SqlParameterSetter
         {
             return getFromCacheAndFilterSmall(returnNullIfNotFoundInIndex, cache, sortedRightIndexAttributes, unusedLeft, unusedRight);
         }
-        else
-        {
-            return getFromCacheAndFilterLarge(returnNullIfNotFoundInIndex, cache, sortedRightIndexAttributes, unusedLeft, unusedRight);
-        }
+        return getFromCacheAndFilterLarge(returnNullIfNotFoundInIndex, cache, sortedRightIndexAttributes, unusedLeft,
+                unusedRight);
     }
 
     private List getFromCacheAndFilterSmall(final boolean returnNullIfNotFoundInIndex, final Cache cache, final Extractor[] sortedRightIndexAttributes,

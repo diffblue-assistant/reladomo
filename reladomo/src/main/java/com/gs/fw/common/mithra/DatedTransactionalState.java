@@ -323,11 +323,8 @@ public class DatedTransactionalState
             {
                 return this.container.isInactivatedOrSplit(this.businessDate);
             }
-            else
-            {
-                this.txData = newData;
-                this.dataVersion = this.txData.zGetDataVersion();
-            }
+            this.txData = newData;
+            this.dataVersion = this.txData.zGetDataVersion();
         }
         return false;
 

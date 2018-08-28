@@ -1094,15 +1094,11 @@ public class MithraTestResource
             }
             return result;
         }
-        else
-        {
-            String fullPath = xmlRoot;
-            if (!xmlRoot.endsWith(File.separator))
-            {
-                fullPath += File.separator;
-            }
-            return new FileInputStream(fullPath + fileName);
+        String fullPath = xmlRoot;
+        if (!xmlRoot.endsWith(File.separator)) {
+            fullPath += File.separator;
         }
+        return new FileInputStream(fullPath + fileName);
     }
 
     private void initializeMithraManager(MithraConfigurationManager manager)
@@ -1415,10 +1411,7 @@ public class MithraTestResource
         {
             return map.valuesAsList();
         }
-        else
-        {
-            return ListFactory.create((List) mithraDataObjects);
-        }
+        return ListFactory.create((List) mithraDataObjects);
     }
 
     private class MasterQueueTableMapKey

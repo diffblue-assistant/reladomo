@@ -105,8 +105,7 @@ public class TransactionLocalMap
         Entry e = table[i];
         if (e != null && e.key == key)
             return e.value;
-        else
-            return getEntryAfterMiss(key, i, e);
+        return getEntryAfterMiss(key, i, e);
     }
 
     /**

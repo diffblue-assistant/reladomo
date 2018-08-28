@@ -370,46 +370,37 @@ public abstract class AbstractDatedCache extends AbstractCache implements Refere
             {
                 return getManyFromAsOfProxy(dataHoldersTupleSet, extractors, abortIfNotFound, asOfDates);
             }
-            else
-            {
-                Index index = this.indices[indexRef - 1];
-                boolean perData = isExtractorPerData(extractors, asOfDates);
-                if (indexRef > 1 && index.isUnique())
-                {
-                    List results;
-                    if (perData)
-                    {
-                        MithraFastList localResults = new MithraFastList(this.getAverageReturnSizeUnlocked((int) indexRef, (int) dataHoldersTupleSet.size()));
+            Index index = this.indices[indexRef - 1];
+            boolean perData = isExtractorPerData(extractors, asOfDates);
+            if (indexRef > 1 && index.isUnique()) {
+                List results;
+                if (perData) {
+                    MithraFastList localResults = new MithraFastList(
+                            this.getAverageReturnSizeUnlocked((int) indexRef, (int) dataHoldersTupleSet.size()));
+                    results = localResults;
+                    if (getManyPerDataFromUnique(extractors, abortIfNotFound, asOfDates, tx, index, localResults,
+                            dataHoldersTupleSet.iterator())) {
+                        results = null;
+                    }
+                } else {
+                    DatedSemiUniqueDataIndex uniqueIndex = (DatedSemiUniqueDataIndex) index;
+                    if (!abortIfNotFound && tx == null && dataHoldersTupleSet.size() > 1
+                            && MithraCpuBoundThreadPool.isParallelizable(dataHoldersTupleSet.size())) {
+                        results = getManyFromUniqueParallel(extractors, asOfDates, dataHoldersTupleSet, uniqueIndex);
+                    } else {
+                        MithraFastList localResults = new MithraFastList(
+                                this.getAverageReturnSizeUnlocked((int) indexRef, (int) dataHoldersTupleSet.size()));
                         results = localResults;
-                        if (getManyPerDataFromUnique(extractors, abortIfNotFound, asOfDates, tx, index, localResults, dataHoldersTupleSet.iterator()))
-                        {
+                        if (getManyFromUniqueSequential(extractors, abortIfNotFound, asOfDates, tx, localResults,
+                                dataHoldersTupleSet.iterator(), uniqueIndex)) {
                             results = null;
                         }
                     }
-                    else
-                    {
-                        DatedSemiUniqueDataIndex uniqueIndex = (DatedSemiUniqueDataIndex) index;
-                        if (!abortIfNotFound && tx == null && dataHoldersTupleSet.size() > 1 && MithraCpuBoundThreadPool.isParallelizable(dataHoldersTupleSet.size()))
-                        {
-                            results = getManyFromUniqueParallel(extractors, asOfDates, dataHoldersTupleSet, uniqueIndex);
-                        }
-                        else
-                        {
-                            MithraFastList localResults = new MithraFastList(this.getAverageReturnSizeUnlocked((int) indexRef, (int) dataHoldersTupleSet.size()));
-                            results = localResults;
-                            if (getManyFromUniqueSequential(extractors, abortIfNotFound, asOfDates, tx, localResults, dataHoldersTupleSet.iterator(), uniqueIndex))
-                            {
-                                results = null;
-                            }
-                        }
-                    }
-                    return results;
                 }
-                else
-                {
-                    return getManyFromNonUnique(extractors, asOfDates, (IterableNonUniqueIndex) index, dataHoldersTupleSet, perData, tx, abortIfNotFound);
-                }
+                return results;
             }
+            return getManyFromNonUnique(extractors, asOfDates, (IterableNonUniqueIndex) index, dataHoldersTupleSet,
+                    perData, tx, abortIfNotFound);
         }
         finally
         {
@@ -522,10 +513,8 @@ public abstract class AbstractDatedCache extends AbstractCache implements Refere
         {
             return getManyFromNonUniqueParallel(extractors, asOfDates, index, dataHolders, perData, tx);
         }
-        else
-        {
-            return getManyFromNonUniqueSequential(extractors, asOfDates, index, dataHolders.iterator(), perData, tx, abortIfNotFound, true, dataHolders.size());
-        }
+        return getManyFromNonUniqueSequential(extractors, asOfDates, index, dataHolders.iterator(), perData, tx,
+                abortIfNotFound, true, dataHolders.size());
     }
 
     private List getManyFromUniqueParallel(final Extractor[] extractors, final Timestamp[] asOfDates,
@@ -1569,12 +1558,10 @@ public abstract class AbstractDatedCache extends AbstractCache implements Refere
             fui.forAllInParallel(procedure);
             return new MithraCompositeList(procedure.getResult());
         }
-        else
-        {
-            MatchAllAsOfDatesProcedure procedure = new MatchAllAsOfDatesProcedure(subExtractors, extractorStartIndex, size, asOfDates, this.asOfAttributes);
-            fui.forAll(procedure);
-            return procedure.getResult();
-        }
+        MatchAllAsOfDatesProcedure procedure = new MatchAllAsOfDatesProcedure(subExtractors, extractorStartIndex, size,
+                asOfDates, this.asOfAttributes);
+        fui.forAll(procedure);
+        return procedure.getResult();
     }
 
     private List matchAsOfDatesForList(Timestamp[] asOfDates, List list, Extractor[] extractors, int startIndex)
@@ -1603,12 +1590,9 @@ public abstract class AbstractDatedCache extends AbstractCache implements Refere
             {
                 return getFromProxyIndexInParallel(extractors, asOfDates);
             }
-            else
-            {
-                procedure =
-                        new MatchAllAsOfDatesProcedure(extractors, 0, this.semiUniqueDatedIndex.getSemiUniqueSize(), asOfDates, this.asOfAttributes);
-                this.semiUniqueDatedIndex.forAll(procedure);
-            }
+            procedure = new MatchAllAsOfDatesProcedure(extractors, 0, this.semiUniqueDatedIndex.getSemiUniqueSize(),
+                    asOfDates, this.asOfAttributes);
+            this.semiUniqueDatedIndex.forAll(procedure);
         }
         finally
         {
@@ -1756,25 +1740,20 @@ public abstract class AbstractDatedCache extends AbstractCache implements Refere
             this.extractTimestampsFromData(data, extractors, asOfDates);
             return ListFactory.create(this.getBusinessObjectFromData(data, asOfDates, getNonDatedPkHashCode(data), weak, isLocked));
         }
-        else
-        {
-            List result = (List) o;
-            boolean perData = isExtractorPerData(extractors, asOfDates);
-            if (!perData && MithraCpuBoundThreadPool.isParallelizable(result.size()))
-            {
-                convertToBusinessObjectsInParallel(result, asOfDates, weak);
+        List result = (List) o;
+        boolean perData = isExtractorPerData(extractors, asOfDates);
+        if (!perData && MithraCpuBoundThreadPool.isParallelizable(result.size())) {
+            convertToBusinessObjectsInParallel(result, asOfDates, weak);
+        } else {
+            for (int i = 0; i < result.size(); i++) {
+                MithraDataObject data = (MithraDataObject) result.get(i);
+                if (perData)
+                    this.extractTimestampsFromData(data, extractors, asOfDates);
+                result.set(i,
+                        this.getBusinessObjectFromData(data, asOfDates, getNonDatedPkHashCode(data), weak, isLocked));
             }
-            else
-            {
-                for (int i = 0; i < result.size(); i++)
-                {
-                    MithraDataObject data = (MithraDataObject) result.get(i);
-                    if (perData) this.extractTimestampsFromData(data, extractors, asOfDates);
-                    result.set(i, this.getBusinessObjectFromData(data, asOfDates, getNonDatedPkHashCode(data), weak, isLocked));
-                }
-            }
-            return result;
         }
+        return result;
     }
 
     private void convertToBusinessObjectsInParallel(final List dataHolders, final Timestamp[] asOfDates, final boolean weak)

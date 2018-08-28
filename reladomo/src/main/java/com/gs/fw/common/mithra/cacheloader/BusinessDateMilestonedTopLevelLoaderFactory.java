@@ -70,9 +70,6 @@ public class BusinessDateMilestonedTopLevelLoaderFactory extends AbstractLoaderF
             Operation businessDateOp = businessDate.equalsEdgePoint();
             return businessDateOp.and(fromZOp).and(thruZOp);
         }
-        else
-        {
-            return businessDate.eq(dateCluster.getBusinessDate());
-        }
+        return businessDate.eq(dateCluster.getBusinessDate());
     }
 }

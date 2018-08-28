@@ -446,15 +446,11 @@ public class MithraCompositeList<E>
             {
                 return true;
             }
-            else if (this.currentIndex < this.iterators.length - 1)
-            {
+            if (this.currentIndex < this.iterators.length - 1) {
                 this.currentIterator = this.iterators[++this.currentIndex];
                 return this.hasNext();
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public E next()
@@ -463,15 +459,11 @@ public class MithraCompositeList<E>
             {
                 return this.currentIterator.next();
             }
-            else if (this.currentIndex < this.iterators.length - 1)
-            {
+            if (this.currentIndex < this.iterators.length - 1) {
                 this.currentIterator = this.iterators[++this.currentIndex];
                 return this.next();
             }
-            else
-            {
-                throw new NoSuchElementException();
-            }
+            throw new NoSuchElementException();
         }
 
         public void remove()

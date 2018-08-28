@@ -130,24 +130,19 @@ public class ASTRelationalOperator extends SimpleNode implements Operator
         {
             return " == ";
         }
-        else if(this.isLesserThan())
-        {
+        if (this.isLesserThan()) {
             return " < ";
         }
-        else if(this.isLesserThanOrEqualTo())
-        {
+        if (this.isLesserThanOrEqualTo()) {
             return " <= ";
         }
-        else if(this.isGreaterThan())
-        {
+        if (this.isGreaterThan()) {
             return " > ";
         }
-        else if(this.isGreaterThanOrEqualTo())
-        {
+        if (this.isGreaterThanOrEqualTo()) {
             return " >= ";
         }
-        else if (this.isNotEqual())
-        {
+        if (this.isNotEqual()) {
             return " != ";
         }
         throw new RuntimeException("relational operator '" + this.toString() + "' not implemented");
@@ -159,24 +154,19 @@ public class ASTRelationalOperator extends SimpleNode implements Operator
         {
             return "eq";
         }
-        else if(this.isLesserThan())
-        {
+        if (this.isLesserThan()) {
             return "lessThan";
         }
-        else if(this.isLesserThanOrEqualTo())
-        {
+        if (this.isLesserThanOrEqualTo()) {
             return "lessThanEquals";
         }
-        else if(this.isGreaterThan())
-        {
+        if (this.isGreaterThan()) {
             return "greaterThan";
         }
-        else if(this.isGreaterThanOrEqualTo())
-        {
+        if (this.isGreaterThanOrEqualTo()) {
             return "greaterThanEquals";
         }
-        else if (this.isNotEqual())
-        {
+        if (this.isNotEqual()) {
             return "notEq";
         }
         throw new RuntimeException("relational operator '" + this.toString() + "' not implemented");

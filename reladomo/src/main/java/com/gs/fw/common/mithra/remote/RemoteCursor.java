@@ -215,10 +215,7 @@ public class RemoteCursor implements Cursor
         {
             return currentBatch.get(currentPos++);
         }
-        else
-        {
-            throw new NoSuchElementException();
-        }
+        throw new NoSuchElementException();
     }
 
     public void remove()

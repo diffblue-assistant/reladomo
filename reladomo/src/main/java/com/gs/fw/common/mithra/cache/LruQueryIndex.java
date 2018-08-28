@@ -293,10 +293,7 @@ public class LruQueryIndex implements QueryIndex
         {
             return new Entry(key, queue, hash, next, isForRelationship);
         }
-        else
-        {
-            return new TimedEntry(key, queue, hash, next, isForRelationship);
-        }
+        return new TimedEntry(key, queue, hash, next, isForRelationship);
     }
 
     private void link(Entry e)

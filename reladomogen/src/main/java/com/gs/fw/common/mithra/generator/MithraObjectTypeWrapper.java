@@ -181,8 +181,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
                 {
                     return true;
                 }
-                else if (!relatedDone.contains(relatedObject))
-                {
+                if (!relatedDone.contains(relatedObject)) {
                     relatedNotDone.add(relatedObject);
                 }
             }
@@ -1226,10 +1225,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
             }
             return newAttributes;
         }
-        else
-        {
-            return original;
-        }
+        return original;
     }
 
     private String getCaseCorrectIndexPrefix(String tableName, String prefix, int i)
@@ -1591,8 +1587,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
                     {
                         return -1;
                     }
-                    else if (o2.isPrimaryKey())
-                    {
+                    if (o2.isPrimaryKey()) {
                         return 1;
                     }
                 }
@@ -2163,7 +2158,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return "MithraReadOnlyPortal";
         }
-        else return "MithraTransactionalPortal";
+        return "MithraTransactionalPortal";
     }
 
     public String getPortalClassForNoTxRuntime()
@@ -2177,8 +2172,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return "new PureMithraObjectPersister(getFinderInstance())";
         }
-        else if (this.isReadOnly())
-        {
+        if (this.isReadOnly()) {
             return "(MithraObjectReader) objectFactory";
         }
         return "(MithraObjectPersister) objectFactory";
@@ -2318,10 +2312,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return this.identityAttributeList.get(0);
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
     public int getIdentityCount()
@@ -2412,11 +2403,10 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
             {
                 return "GenericBiTemporalDirector";
             }
-            else if (this.hasBusinessDateAsOfAttribute())
-            {
+            if (this.hasBusinessDateAsOfAttribute()) {
                 return "GenericNonAuditedTemporalDirector";
             }
-            else return "AuditOnlyTemporalDirector";
+            return "AuditOnlyTemporalDirector";
         }
         return this.getWrapped().getDatedTransactionalTemporalDirector();
     }
@@ -2447,14 +2437,10 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return "BiTemporalTransactionalDataContainer";
         }
-        else if (this.hasProcessingDate())
-        {
+        if (this.hasProcessingDate()) {
             return "AuditOnlyTransactionalDataContainer";
         }
-        else
-        {
-            return "NonAuditedTransactionalDataContainer";
-        }
+        return "NonAuditedTransactionalDataContainer";
     }
 
     public int getDoubleAttributeCount()
@@ -2531,10 +2517,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
             //todo: this can potentially break when an imported list is used for a many-to-many relationship
             return other;
         }
-        else
-        {
-            return this;
-        }
+        return this;
     }
 
     public boolean addJoinToConstantPool(ASTRelationalExpression exp)
@@ -2832,7 +2815,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
             this.childClasses.toArray(children);
             return children;
         }
-        else return null;
+        return null;
     }
 
     public String getSuperClassFinders()
@@ -2852,10 +2835,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
             result+= " } ";
             return result;
         }
-        else
-        {
-            return "null";
-        }
+        return "null";
     }
 
     public String getSubClassFinders()
@@ -2864,23 +2844,18 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return "null";
         }
-        else
-        {
-            String result = "new RelatedFinder[] {";
-            boolean addComma = false;
-            for(int i=0;i<childClasses.size();i++)
-            {
-                if (addComma)
-                {
-                    result += ",";
-                }
-                MithraObjectTypeWrapper child = childClasses.get(i);
-                result += child.getFinderClassName()+".getFinderInstance()";
-                addComma = true;
+        String result = "new RelatedFinder[] {";
+        boolean addComma = false;
+        for (int i = 0; i < childClasses.size(); i++) {
+            if (addComma) {
+                result += ",";
             }
-            result+= " } ";
-            return result;
+            MithraObjectTypeWrapper child = childClasses.get(i);
+            result += child.getFinderClassName() + ".getFinderInstance()";
+            addComma = true;
         }
+        result += " } ";
+        return result;
     }
 
     public int getResultSetStartPosition()
@@ -3005,10 +2980,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
             result.toArray(finalResult);
             return finalResult;
         }
-        else
-        {
-            return EMPTY_ATTRIBUTES;
-        }
+        return EMPTY_ATTRIBUTES;
     }
 
     public String getNullGetterExpressionForMutableIndex(int index)
@@ -3286,8 +3258,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return this.sourceAttribute.getTypeAsString() + " " + SOURCE_ATTRIBUTE_VARIABLE_NAME;
         }
-        else
-            return "";
+        return "";
     }
 
     public String getUserFriendlySourceAttributeVariableDeclaration()
@@ -3296,8 +3267,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return this.sourceAttribute.getTypeAsString() + " " + this.sourceAttribute.getName();
         }
-        else
-            return "";
+        return "";
     }
 
     public String getUserFriendlySourceAttributeVariableName()
@@ -3306,8 +3276,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return this.sourceAttribute.getName();
         }
-        else
-            return "";
+        return "";
     }
 
     public String getSourceAttributeVariableDeclarationWithComma()
@@ -3316,8 +3285,7 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return ", " + this.sourceAttribute.getTypeAsString() + " " + SOURCE_ATTRIBUTE_VARIABLE_NAME;
         }
-        else
-            return "";
+        return "";
     }
 
     public String getColumnListWithoutPk()
@@ -3466,16 +3434,14 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
     {
         if (this.hasSourceAttribute())
             return SOURCE_ATTRIBUTE_VARIABLE_NAME;
-        else
-            return "";
+        return "";
     }
 
     public String getConnectionManagerClassName()
     {
         if (this.hasSourceAttribute())
             return this.getSourceAttribute().getType().getConnectionManagerClassName();
-        else
-            return "com.gs.fw.common.mithra.connectionmanager.SourcelessConnectionManager";
+        return "com.gs.fw.common.mithra.connectionmanager.SourcelessConnectionManager";
     }
 
     public String toString()
@@ -3489,15 +3455,14 @@ public class MithraObjectTypeWrapper extends MithraBaseObjectTypeWrapper
         {
             return objectName + "." + this.getSourceAttribute().getGetter();
         }
-        else return "";
+        return "";
     }
 
     public String getSourceAttributeVariableWithComma()
     {
         if (this.hasSourceAttribute())
             return ", " + SOURCE_ATTRIBUTE_VARIABLE_NAME;
-        else
-            return "";
+        return "";
     }
 
     public boolean hasCompatibleSourceAttribute(MithraObjectTypeWrapper other)

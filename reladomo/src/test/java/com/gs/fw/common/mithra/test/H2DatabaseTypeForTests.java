@@ -127,9 +127,6 @@ public class H2DatabaseTypeForTests extends H2DatabaseType
         {
             return "-- create temp table and index suppressed for this test - skipping create index for " + fullTableName;
         }
-        else
-        {
-            return super.createIndexSql(fullTableName, indexColumns);
-        }
+        return super.createIndexSql(fullTableName, indexColumns);
     }
 }

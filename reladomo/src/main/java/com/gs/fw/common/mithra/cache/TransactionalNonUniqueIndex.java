@@ -391,10 +391,7 @@ public class TransactionalNonUniqueIndex implements IterableNonUniqueIndex, Tran
             }
             return perThreadIndex.put(businessObject);
         }
-        else
-        {
-            return this.nonTransactionalPut(businessObject);
-        }
+        return this.nonTransactionalPut(businessObject);
     }
 
     public Object nonTransactionalPut(Object businessObject)

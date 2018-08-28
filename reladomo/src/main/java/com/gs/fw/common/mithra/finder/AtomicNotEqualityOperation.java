@@ -73,7 +73,7 @@ public abstract class AtomicNotEqualityOperation extends AbstractAtomicOperation
             {
                 return new None(this.getAttribute());
             }
-            else return op;
+            return op;
         }
         return null;
     }

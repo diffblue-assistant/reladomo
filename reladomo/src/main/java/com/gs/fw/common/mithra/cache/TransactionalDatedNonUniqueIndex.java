@@ -77,12 +77,9 @@ public class TransactionalDatedNonUniqueIndex implements IterableNonUniqueIndex,
             {
                 return fromMain;
             }
-            else if (fromMain instanceof List)
-            {
+            if (fromMain instanceof List) {
                 result = (List) fromMain;
-            }
-            else
-            {
+            } else {
                 result = new FastList(1);
                 result.add(fromMain);
             }
@@ -402,10 +399,7 @@ public class TransactionalDatedNonUniqueIndex implements IterableNonUniqueIndex,
             }
             return perThreadIndex.put(businessObject);
         }
-        else
-        {
-            return this.nonTransactionalPut(businessObject);
-        }
+        return this.nonTransactionalPut(businessObject);
     }
 
     public Object nonTransactionalPut(Object businessObject)

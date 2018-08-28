@@ -103,10 +103,7 @@ public class MatchAsOfExtractorProcedure implements DoUntilProcedure
             }
             return false;
         }
-        else
-        {
-            result = o;
-            return true;
-        }
+        result = o;
+        return true;
     }
 }

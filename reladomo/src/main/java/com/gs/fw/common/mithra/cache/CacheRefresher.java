@@ -137,10 +137,7 @@ public class CacheRefresher
         {
             return map.valuesAsList();
         }
-        else
-        {
-            return ListFactory.create(mithraObjects);
-        }
+        return ListFactory.create(mithraObjects);
     }
 
     public void refreshObjectsFromServer(MithraFastList<MithraDataObject> toRefresh)

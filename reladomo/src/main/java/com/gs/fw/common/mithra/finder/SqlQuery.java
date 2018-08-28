@@ -276,10 +276,8 @@ public class SqlQuery implements MapperStack, WhereClause.WhereClauseOwner
             {
                 return DEFAULT_DATABASE_ALIAS;
             }
-            else
-            {
-                throw new RuntimeException("unexpected top level operation on object "+objectPortal.getFinder().getClass().getName()+" in operation "+safeToString());
-            }
+            throw new RuntimeException("unexpected top level operation on object "
+                    + objectPortal.getFinder().getClass().getName() + " in operation " + safeToString());
         }
         else
         {
@@ -385,11 +383,9 @@ public class SqlQuery implements MapperStack, WhereClause.WhereClauseOwner
         {
             return whereClause.toString();
         }
-        else
-        {
-            if (unionNumber == this.numberOfUnions - 1 && this.currentQueryNumber == this.numberOfQueries - 1) return this.lastWhereClause;
-            return this.firstWhereClause;
-        }
+        if (unionNumber == this.numberOfUnions - 1 && this.currentQueryNumber == this.numberOfQueries - 1)
+            return this.lastWhereClause;
+        return this.firstWhereClause;
     }
 
     public String getTableName(MithraObjectPortal objectPortal, MapperStackImpl mapperStack)
@@ -502,17 +498,13 @@ public class SqlQuery implements MapperStack, WhereClause.WhereClauseOwner
             this.whereClause.appendTempTableFromClause(this, fromClause);
             return fromClause.toString();
         }
-        else
-        {
-            //todo: fix this for joined subclass
-            StringBuilder fromClause = new StringBuilder(this.getTableName(op.getResultObjectPortal(), MapperStackImpl.EMPTY_MAPPER_STACK_IMPL));
-            if (this.useDatabaseAliasInSqlQuery)
-            {
-                fromClause.append(' ').append(DEFAULT_DATABASE_ALIAS);
-            }
-            this.whereClause.appendTempTableFromClause(this, fromClause);
-            return fromClause.toString();
+        StringBuilder fromClause = new StringBuilder(
+                this.getTableName(op.getResultObjectPortal(), MapperStackImpl.EMPTY_MAPPER_STACK_IMPL));
+        if (this.useDatabaseAliasInSqlQuery) {
+            fromClause.append(' ').append(DEFAULT_DATABASE_ALIAS);
         }
+        this.whereClause.appendTempTableFromClause(this, fromClause);
+        return fromClause.toString();
     }
 
     public void appendFromClause(StringBuilder builder)
@@ -536,11 +528,8 @@ public class SqlQuery implements MapperStack, WhereClause.WhereClauseOwner
         {
             return this.analyzedOperation.getOriginalOperation().getResultObjectPortal().getFinder().getClass().getName();
         }
-        else
-        {
-            Mapper lastMapper = mapperStack.getLastMapper();
-            return lastMapper.getFromPortal().getFinder().getClass().getName();
-        }
+        Mapper lastMapper = mapperStack.getLastMapper();
+        return lastMapper.getFromPortal().getFinder().getClass().getName();
     }
 
     public Object getSourceAttributeValueForCurrentSource()
@@ -837,10 +826,7 @@ public class SqlQuery implements MapperStack, WhereClause.WhereClauseOwner
         {
             return this.getCurrentIdExtractor().isUseExplicitJoins();
         }
-        else
-        {
-            return joinClause.allowsInClauseTempJoinReplacement();
-        }
+        return joinClause.allowsInClauseTempJoinReplacement();
     }
 
     private TupleTempContext createTempContext(SetBasedAtomicOperation largeOp)

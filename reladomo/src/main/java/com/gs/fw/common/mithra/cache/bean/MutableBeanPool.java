@@ -47,10 +47,8 @@ public class MutableBeanPool<E extends MutableBean>
             {
                 return construct(index);
             }
-            else if (result != null)
-            {
-                if (array.compareAndSet(index, result, null))
-                {
+            if (result != null) {
+                if (array.compareAndSet(index, result, null)) {
                     return (E) result;
                 }
             }

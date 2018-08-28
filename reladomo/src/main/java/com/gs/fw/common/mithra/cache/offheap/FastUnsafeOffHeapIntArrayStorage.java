@@ -105,8 +105,7 @@ public class FastUnsafeOffHeapIntArrayStorage implements OffHeapIntArrayStorage
                 unsafeZeroMemory(computeAddress(result), size << 2);
                 return result;
             }
-            else if (freeSize > size + 2)
-            {
+            if (freeSize > size + 2) {
                 int result = largestFree + 1;
                 unsafePutInt(computeAddress(largestFree), size);
                 unsafePutInt(computeAddress(result + size), size);
@@ -279,10 +278,7 @@ public class FastUnsafeOffHeapIntArrayStorage implements OffHeapIntArrayStorage
                 unsafePutInt(initialAddress + ((newSize + 1) << 2), newSize);
                 return arrayRef;
             }
-            else
-            {
-                return reallocByCopyAndFree(arrayRef, newSize);
-            }
+            return reallocByCopyAndFree(arrayRef, newSize);
         }
         int adjacentRightSize = unsafeGetInt(computeAddress(arrayRef + size + 1));
         if (adjacentRightSize < 0 && -adjacentRightSize > delta)

@@ -87,16 +87,11 @@ public class RemoteMithraServiceImpl implements RemoteMithraService
                 }
                 return workerTask;
             }
-            else
-            {
-                synchronized (transactionIdToWorkerThreadMap)
-                {
-                    workerTask = (ServerTransactionWorkerTask) transactionIdToWorkerThreadMap.get(remoteTransactionId);
-                }
-                if (workerTask == null || workerTask.isTimedOut())
-                {
-                    throw new MithraTransactionException("server side transaction context is timed out or non-existant");
-                }
+            synchronized (transactionIdToWorkerThreadMap) {
+                workerTask = (ServerTransactionWorkerTask) transactionIdToWorkerThreadMap.get(remoteTransactionId);
+            }
+            if (workerTask == null || workerTask.isTimedOut()) {
+                throw new MithraTransactionException("server side transaction context is timed out or non-existant");
             }
             return workerTask;
         }

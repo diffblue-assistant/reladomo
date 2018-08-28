@@ -120,22 +120,15 @@ public class ASTAttributeName extends SimpleNode
             {
                 return "Class name '" + className + "'" + "not defined. Have you added a xml file for this class?";
             }
-            else
-            {
-                MithraObjectTypeWrapper wrapper = (MithraObjectTypeWrapper) allObjects.get(className);
-                this.owner = wrapper;
-                this.attribute = wrapper.getAttributeByName(attributeName);
-                if (this.attribute == null)
-                {
-                    return "Attribute '" + attributeName + "' does not exist in class '" + className + "'";
-                }
+            MithraObjectTypeWrapper wrapper = (MithraObjectTypeWrapper) allObjects.get(className);
+            this.owner = wrapper;
+            this.attribute = wrapper.getAttributeByName(attributeName);
+            if (this.attribute == null) {
+                return "Attribute '" + attributeName + "' does not exist in class '" + className + "'";
             }
             return null;
         }
-        else
-        {
-            return "Attribute '" + this.getName() + "' is not in [className.attribute] format" + nameSplit.length;
-        }
+        return "Attribute '" + this.getName() + "' is not in [className.attribute] format" + nameSplit.length;
     }
 
     public boolean isSourceAttribute()

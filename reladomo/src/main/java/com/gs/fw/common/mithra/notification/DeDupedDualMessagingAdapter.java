@@ -138,15 +138,11 @@ public class DeDupedDualMessagingAdapter implements MithraNotificationMessagingA
                     }
                     return false;
                 }
-                else
-                {
-                    if (LOGGER.isDebugEnabled())
-                    {
-                        LOGGER.debug("New/unseen message received: " + key);
-                    }
-                    this.messagesWeHaveSeenBefore.add(key);
-                    return true;
+                if (LOGGER.isDebugEnabled()) {
+                    LOGGER.debug("New/unseen message received: " + key);
                 }
+                this.messagesWeHaveSeenBefore.add(key);
+                return true;
             }
         }
     }

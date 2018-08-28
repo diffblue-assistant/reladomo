@@ -45,10 +45,7 @@ public class OperationBasedFilter extends AbstractBooleanFilter
         {
             return new OperationBasedFilter(this.operation.and(((OperationBasedFilter) that).operation));
         }
-        else
-        {
-            return super.and(that);
-        }
+        return super.and(that);
     }
 
     public BooleanFilter or(Filter that)
@@ -57,9 +54,6 @@ public class OperationBasedFilter extends AbstractBooleanFilter
         {
             return new OperationBasedFilter(this.operation.or(((OperationBasedFilter) that).operation));
         }
-        else
-        {
-            return super.or(that);
-        }
+        return super.or(that);
     }
 }

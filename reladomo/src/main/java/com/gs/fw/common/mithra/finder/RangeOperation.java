@@ -109,41 +109,29 @@ public abstract class RangeOperation extends AbstractAtomicOperation
                 {
                     return NoMatchSmr.INSTANCE;
                 }
-                else if (existingOperation instanceof AtomicNotEqualityOperation)
-                {
+                if (existingOperation instanceof AtomicNotEqualityOperation) {
                     AtomicNotEqualityOperation notEqualityOperation = (AtomicNotEqualityOperation) existingOperation;
-                    if (!this.matchesWithoutDeleteCheck(notEqualityOperation, notEqualityOperation.getStaticExtractor()))
-                    {
+                    if (!this.matchesWithoutDeleteCheck(notEqualityOperation,
+                            notEqualityOperation.getStaticExtractor())) {
                         return new SuperMatchSmr(existingOperation, this);
                     }
                     return NoMatchSmr.INSTANCE;
                 }
-                else if (existingOperation instanceof InOperation)
-                {
+                if (existingOperation instanceof InOperation) {
                     return NoMatchSmr.INSTANCE;
                 }
-                else if (existingOperation instanceof NotInOperation)
-                {
-                    // too hard to loop here
+                if (existingOperation instanceof NotInOperation) {
                     return NoMatchSmr.INSTANCE;
                 }
-                else if (existingOperation instanceof RangeOperation)
-                {
+                if (existingOperation instanceof RangeOperation) {
                     RangeOperation rangeOperation = (RangeOperation) existingOperation;
-                    if (rangeOperation.getDirection() == this.getDirection() && rangeOperation.matchesWithoutDeleteCheck(this, getStaticExtractor()))
-                    {
+                    if (rangeOperation.getDirection() == this.getDirection()
+                            && rangeOperation.matchesWithoutDeleteCheck(this, getStaticExtractor())) {
                         return new SuperMatchSmr(existingOperation, this);
                     }
-                }
-                else if (existingOperation instanceof IsNotNullOperation)
-                {
+                } else if (existingOperation instanceof IsNotNullOperation) {
                     return new SuperMatchSmr(existingOperation, this);
-                }
-                else
-                {
-                    // StringLikeOperation
-                    // StringNotLikeOperation
-                    // AtomicSelf*Operation
+                } else {
                     return NoMatchSmr.INSTANCE;
                 }
             }

@@ -194,10 +194,7 @@ public class MithraObjectXmlGenerator extends Task
         {
             return;
         }
-        else
-        {
-            includeList = new ArrayList<String>();
-        }
+        includeList = new ArrayList<String>();
 
         if (includeTablesFromFile != null)
         {
@@ -257,10 +254,7 @@ public class MithraObjectXmlGenerator extends Task
         {
             return;
         }
-        else
-        {
-            includeList = new ArrayList<String>();
-        }
+        includeList = new ArrayList<String>();
 
         this.includeTables = includeTables;
 
@@ -655,28 +649,23 @@ public class MithraObjectXmlGenerator extends Task
                 Class.forName(driver).newInstance();
                 return DriverManager.getConnection(url, userName, password);
             }
-            else
-            {
-                Properties env = new Properties();
-                env.put("com.gs.fw.aig.jdbc.useConnectionPool", "false");
-                env.put("user", userName);
-                env.put("password", password);
-                if (this.getDatabaseType().contains("sybase"))
-                {
-                    env.put("com.gs.fw.aig.jdbc.global.DataSourceImpl","com.sybase.jdbc4.jdbc.SybDataSource");
-                }
-                LdapDataSourceProvider ldapDataSourceProvider;
-                try
-                {
-                    ldapDataSourceProvider = (LdapDataSourceProvider) Class.forName(ldapDataSourceProviderClassName).newInstance();
-                }
-                catch (Exception e)
-                {
-                    throw new RuntimeException("could not create LDAP data source ", e);
-                }
-                DataSource ds = ldapDataSourceProvider.createLdapDataSource(env, ldapName);;
-                return ds.getConnection(userName, password);
+            Properties env = new Properties();
+            env.put("com.gs.fw.aig.jdbc.useConnectionPool", "false");
+            env.put("user", userName);
+            env.put("password", password);
+            if (this.getDatabaseType().contains("sybase")) {
+                env.put("com.gs.fw.aig.jdbc.global.DataSourceImpl", "com.sybase.jdbc4.jdbc.SybDataSource");
             }
+            LdapDataSourceProvider ldapDataSourceProvider;
+            try {
+                ldapDataSourceProvider = (LdapDataSourceProvider) Class.forName(ldapDataSourceProviderClassName)
+                        .newInstance();
+            } catch (Exception e) {
+                throw new RuntimeException("could not create LDAP data source ", e);
+            }
+            DataSource ds = ldapDataSourceProvider.createLdapDataSource(env, ldapName);
+            ;
+            return ds.getConnection(userName, password);
         }
         catch (SQLException e)
         {

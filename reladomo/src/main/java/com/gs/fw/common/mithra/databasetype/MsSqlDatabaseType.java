@@ -600,10 +600,7 @@ public class MsSqlDatabaseType extends AbstractDatabaseType
         {
             return "with (serializable)";
         }
-        else
-        {
-            return "with (nolock)";
-        }
+        return "with (nolock)";
     }
 
     public boolean hasBulkInsert()

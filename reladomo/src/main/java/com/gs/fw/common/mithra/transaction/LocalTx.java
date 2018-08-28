@@ -577,10 +577,7 @@ public class LocalTx implements Transaction
             {
                 return Status.STATUS_MARKED_ROLLBACK;
             }
-            else
-            {
-                return Status.STATUS_ACTIVE;
-            }
+            return Status.STATUS_ACTIVE;
         }
 
         @Override

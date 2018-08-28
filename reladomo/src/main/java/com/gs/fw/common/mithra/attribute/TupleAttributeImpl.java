@@ -182,10 +182,7 @@ public class TupleAttributeImpl implements TupleAttribute
             }
             return constantOp.and(inOperation);
         }
-        else
-        {
-            return new MultiInOperation(attributes, new MithraArrayTupleTupleSet(extractors, dataHolders, ignoreNulls));
-        }
+        return new MultiInOperation(attributes, new MithraArrayTupleTupleSet(extractors, dataHolders, ignoreNulls));
     }
 
     public Operation inIgnoreNulls(List dataHolders, Extractor[] extractors)

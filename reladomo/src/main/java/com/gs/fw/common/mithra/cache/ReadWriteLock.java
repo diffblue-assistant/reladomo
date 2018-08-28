@@ -285,11 +285,8 @@ public class ReadWriteLock
                 singularReaderThread = null;
                 return compareAndSetState(GLOBAL_MASK | 1, GLOBAL_MASK) || slowReleaseShared();
             }
-            else
-            {
-                releasePrepareForLocal();
-                return true;
-            }
+            releasePrepareForLocal();
+            return true;
         }
 
         private void releasePrepareForLocal()

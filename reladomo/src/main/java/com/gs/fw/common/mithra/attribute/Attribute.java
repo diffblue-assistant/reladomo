@@ -562,18 +562,11 @@ public abstract class Attribute<Owner, V> implements com.gs.fw.finder.Attribute<
                 // right is shorter than left. Condition (2) with common mapper
                 return filterEqWithPartialCommon(right, left, commonMapper);
             }
-            else
-            {
-                // condition 4
-                Mapper mapper = this.constructEqualityMapper(other);
-                mapper.setAnonymous(true);
-                return new MappedOperation(mapper, new All(((MappedAttribute)other).getWrappedAttribute()));
-            }
+            Mapper mapper = this.constructEqualityMapper(other);
+            mapper.setAnonymous(true);
+            return new MappedOperation(mapper, new All(((MappedAttribute) other).getWrappedAttribute()));
         }
-        else
-        {
-            return other.filterEqWithCheck(this); // Condition (2) without common mapper
-        }
+        return other.filterEqWithCheck(this);
     }
 
     private Operation filterEqWithPartialCommon(MappedAttribute left, MappedAttribute right, Mapper commonMapper)

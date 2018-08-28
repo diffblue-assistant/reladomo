@@ -292,10 +292,7 @@ public abstract class MithraMatcherThreadTestAbstract extends TestCase
                 firstTime = false;
                 return false;
             }
-            else
-            {
-                return true;
-            }
+            return true;
         }
     }
 

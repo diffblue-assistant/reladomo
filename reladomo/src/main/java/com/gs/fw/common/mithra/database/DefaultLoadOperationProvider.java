@@ -44,9 +44,6 @@ public class DefaultLoadOperationProvider implements LoadOperationProvider
             }
             return ListFactory.create(op);
         }
-        else
-        {
-            return ListFactory.create(finder.all());
-        }
+        return ListFactory.create(finder.all());
     }
 }

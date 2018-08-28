@@ -247,10 +247,7 @@ public abstract class AsOfAttribute<T> extends Attribute<T, Timestamp> implement
         {
             return new AsOfEqualityMapper(this, (AsOfAttribute) right);
         }
-        else
-        {
-            return new AsOfTimestampEqualityMapper(this, (TimestampAttribute) right);
-        }
+        return new AsOfTimestampEqualityMapper(this, (TimestampAttribute) right);
     }
 
     public EqualityMapper constructEqualityMapper(TimestampAttribute right)
@@ -322,12 +319,8 @@ public abstract class AsOfAttribute<T> extends Attribute<T, Timestamp> implement
         {
             return to.equals(this.getInfinityDate());
         }
-        else
-        {
-            if (to.after(asOfDate) || (this.isToIsInclusive() && to.equals(asOfDate)))
-            {
-                return from.before(asOfDate) || (!this.isToIsInclusive() && from.equals(asOfDate));
-            }
+        if (to.after(asOfDate) || (this.isToIsInclusive() && to.equals(asOfDate))) {
+            return from.before(asOfDate) || (!this.isToIsInclusive() && from.equals(asOfDate));
         }
         return false;
     }
@@ -438,24 +431,18 @@ public abstract class AsOfAttribute<T> extends Attribute<T, Timestamp> implement
             whereClause.append(" = ?");
             return 1;
         }
-        else
-        {
-            if (this.isToIsInclusive())
-            {
-                whereClause.append(this.getFromAttribute().getColumnName());
-                whereClause.append(" < ? and ");
-                whereClause.append(this.getToAttribute().getColumnName());
-                whereClause.append(" >= ?");
-            }
-            else
-            {
-                whereClause.append(this.getFromAttribute().getColumnName());
-                whereClause.append(" <= ? and ");
-                whereClause.append(this.getToAttribute().getColumnName());
-                whereClause.append(" > ?");
-            }
-            return 2;
+        if (this.isToIsInclusive()) {
+            whereClause.append(this.getFromAttribute().getColumnName());
+            whereClause.append(" < ? and ");
+            whereClause.append(this.getToAttribute().getColumnName());
+            whereClause.append(" >= ?");
+        } else {
+            whereClause.append(this.getFromAttribute().getColumnName());
+            whereClause.append(" <= ? and ");
+            whereClause.append(this.getToAttribute().getColumnName());
+            whereClause.append(" > ?");
         }
+        return 2;
     }
 
     public void appendInfinityWhereClause(StringBuffer whereClause)

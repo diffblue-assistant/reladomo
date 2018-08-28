@@ -485,11 +485,8 @@ public class MultiThreadedTx implements Transaction
             {
                 return this.futureXaResource.prepare(this.getBranchXid());
             }
-            else
-            {
-                int prepareState = this.getResource().prepare(this.getBranchXid());
-                return new ImmediateFuture<Integer>(prepareState);
-            }
+            int prepareState = this.getResource().prepare(this.getBranchXid());
+            return new ImmediateFuture<Integer>(prepareState);
 
         }
     }
@@ -757,10 +754,7 @@ public class MultiThreadedTx implements Transaction
             {
                 return Status.STATUS_MARKED_ROLLBACK;
             }
-            else
-            {
-                return Status.STATUS_ACTIVE;
-            }
+            return Status.STATUS_ACTIVE;
         }
 
         @Override

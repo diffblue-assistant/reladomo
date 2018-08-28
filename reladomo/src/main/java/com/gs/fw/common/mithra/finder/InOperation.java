@@ -70,7 +70,7 @@ public abstract class InOperation extends AtomicSetBasedOperation implements Ope
         {
             return this.getCache().getAverageReturnSize(this.getIndexRef(), this.getSetSize());
         }
-        else return this.getCache().estimateQuerySize();
+        return this.getCache().estimateQuerySize();
     }
 
     @Override
@@ -80,7 +80,7 @@ public abstract class InOperation extends AtomicSetBasedOperation implements Ope
         {
             return this.getCache().getMaxReturnSize(this.getIndexRef(), this.getSetSize());
         }
-        else return this.getCache().estimateQuerySize();
+        return this.getCache().estimateQuerySize();
     }
 
     /*
@@ -199,35 +199,23 @@ public abstract class InOperation extends AtomicSetBasedOperation implements Ope
                     {
                         return NoMatchSmr.INSTANCE;
                     }
-                    else if (existingOperation instanceof AtomicNotEqualityOperation)
-                    {
-                        if (this.setContains(existingOperation, ((AtomicNotEqualityOperation) existingOperation).getStaticExtractor()))
-                        {
+                    if (existingOperation instanceof AtomicNotEqualityOperation) {
+                        if (this.setContains(existingOperation,
+                                ((AtomicNotEqualityOperation) existingOperation).getStaticExtractor())) {
                             return NoMatchSmr.INSTANCE;
                         }
                         return new SuperMatchSmr(existingOperation, this);
                     }
-                    else if (existingOperation instanceof AtomicSetBasedOperation)
-                    {
-                        if (existingOperation instanceof InOperation && ((InOperation) existingOperation).getSetSize() >= this.getSetSize())
-                        {
-                            return this.shapeMatchSet((InOperation)existingOperation);
+                    if (existingOperation instanceof AtomicSetBasedOperation) {
+                        if (existingOperation instanceof InOperation
+                                && ((InOperation) existingOperation).getSetSize() >= this.getSetSize()) {
+                            return this.shapeMatchSet((InOperation) existingOperation);
                         }
-                    }
-                    else if (existingOperation instanceof RangeOperation)
-                    {
-                        // too hard to loop here. ignoring for now.
+                    } else if (existingOperation instanceof RangeOperation) {
                         return NoMatchSmr.INSTANCE;
-                    }
-                    else if (existingOperation instanceof IsNotNullOperation)
-                    {
+                    } else if (existingOperation instanceof IsNotNullOperation) {
                         return new SuperMatchSmr(existingOperation, this);
-                    }
-                    else
-                    {
-                        // StringLikeOperation
-                        // StringNotLikeOperation
-                        // AtomicSelf*Operation
+                    } else {
                         return NoMatchSmr.INSTANCE;
                     }
                 }

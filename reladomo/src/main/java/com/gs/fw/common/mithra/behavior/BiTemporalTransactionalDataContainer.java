@@ -71,10 +71,7 @@ public class BiTemporalTransactionalDataContainer extends AbstractTemporalContai
         {
             return this.getActiveDataFor(businessDate);
         }
-        else
-        {
-            return getDataFromList(this.inactiveDataList, businessDate, processingDate);
-        }
+        return getDataFromList(this.inactiveDataList, businessDate, processingDate);
     }
 
     public MithraDataObject getCommitedDataFor(MithraDatedTransactionalObject mithraObject)

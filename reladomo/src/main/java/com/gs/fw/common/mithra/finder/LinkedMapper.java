@@ -171,14 +171,10 @@ public class LinkedMapper implements Mapper, Externalizable
             }
             return new LinkedMapper(this.mappers.subList(headLinkedMapper.mappers.size(), this.mappers.size()));
         }
-        else
-        {
-            List<Mapper> mapperList = this.mappers.subList(1, this.mappers.size());
-            if(mapperList.size() > 1)
-               return new LinkedMapper(mapperList);
-            else
-               return mapperList.get(0);
-        }
+        List<Mapper> mapperList = this.mappers.subList(1, this.mappers.size());
+        if (mapperList.size() > 1)
+            return new LinkedMapper(mapperList);
+        return mapperList.get(0);
     }
 
     public Function getParentSelectorRemainder(DeepRelationshipAttribute parentSelector)

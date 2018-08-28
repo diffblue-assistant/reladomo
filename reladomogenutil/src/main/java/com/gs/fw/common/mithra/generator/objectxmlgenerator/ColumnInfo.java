@@ -282,15 +282,11 @@ public class ColumnInfo
         {
             return StringUtility.toCamelCaseIgnoringLastChar(tableName + "_Id", "_", false);
         }
-        else
-        {
-            String result = StringUtility.toCamelCaseIgnoringLastChar(columnName, "_", false);
-            if (javaKeywordSet.contains(result))
-            {
-                result += "_FIXME";
-            }
-            return result;
+        String result = StringUtility.toCamelCaseIgnoringLastChar(columnName, "_", false);
+        if (javaKeywordSet.contains(result)) {
+            result += "_FIXME";
         }
+        return result;
     }
 
     public int getPrecision()

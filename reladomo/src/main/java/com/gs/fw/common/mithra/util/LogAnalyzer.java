@@ -251,10 +251,7 @@ public class LogAnalyzer
                     allInfo.infos[logLineType] = new DetailedInfo(this.getTotalTime());
                     return true;
                 }
-                else
-                {
-                    return allInfo.infos[logLineType].addTime(this.getTotalTime());
-                }
+                return allInfo.infos[logLineType].addTime(this.getTotalTime());
             }
             return false;
         }

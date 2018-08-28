@@ -293,10 +293,7 @@ public class BatchJmsMessageLoop<T extends InFlightBatch>
             e.waitBeforeRetrying();
             return batchSize;
         }
-        else
-        {
-            return splitBatchIfNeeded(inFlightBatch, batchSize, e);
-        }
+        return splitBatchIfNeeded(inFlightBatch, batchSize, e);
     }
 
     public static void setPoisoned(boolean poisoned)
@@ -326,23 +323,19 @@ public class BatchJmsMessageLoop<T extends InFlightBatch>
             }
             return batchSize;
         }
-        else
-        {
-            if (e instanceof MithraBusinessException && ((MithraBusinessException)e).isTimedOut())
-            {
-                this.timeouts++;
-                if (this.timeouts == 3)
-                {
-                    this.logger.error("Reducing max batch size from {} to {} due to timeout", maxBatchSize, maxBatchSize/2);
-                    maxBatchSize = batchSize/2;
-                    timeouts = 0;
-                }
+        if (e instanceof MithraBusinessException && ((MithraBusinessException) e).isTimedOut()) {
+            this.timeouts++;
+            if (this.timeouts == 3) {
+                this.logger.error("Reducing max batch size from {} to {} due to timeout", maxBatchSize,
+                        maxBatchSize / 2);
+                maxBatchSize = batchSize / 2;
+                timeouts = 0;
             }
-            int newBatchSize = batchSize/2;
-            splitBatchMode = true;
-            this.logger.error("Reducing batch size from {} to {}", batchSize, newBatchSize);
-            return newBatchSize;
         }
+        int newBatchSize = batchSize / 2;
+        splitBatchMode = true;
+        this.logger.error("Reducing batch size from {} to {}", batchSize, newBatchSize);
+        return newBatchSize;
     }
 
     protected boolean sanityCheck()

@@ -291,12 +291,10 @@ public class OffHeapSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return containsInNonDatedChained(cur & ~UPPER_BIT_MASK, keyHolder, extractors, filter);
         }
-        else if (isMultiEntry(cur))
-        {
+        if (isMultiEntry(cur)) {
             return containsInNonDatedMultiEntry(cur & ~UPPER_BIT_MASK, keyHolder, extractors, filter);
         }
-        else if (nonDatedHashStrategy.equals(dataStorage, cur, keyHolder, extractors))
-        {
+        if (nonDatedHashStrategy.equals(dataStorage, cur, keyHolder, extractors)) {
             return containsInNonDatedIfMatchAsOfDates(dataStorage.getDataAsObject(cur), keyHolder, extractors, filter);
         }
         return false;
@@ -753,12 +751,10 @@ public class OffHeapSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return getFromNonDatedChained(cur & ~UPPER_BIT_MASK, valueHolder, extractors);
         }
-        else if (isMultiEntry(cur))
-        {
+        if (isMultiEntry(cur)) {
             return getFromNonDatedMultiEntry(cur & ~UPPER_BIT_MASK, valueHolder, extractors);
         }
-        else if (nonDatedHashStrategy.equals(dataStorage, cur, valueHolder, extractors))
-        {
+        if (nonDatedHashStrategy.equals(dataStorage, cur, valueHolder, extractors)) {
             return getFromNonDatedIfMatchAsOfDates(dataStorage.getDataAsObject(cur), valueHolder, extractors);
         }
         return null;
@@ -853,23 +849,18 @@ public class OffHeapSemiUniqueDatedIndex implements SemiUniqueDatedIndex
                 }
                 return result.size() > 0 ? result : null;
             }
-            else
-            {
-                for (int i = size - 1; i >= 0; i--)
-                {
-                    Object e = dataStorage.getDataAsObject(MultiEntry.getAt(storage, multiEntryRef, i));
-                    if (!extractorOne.dataMatches(e, extractorOne.timestampValueOf(valueHolder), asOfAttributes[0]))
-                    {
-                        continue;
-                    }
-                    if (extractorTwo != null && !extractorTwo.dataMatches(e, extractorTwo.timestampValueOf(valueHolder), asOfAttributes[1]))
-                    {
-                        continue;
-                    }
-                    return e;
+            for (int i = size - 1; i >= 0; i--) {
+                Object e = dataStorage.getDataAsObject(MultiEntry.getAt(storage, multiEntryRef, i));
+                if (!extractorOne.dataMatches(e, extractorOne.timestampValueOf(valueHolder), asOfAttributes[0])) {
+                    continue;
                 }
-                return null;
+                if (extractorTwo != null && !extractorTwo.dataMatches(e, extractorTwo.timestampValueOf(valueHolder),
+                        asOfAttributes[1])) {
+                    continue;
+                }
+                return e;
             }
+            return null;
         }
         return null;
     }
@@ -885,12 +876,10 @@ public class OffHeapSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return getFromNonDatedChained(cur & ~UPPER_BIT_MASK, valueHolder, extractors);
         }
-        else if (isMultiEntry(cur))
-        {
+        if (isMultiEntry(cur)) {
             return getFromNonDatedMultiEntry(cur & ~UPPER_BIT_MASK, valueHolder, extractors);
         }
-        else if (nonDatedHashStrategy.equals(dataStorage, cur, valueHolder, extractors))
-        {
+        if (nonDatedHashStrategy.equals(dataStorage, cur, valueHolder, extractors)) {
             return getFromNonDatedIfMatchAsOfDates(dataStorage.getDataAsObject(cur), valueHolder, extractors);
         }
         return null;
@@ -985,23 +974,18 @@ public class OffHeapSemiUniqueDatedIndex implements SemiUniqueDatedIndex
                 }
                 return result.size() > 0 ? result : null;
             }
-            else
-            {
-                for (int i = size - 1; i >= 0; i--)
-                {
-                    Object e = dataStorage.getDataAsObject(MultiEntry.getAt(storage, multiEntryRef, i));
-                    if (!extractorOne.dataMatches(e, extractorOne.timestampValueOf(valueHolder), asOfAttributes[0]))
-                    {
-                        continue;
-                    }
-                    if (extractorTwo != null && !extractorTwo.dataMatches(e, extractorTwo.timestampValueOf(valueHolder), asOfAttributes[1]))
-                    {
-                        continue;
-                    }
-                    return e;
+            for (int i = size - 1; i >= 0; i--) {
+                Object e = dataStorage.getDataAsObject(MultiEntry.getAt(storage, multiEntryRef, i));
+                if (!extractorOne.dataMatches(e, extractorOne.timestampValueOf(valueHolder), asOfAttributes[0])) {
+                    continue;
                 }
-                return null;
+                if (extractorTwo != null && !extractorTwo.dataMatches(e, extractorTwo.timestampValueOf(valueHolder),
+                        asOfAttributes[1])) {
+                    continue;
+                }
+                return e;
             }
+            return null;
         }
         return null;
     }
@@ -1017,16 +1001,12 @@ public class OffHeapSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return getNonDatedFromDataChained(cur & ~UPPER_BIT_MASK, data, asOfDates);
         }
-        else if (isMultiEntry(cur))
-        {
+        if (isMultiEntry(cur)) {
             int multiEntryRef = cur & ~UPPER_BIT_MASK;
-            if (this.nonDatedHashStrategy.equals(dataStorage, MultiEntry.getFirst(storage, multiEntryRef), data))
-            {
+            if (this.nonDatedHashStrategy.equals(dataStorage, MultiEntry.getFirst(storage, multiEntryRef), data)) {
                 return getNonDatedFromMultiEntry(multiEntryRef, asOfDates);
             }
-        }
-        else if (this.nonDatedHashStrategy.equals(dataStorage, cur, data))
-        {
+        } else if (this.nonDatedHashStrategy.equals(dataStorage, cur, data)) {
             return getFromNonDatedIfMatchesAsOfDates(asOfDates, dataStorage.getDataAsObject(cur));
         }
         return null;
@@ -1090,12 +1070,10 @@ public class OffHeapSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return addNonDatedToContainerChained(cur & ~UPPER_BIT_MASK, data, container);
         }
-        else if (isMultiEntry(cur))
-        {
+        if (isMultiEntry(cur)) {
             return addMultiEntryToContainer(cur & ~UPPER_BIT_MASK, data, container);
         }
-        else if (this.nonDatedHashStrategy.equals(dataStorage, cur, data))
-        {
+        if (this.nonDatedHashStrategy.equals(dataStorage, cur, data)) {
             container.addCommittedData(dataStorage.getData(cur));
             return true;
         }
@@ -2126,10 +2104,7 @@ public class OffHeapSemiUniqueDatedIndex implements SemiUniqueDatedIndex
         {
             return parallelCollectMilestoneOverlap();
         }
-        else
-        {
-            throw new MithraException("Unsupported number of asOfAttributes");
-        }
+        throw new MithraException("Unsupported number of asOfAttributes");
     }
 
     private List<Object> parallelCollectMilestoneOverlap()

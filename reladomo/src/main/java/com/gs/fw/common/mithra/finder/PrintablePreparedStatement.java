@@ -119,7 +119,7 @@ public class PrintablePreparedStatement implements PreparedStatement
             }
             return buffer.toString();
         }
-        else return this.initialStatement;
+        return this.initialStatement;
     }
 
     public void setByte(int parameterIndex, byte x) throws SQLException

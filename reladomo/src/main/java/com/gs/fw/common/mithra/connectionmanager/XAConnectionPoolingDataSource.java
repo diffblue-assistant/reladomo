@@ -113,10 +113,7 @@ public class XAConnectionPoolingDataSource implements DataSource
         {
             return getConnectionForTransaction(currentTransaction);
         }
-        else
-        {
-            return getConnectionForNoTransaction();
-        }
+        return getConnectionForNoTransaction();
     }
 
     private Connection getConnectionForNoTransaction()

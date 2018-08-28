@@ -448,9 +448,8 @@ public class ChainedMapper extends AbstractMapper
         {
             return cm.combineWithFirstMapper(otherMappedOperation, mappedOperation);
         }
-        else if (thisMapper.getFromPortal().equals(secondMapper.getFromPortal())
-            && thisMapper.getResultPortal().equals(secondMapper.getResultPortal()))
-        {
+        if (thisMapper.getFromPortal().equals(secondMapper.getFromPortal())
+                && thisMapper.getResultPortal().equals(secondMapper.getResultPortal())) {
             return cm.combineWithSecondMapper(otherMappedOperation, mappedOperation);
         }
         return null;

@@ -42,14 +42,10 @@ public class EvoTypesRoot extends EvoTypesRootAbstract
         {
             return new EvoTypesRootA(ref, attributes);
         }
-        else if (attributes.charAttribute().charValueOf(ref) == 'B')
-        {
+        if (attributes.charAttribute().charValueOf(ref) == 'B') {
             return new EvoTypesRootB(ref, attributes);
         }
-        else
-        {
-            return new EvoTypesRoot(ref, attributes);
-        }
+        return new EvoTypesRoot(ref, attributes);
     }
 
     private EvoTypesRoot(Builder builder)

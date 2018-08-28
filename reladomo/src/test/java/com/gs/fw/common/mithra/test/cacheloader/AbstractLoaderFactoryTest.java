@@ -86,10 +86,7 @@ public class AbstractLoaderFactoryTest extends TestCase
             {
                 return new DateInvariantAdditionalOperationBuilder();
             }
-            else
-            {
-                return new DateVariantAdditionalOperationBuilder();
-            }
+            return new DateVariantAdditionalOperationBuilder();
         }
     }
 

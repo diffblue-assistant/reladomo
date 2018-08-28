@@ -93,11 +93,7 @@ public abstract class PersistenceState
             }
             return result;
         }
-        else
-        {
-            // we'll have to wait
-            transactionalState.waitForTransactions();
-        }
+        transactionalState.waitForTransactions();
         return result;
     }
 

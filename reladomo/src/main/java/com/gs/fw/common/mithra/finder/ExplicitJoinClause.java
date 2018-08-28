@@ -883,16 +883,9 @@ public class ExplicitJoinClause implements JoinClause, WhereClause.WhereClauseOw
             {
                 return fullyQualifiedColumnName;
             }
-            else
-            {
-                // we have to now pass this all the way up to the query through one or more aggregate parents!!
-                return parent.addToSelectAttributes(fullyQualifiedColumnName);
-            }
+            return parent.addToSelectAttributes(fullyQualifiedColumnName);
         }
-        else
-        {
-            return fullyQualifiedColumnName;
-        }
+        return fullyQualifiedColumnName;
     }
 
     private String addToSelectAttributes(String fullyQualifiedColumnName)
@@ -907,10 +900,7 @@ public class ExplicitJoinClause implements JoinClause, WhereClause.WhereClauseOw
         {
             return fullyQualifiedColumnName;
         }
-        else
-        {
-            return parent.addToSelectAttributes(fullyQualifiedColumnName);
-        }
+        return parent.addToSelectAttributes(fullyQualifiedColumnName);
     }
 
     private String addToUngroupedSelectAttributes(String fullyQualifiedColumnName)
@@ -925,10 +915,7 @@ public class ExplicitJoinClause implements JoinClause, WhereClause.WhereClauseOw
         {
             return fullyQualifiedColumnName;
         }
-        else
-        {
-            return parent.addToUngroupedSelectAttributes(fullyQualifiedColumnName);
-        }
+        return parent.addToUngroupedSelectAttributes(fullyQualifiedColumnName);
     }
 
     private String getFullyQualifiedColumnNameFromJoins(String fullyQualifiedColumnName)
@@ -979,16 +966,9 @@ public class ExplicitJoinClause implements JoinClause, WhereClause.WhereClauseOw
             {
                 return orderByColumnName;
             }
-            else
-            {
-                // we have to now pass this all the way up to the query through one or more aggregate parents!!
-                return parent.addToUngroupedSelectAttributes(orderByColumnName);
-            }
+            return parent.addToUngroupedSelectAttributes(orderByColumnName);
         }
-        else
-        {
-            return orderByColumnName;
-        }
+        return orderByColumnName;
     }
 
 

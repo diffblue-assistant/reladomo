@@ -182,8 +182,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.intValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.intValueOf(getOne(cur))) {
             return cur;
         }
         return null;
@@ -211,8 +210,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.charValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.charValueOf(getOne(cur))) {
             return cur;
         }
         return null;
@@ -239,8 +237,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, key);
         }
-        else if (cur != null && key.equals(indexExtractors[0].valueOf(getOne(cur))))
-        {
+        if (cur != null && key.equals(indexExtractors[0].valueOf(getOne(cur)))) {
             return cur;
         }
         return null;
@@ -267,8 +264,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, key);
         }
-        else if (cur != null && Arrays.equals(key, (byte[]) indexExtractors[0].valueOf(getOne(cur))))
-        {
+        if (cur != null && Arrays.equals(key, (byte[]) indexExtractors[0].valueOf(getOne(cur)))) {
             return cur;
         }
         return null;
@@ -296,8 +292,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.longValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.longValueOf(getOne(cur))) {
             return cur;
         }
         return null;
@@ -325,8 +320,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.doubleValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.doubleValueOf(getOne(cur))) {
             return cur;
         }
         return null;
@@ -354,8 +348,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.floatValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.floatValueOf(getOne(cur))) {
             return cur;
         }
         return null;
@@ -383,8 +376,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, key, extractor);
         }
-        else if (cur != null && key == extractor.booleanValueOf(getOne(cur)))
-        {
+        if (cur != null && key == extractor.booleanValueOf(getOne(cur))) {
             return cur;
         }
         return null;
@@ -433,12 +425,12 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
             }
             return null;
         }
-        else if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors))
-        {
+        if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors)) {
             this.table[index] = null;
             this.uniqueSize -= cur instanceof FullUniqueIndex ? ((FullUniqueIndex) cur).size() : 1;
             this.nonUniqueSize--;
-            if (max == cur) max = null;
+            if (max == cur)
+                max = null;
             return cur;
         }
         return null;
@@ -455,8 +447,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, valueHolder, extractors);
         }
-        else if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors))
-        {
+        if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors)) {
             return cur;
         }
         return null;
@@ -488,8 +479,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getFromChained((ChainedBucket) cur, valueHolder, extractors);
         }
-        else if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors))
-        {
+        if (cur != null && hashStrategy.equals(getOne(cur), valueHolder, extractors)) {
             return cur;
         }
         return null;
@@ -516,8 +506,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return containsInChained((ChainedBucket) cur, keyHolder, extractors, filter);
         }
-        else if (cur != null && hashStrategy.equals(getOne(cur), keyHolder, extractors))
-        {
+        if (cur != null && hashStrategy.equals(getOne(cur), keyHolder, extractors)) {
             return containsInUniqueSet(cur, keyHolder, filter);
         }
         return false;
@@ -611,10 +600,8 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return containsFromChained((ChainedBucket) cur, key);
         }
-        else if (cur != null && this.hashStrategy.equals(getOne(cur), key))
-        {
-            if (cur instanceof FullUniqueIndex)
-            {
+        if (cur != null && this.hashStrategy.equals(getOne(cur), key)) {
+            if (cur instanceof FullUniqueIndex) {
                 return ((FullUniqueIndex) cur).contains(key);
             }
             return this.pkHashStrategy.equals(cur, key);
@@ -844,8 +831,7 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
         {
             return getNullsFromChained((ChainedBucket) cur);
         }
-        else if (cur != null && indexExtractors[0].isAttributeNull(getOne(cur)))
-        {
+        if (cur != null && indexExtractors[0].isAttributeNull(getOne(cur))) {
             return cur;
         }
         return null;
@@ -879,28 +865,23 @@ public class NonUniqueIndex implements IterableNonUniqueIndex, UnderlyingObjectG
             {
                 return removeFromChainUsingUnderlying((ChainedBucket) cur, underlying, index);
             }
-            else if (hashStrategy.equals(getOne(cur), underlying))
-            {
+            if (hashStrategy.equals(getOne(cur), underlying)) {
                 uniqueSize--;
                 boolean removeEntry = false;
                 Object removed = null;
-                if (cur instanceof FullUniqueIndex)
-                {
+                if (cur instanceof FullUniqueIndex) {
                     FullUniqueIndex set = (FullUniqueIndex) cur;
                     removed = set.removeUsingUnderlying(underlying);
                     removeEntry = set.isEmpty();
-                }
-                else
-                {
-                    if (this.pkHashStrategy.equals(this.underlyingObjectGetter.getUnderlyingObject(cur), underlying))
-                    {
+                } else {
+                    if (this.pkHashStrategy.equals(this.underlyingObjectGetter.getUnderlyingObject(cur), underlying)) {
                         removed = cur;
                         removeEntry = true;
                     }
                 }
-                if (removeEntry)
-                {
-                    if (max == cur) max = null;
+                if (removeEntry) {
+                    if (max == cur)
+                        max = null;
                     nonUniqueSize--;
                     table[index] = null;
                 }

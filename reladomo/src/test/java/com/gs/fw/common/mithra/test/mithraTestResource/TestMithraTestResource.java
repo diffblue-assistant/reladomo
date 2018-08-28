@@ -641,15 +641,11 @@ public class TestMithraTestResource extends TestCase
             }
             return result;
         }
-        else
-        {
-            String fullPath = xmlRoot;
-            if (!xmlRoot.endsWith(File.separator))
-            {
-                fullPath += File.separator;
-            }
-            return new FileInputStream(fullPath + fileName);
+        String fullPath = xmlRoot;
+        if (!xmlRoot.endsWith(File.separator)) {
+            fullPath += File.separator;
         }
+        return new FileInputStream(fullPath + fileName);
     }
 
 

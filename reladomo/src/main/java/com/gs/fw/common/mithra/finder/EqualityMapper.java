@@ -493,13 +493,11 @@ public class EqualityMapper extends AbstractMapper implements Cloneable
         {
             return this.getCache().getAverageReturnSize(indexRef.indexReference, 1);
         }
-        else
-        {
-            double leftSize = this.left.getOwnerPortal().getCache().estimateQuerySize();
-            double rightSize = this.right.getOwnerPortal().getCache().estimateQuerySize();
-            if (rightSize == 0) return 0;
-            return leftSize / rightSize;
-        }
+        double leftSize = this.left.getOwnerPortal().getCache().estimateQuerySize();
+        double rightSize = this.right.getOwnerPortal().getCache().estimateQuerySize();
+        if (rightSize == 0)
+            return 0;
+        return leftSize / rightSize;
     }
 
     @Override
@@ -510,13 +508,11 @@ public class EqualityMapper extends AbstractMapper implements Cloneable
         {
             return this.getCache().getMaxReturnSize(indexRef.indexReference, multiplier);
         }
-        else
-        {
-            double leftSize = this.left.getOwnerPortal().getCache().estimateQuerySize();
-            double rightSize = this.right.getOwnerPortal().getCache().estimateQuerySize();
-            if (rightSize == 0) return 0;
-            return (int) Math.min(leftSize  * multiplier/ rightSize, this.getCache().estimateQuerySize());
-        }
+        double leftSize = this.left.getOwnerPortal().getCache().estimateQuerySize();
+        double rightSize = this.right.getOwnerPortal().getCache().estimateQuerySize();
+        if (rightSize == 0)
+            return 0;
+        return (int) Math.min(leftSize * multiplier / rightSize, this.getCache().estimateQuerySize());
     }
 
     public void registerEqualitiesAndAtomicOperations(TransitivePropagator transitivePropagator)

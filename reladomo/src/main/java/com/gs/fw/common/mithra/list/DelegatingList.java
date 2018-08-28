@@ -658,10 +658,7 @@ public abstract class DelegatingList<E> implements MithraList<E>
         {
             return map.valuesAsList();
         }
-        else
-        {
-            return ListFactory.create(listToSegregate);
-        }
+        return ListFactory.create(listToSegregate);
     }
 
     private List<? extends List> segregateByAsOfAttribute(AsOfAttribute[] asOfAttributes)
@@ -679,10 +676,7 @@ public abstract class DelegatingList<E> implements MithraList<E>
         {
             return map.valuesAsList();
         }
-        else
-        {
-            return ListFactory.<List>create(this);
-        }
+        return ListFactory.<List>create(this);
     }
 
     private void forceRefreshWithMultiplePk(List listToRefresh, Attribute[] pkAttributes, Operation extraOp, MithraTransaction tx, boolean oldEvaluationMode)
@@ -767,13 +761,10 @@ public abstract class DelegatingList<E> implements MithraList<E>
         {
             return finder.findMany(new AndOperation(this.getOperation(), other.getOperation()));
         }
-        else
-        {
-            List result = finder.constructEmptyList();
-            result.addAll(this);
-            result.retainAll(other);
-            return result;
-        }
+        List result = finder.constructEmptyList();
+        result.addAll(this);
+        result.retainAll(other);
+        return result;
 
     }
 

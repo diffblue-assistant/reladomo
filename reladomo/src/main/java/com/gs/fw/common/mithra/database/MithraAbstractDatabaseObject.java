@@ -316,17 +316,11 @@ public abstract class MithraAbstractDatabaseObject
         {
             return null;
         }
-        else
-        {
-            try
-            {
-                return (MithraStatsListenerFactory) Class.forName(factoryClassName).newInstance();
-            }
-            catch (Exception e)
-            {
-                staticLogger.error("Exception creating factory " + factoryClassName + ". Will return null", e);
-                return null;
-            }
+        try {
+            return (MithraStatsListenerFactory) Class.forName(factoryClassName).newInstance();
+        } catch (Exception e) {
+            staticLogger.error("Exception creating factory " + factoryClassName + ". Will return null", e);
+            return null;
         }
     }
 
@@ -2753,10 +2747,7 @@ public abstract class MithraAbstractDatabaseObject
         {
             return map.valuesAsList();
         }
-        else
-        {
-            return ListFactory.create(mithraObjects);
-        }
+        return ListFactory.create(mithraObjects);
     }
 
     public void destroyTempContext(String fullyQualifiedTableName, Object source, boolean isForQuery)
@@ -4584,10 +4575,7 @@ public abstract class MithraAbstractDatabaseObject
         {
             return map.valuesAsList();
         }
-        else
-        {
-            return ListFactory.create(updateOperations);
-        }
+        return ListFactory.create(updateOperations);
     }
 
     protected void zBatchInsert(List mithraObjects, int bulkInsertThreshold) throws MithraDatabaseException

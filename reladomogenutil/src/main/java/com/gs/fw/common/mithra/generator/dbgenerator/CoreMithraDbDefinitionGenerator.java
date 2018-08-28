@@ -119,8 +119,7 @@ public class CoreMithraDbDefinitionGenerator extends BaseMithraGenerator
         {
             return SybaseDatabaseType.getInstance();
         }
-        else if (this.databaseType.equalsIgnoreCase(DB_NAME_UDB82))
-        {
+        if (this.databaseType.equalsIgnoreCase(DB_NAME_UDB82)) {
             return Udb82DatabaseType.getInstance();
         }
 

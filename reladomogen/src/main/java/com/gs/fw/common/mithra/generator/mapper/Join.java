@@ -380,13 +380,10 @@ public class Join
             and.jjtAddChild(constraint, and.jjtGetNumChildren());
             return and;
         }
-        else
-        {
-            ASTAndExpression result = new ASTAndExpression(0);
-            result.jjtAddChild(filters, 0);
-            result.jjtAddChild(constraint, 1);
-            return result;
-        }
+        ASTAndExpression result = new ASTAndExpression(0);
+        result.jjtAddChild(filters, 0);
+        result.jjtAddChild(constraint, 1);
+        return result;
     }
 
     public boolean addConstraint(ASTRelationalExpression constraint)

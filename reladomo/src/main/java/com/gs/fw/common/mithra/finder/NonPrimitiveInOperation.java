@@ -150,7 +150,7 @@ public class NonPrimitiveInOperation extends InOperation implements SqlParameter
         {
             this.populateCopiedArray();
             if (isSelectedObject) return copiedArray[sourceNumber];
-            else return copiedArray[0];
+            return copiedArray[0];
         }
         throw new MithraBusinessException("'in' operations for source keys on related objects are not yet implemented!");
     }

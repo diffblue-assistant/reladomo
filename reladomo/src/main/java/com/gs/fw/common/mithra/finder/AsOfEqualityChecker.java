@@ -304,22 +304,16 @@ public class AsOfEqualityChecker implements MapperStack
         {
             return setAsOfOperationUnconditionally(attributeWithMapperStack, op);
         }
-        else
-        {
-
-            AsOfOperation newAsOfOperation = op.getObject();
-            AsOfOperation existingAsOfOperation = (AsOfOperation) asOfEqOp.getObject();
-            if (existingAsOfOperation.zGetAsOfOperationPriority() < newAsOfOperation.zGetAsOfOperationPriority())
-            {
-                return setAsOfOperationUnconditionally(attributeWithMapperStack, op);
-            }
-            else if (newAsOfOperation instanceof AsOfEqOperation && existingAsOfOperation instanceof AsOfEqOperation)
-            {
-                AsOfEqOperation first = (AsOfEqOperation) newAsOfOperation;
-                AsOfEqOperation second = (AsOfEqOperation) existingAsOfOperation;
-                if (!first.getParameter().equals(second.getParameter())) throw new MithraBusinessException("can't have multiple asOf operations");
-            }
-
+        AsOfOperation newAsOfOperation = op.getObject();
+        AsOfOperation existingAsOfOperation = (AsOfOperation) asOfEqOp.getObject();
+        if (existingAsOfOperation.zGetAsOfOperationPriority() < newAsOfOperation.zGetAsOfOperationPriority()) {
+            return setAsOfOperationUnconditionally(attributeWithMapperStack, op);
+        }
+        if (newAsOfOperation instanceof AsOfEqOperation && existingAsOfOperation instanceof AsOfEqOperation) {
+            AsOfEqOperation first = (AsOfEqOperation) newAsOfOperation;
+            AsOfEqOperation second = (AsOfEqOperation) existingAsOfOperation;
+            if (!first.getParameter().equals(second.getParameter()))
+                throw new MithraBusinessException("can't have multiple asOf operations");
         }
 
         return false;

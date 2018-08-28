@@ -153,10 +153,7 @@ public abstract class AbstractDatedTransactionalCache extends AbstractDatedCache
         {
             return super.getObjectFromData(data, asOfDates, weak);
         }
-        else
-        {
-            return getObjectFromDataForTx(data, asOfDates, tx, weak);
-        }
+        return getObjectFromDataForTx(data, asOfDates, tx, weak);
     }
 
     private Object getObjectFromDataForTx(MithraDataObject data, Timestamp[] asOfDates, MithraTransaction tx, boolean weak)
@@ -683,10 +680,7 @@ public abstract class AbstractDatedTransactionalCache extends AbstractDatedCache
                 }
                 return container.enrollReadOnly(mithraObject, transactionalData, prevState);
             }
-            else
-            {
-                return container.possiblyEnroll(mithraObject, transactionalData, null, prevState);
-            }
+            return container.possiblyEnroll(mithraObject, transactionalData, null, prevState);
         }
         finally
         {
@@ -748,10 +742,7 @@ public abstract class AbstractDatedTransactionalCache extends AbstractDatedCache
                 }
                 return container.enrollReadOnly(mithraObject, transactionalData, prevState);
             }
-            else
-            {
-                return container.possiblyEnroll(mithraObject, transactionalData, null, prevState);
-            }
+            return container.possiblyEnroll(mithraObject, transactionalData, null, prevState);
         }
         finally
         {

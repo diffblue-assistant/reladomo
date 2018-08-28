@@ -447,10 +447,7 @@ public abstract class BooleanAttribute<T> extends Attribute<T, Boolean> implemen
             boolean firstNull = this.isAttributeNull(first);
             return firstNull == this.isAttributeNull(second) && (firstNull || this.primitiveValueEquals(first, second));
         }
-        else
-        {
-            return this.primitiveValueEquals(first, second);
-        }
+        return this.primitiveValueEquals(first, second);
     }
 
     public <O> boolean valueEquals(T first, O second, Extractor<O, Boolean> secondExtractor)

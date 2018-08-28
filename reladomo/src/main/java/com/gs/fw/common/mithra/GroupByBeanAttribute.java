@@ -99,12 +99,12 @@ public class GroupByBeanAttribute extends GroupByAttribute
                 }
                 return (short) intVal;
             }
-            else if (isMethodParameterByte)
-            {
+            if (isMethodParameterByte) {
                 int intVal = ((Number) value).intValue();
-                if (intVal < Byte.MIN_VALUE || intVal > Byte.MAX_VALUE)
-                {
-                    throw new MithraBusinessException("Aggregate result returned value " + value + " for method " + setterMethod.getName() + "of class " + instance.getClass() + " which cannot be set as byte as it is out of byte range");
+                if (intVal < Byte.MIN_VALUE || intVal > Byte.MAX_VALUE) {
+                    throw new MithraBusinessException("Aggregate result returned value " + value + " for method "
+                            + setterMethod.getName() + "of class " + instance.getClass()
+                            + " which cannot be set as byte as it is out of byte range");
                 }
                 return (byte) intVal;
             }

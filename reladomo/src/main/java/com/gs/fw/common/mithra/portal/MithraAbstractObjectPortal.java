@@ -590,10 +590,8 @@ public abstract class MithraAbstractObjectPortal implements MithraObjectPortal
         {
             return findCursorFromServerWithoutRetry(op, postLoadFilter, orderby, maxObjectsToRetrieve, bypassCache, maxParallelDegree, forceImplicitJoin);
         }
-        else
-        {
-            return findCursorFromServerWithRetry(op, postLoadFilter, orderby, maxObjectsToRetrieve, bypassCache, maxParallelDegree, forceImplicitJoin);
-        }
+        return findCursorFromServerWithRetry(op, postLoadFilter, orderby, maxObjectsToRetrieve, bypassCache,
+                maxParallelDegree, forceImplicitJoin);
     }
 
     private Cursor findCursorFromServerWithRetry(Operation op, Filter postLoadFilter, OrderBy orderby, int maxObjectsToRetrieve, boolean bypassCache, int maxParallelDegree, boolean forceImplicitJoin)
@@ -1262,10 +1260,8 @@ public abstract class MithraAbstractObjectPortal implements MithraObjectPortal
         {
             return findFromServerForTransaction(analyzedOperation, orderby, forRelationship, maxObjectsToRetrieve, bypassCache, forceImplicitJoin);
         }
-        else
-        {
-            return findFromServerForNoTransaction(analyzedOperation, orderby, forRelationship, maxObjectsToRetrieve, numOfParallelThreads, bypassCache, forceImplicitJoin);
-        }
+        return findFromServerForNoTransaction(analyzedOperation, orderby, forRelationship, maxObjectsToRetrieve,
+                numOfParallelThreads, bypassCache, forceImplicitJoin);
     }
 
     protected CachedQuery findFromServerForNoTransaction(AnalyzedOperation analyzedOperation, OrderBy orderby,
@@ -1407,12 +1403,9 @@ public abstract class MithraAbstractObjectPortal implements MithraObjectPortal
             if (obj == null) return null;
             return obj.zGetTxDataForRead();
         }
-        else
-        {
-            MithraDataObject newData = this.getMithraObjectReader().refresh(data, lockInDatabase);
-            MithraManagerProvider.getMithraManager().incrementDatabaseRetrieveCount();
-            return newData;
-        }
+        MithraDataObject newData = this.getMithraObjectReader().refresh(data, lockInDatabase);
+        MithraManagerProvider.getMithraManager().incrementDatabaseRetrieveCount();
+        return newData;
     }
 
     public MithraDataObject refreshDatedObject(MithraDatedObject mithraDatedObject, boolean lockInDatabase)
@@ -1602,11 +1595,8 @@ public abstract class MithraAbstractObjectPortal implements MithraObjectPortal
             computeOptimisticAddressingAttributes();
             return this.optimisticAddressingAttributes;
         }
-        else
-        {
-            computeAddressingAttributes();
-            return this.addressingAttributes;
-        }
+        computeAddressingAttributes();
+        return this.addressingAttributes;
     }
 
     @Override

@@ -209,8 +209,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, key, extractor);
         }
-        else if (cur != FREE && key == extractor.intValueOf(dataStorage, getOne(cur)))
-        {
+        if (cur != FREE && key == extractor.intValueOf(dataStorage, getOne(cur))) {
             return convertToObject(cur);
         }
         return null;
@@ -240,8 +239,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, key, extractor);
         }
-        else if (cur != FREE && key == extractor.charValueOf(dataStorage, getOne(cur)))
-        {
+        if (cur != FREE && key == extractor.charValueOf(dataStorage, getOne(cur))) {
             return convertToObject(cur);
         }
         return null;
@@ -271,8 +269,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, key, extractor);
         }
-        else if (cur != FREE && extractor.valueEquals(dataStorage, getOne(cur), key))
-        {
+        if (cur != FREE && extractor.valueEquals(dataStorage, getOne(cur), key)) {
             return convertToObject(cur);
         }
         return null;
@@ -307,8 +304,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, key, extractor);
         }
-        else if (cur != FREE && key == extractor.longValueOf(dataStorage, getOne(cur)))
-        {
+        if (cur != FREE && key == extractor.longValueOf(dataStorage, getOne(cur))) {
             return convertToObject(cur);
         }
         return null;
@@ -338,8 +334,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, key, extractor);
         }
-        else if (cur != FREE && key == extractor.doubleValueOf(dataStorage, getOne(cur)))
-        {
+        if (cur != FREE && key == extractor.doubleValueOf(dataStorage, getOne(cur))) {
             return convertToObject(cur);
         }
         return null;
@@ -369,8 +364,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, key, extractor);
         }
-        else if (cur != FREE && key == extractor.floatValueOf(dataStorage, getOne(cur)))
-        {
+        if (cur != FREE && key == extractor.floatValueOf(dataStorage, getOne(cur))) {
             return convertToObject(cur);
         }
         return null;
@@ -400,8 +394,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, key, extractor);
         }
-        else if (cur != FREE && key == extractor.booleanValueOf(dataStorage, getOne(cur)))
-        {
+        if (cur != FREE && key == extractor.booleanValueOf(dataStorage, getOne(cur))) {
             return convertToObject(cur);
         }
         return null;
@@ -430,8 +423,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, valueHolder, extractors);
         }
-        else if (cur != FREE && hashStrategy.equals(dataStorage, getOne(cur), valueHolder, extractors))
-        {
+        if (cur != FREE && hashStrategy.equals(dataStorage, getOne(cur), valueHolder, extractors)) {
             return convertToObject(cur);
         }
         return null;
@@ -465,8 +457,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getFromChained(cur & ~UPPER_BIT_MASK, valueHolder, extractors);
         }
-        else if (cur != FREE && hashStrategy.equals(dataStorage, getOne(cur), valueHolder, extractors))
-        {
+        if (cur != FREE && hashStrategy.equals(dataStorage, getOne(cur), valueHolder, extractors)) {
             return convertToObject(cur);
         }
         return null;
@@ -495,8 +486,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return containsInChained(cur & ~UPPER_BIT_MASK, keyHolder, extractors, filter);
         }
-        else if (cur != FREE && hashStrategy.equals(dataStorage, getOne(cur), keyHolder, extractors))
-        {
+        if (cur != FREE && hashStrategy.equals(dataStorage, getOne(cur), keyHolder, extractors)) {
             return containsInList(cur, keyHolder, filter);
         }
         return false;
@@ -799,8 +789,7 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
         {
             return getNullsFromChained(cur & ~UPPER_BIT_MASK);
         }
-        else if (cur != FREE && indexExtractors[0].isAttributeNull(dataStorage, getOne(cur)))
-        {
+        if (cur != FREE && indexExtractors[0].isAttributeNull(dataStorage, getOne(cur))) {
             return convertToObject(cur);
         }
         return null;
@@ -841,23 +830,18 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
                 nonUniqueSize--;
                 return key;
             }
-            else if (isChainedBucket(cur))
-            {
+            if (isChainedBucket(cur)) {
                 return removeFromChain(cur & ~UPPER_BIT_MASK, dataOffset, index, key);
             }
-            else if (isUniqueIndex(cur))
-            {
+            if (isUniqueIndex(cur)) {
                 int uniqueIndexRef = cur & ~UPPER_BIT_MASK;
-                if (UniqueOffHeapIntIndex.remove(storage, uniqueIndexRef, dataOffset))
-                {
+                if (UniqueOffHeapIntIndex.remove(storage, uniqueIndexRef, dataOffset)) {
                     uniqueSize--;
-                    if (UniqueOffHeapIntIndex.size(storage, uniqueIndexRef) == 0)
-                    {
+                    if (UniqueOffHeapIntIndex.size(storage, uniqueIndexRef) == 0) {
                         storage.free(uniqueIndexRef);
                         setTableAt(index, FREE);
                         nonUniqueSize--;
-                        if (largest == uniqueIndexRef)
-                        {
+                        if (largest == uniqueIndexRef) {
                             largest = FREE;
                         }
                     }
@@ -882,22 +866,19 @@ public class NonUniqueOffHeapIndex implements IterableNonUniqueIndex, Underlying
                 if (size == 1) freeChain(bucket, index);
                 return key;
             }
-            else if (isUniqueIndex(cur))
-            {
+            if (isUniqueIndex(cur)) {
                 int uniqueIndexRef = cur & ~UPPER_BIT_MASK;
-                if (UniqueOffHeapIntIndex.remove(storage, uniqueIndexRef, value))
-                {
+                if (UniqueOffHeapIntIndex.remove(storage, uniqueIndexRef, value)) {
                     uniqueSize--;
-                    if (UniqueOffHeapIntIndex.size(storage, uniqueIndexRef) == 0)
-                    {
+                    if (UniqueOffHeapIntIndex.size(storage, uniqueIndexRef) == 0) {
                         storage.free(uniqueIndexRef);
                         ChainedBucket.removeAt(storage, bucket, i);
                         nonUniqueSize--;
-                        if (largest == uniqueIndexRef)
-                        {
+                        if (largest == uniqueIndexRef) {
                             largest = FREE;
                         }
-                        if (size == 1) freeChain(bucket, index);
+                        if (size == 1)
+                            freeChain(bucket, index);
                     }
                     return key;
                 }

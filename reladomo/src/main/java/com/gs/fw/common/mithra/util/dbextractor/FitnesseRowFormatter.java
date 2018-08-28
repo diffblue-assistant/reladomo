@@ -38,22 +38,16 @@ public class FitnesseRowFormatter implements Function<Object, String>
         {
             return "";
         }
-        else if (object instanceof Boolean)
-        {
+        if (object instanceof Boolean) {
             return object.toString();
         }
-        else if (object instanceof Number)
-        {
+        if (object instanceof Number) {
             return NUMBER_FORMAT.format(Double.valueOf(object.toString()));
         }
-        else if (object instanceof Timestamp)
-        {
-            return DATE_FORMAT.print(((Timestamp)object).getTime());
+        if (object instanceof Timestamp) {
+            return DATE_FORMAT.print(((Timestamp) object).getTime());
         }
-        else
-        {
-            return object.toString();
-        }
+        return object.toString();
 
     }
 }

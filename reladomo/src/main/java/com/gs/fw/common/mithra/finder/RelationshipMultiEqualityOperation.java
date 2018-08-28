@@ -334,11 +334,9 @@ public class RelationshipMultiEqualityOperation implements Operation, EqualityOp
             }
             return result;
         }
-        else
-        {
-            if (cache.isDated()) return null;
-            return this.applyOperation(cache.getAll());
-        }
+        if (cache.isDated())
+            return null;
+        return this.applyOperation(cache.getAll());
     }
 
     public void filterResultsInPlace(boolean[] applied, List list)
@@ -376,22 +374,18 @@ public class RelationshipMultiEqualityOperation implements Operation, EqualityOp
             filterResultsInPlace(applied, result);
             return result;
         }
-        else if (result instanceof MithraCompositeList)
-        {
-            parallelFilter(applied, (MithraCompositeList)result);
+        if (result instanceof MithraCompositeList) {
+            parallelFilter(applied, (MithraCompositeList) result);
             return result;
         }
-        else
-        {
-            MithraFastList newResult = new MithraFastList(result.size());
-            for(int i=0;i<result.size();i++)
-            {
-                Object o = result.get(i);
-                if (matchesUnapplied(applied, o)) newResult.add(o);
-            }
-            result = newResult;
-            return result;
+        MithraFastList newResult = new MithraFastList(result.size());
+        for (int i = 0; i < result.size(); i++) {
+            Object o = result.get(i);
+            if (matchesUnapplied(applied, o))
+                newResult.add(o);
         }
+        result = newResult;
+        return result;
     }
 
     private void parallelFilter(final boolean[] applied, MithraCompositeList mithraCompositeList)
@@ -564,10 +558,7 @@ public class RelationshipMultiEqualityOperation implements Operation, EqualityOp
                         {
                             return combined;
                         }
-                        else
-                        {
-                            return this;
-                        }
+                        return this;
                     }
                 }
             }
@@ -617,8 +608,7 @@ public class RelationshipMultiEqualityOperation implements Operation, EqualityOp
             RelationshipMultiEqualityOperation other = (RelationshipMultiEqualityOperation) obj;
             return equalsOther(other);
         }
-        else if (obj instanceof MultiEqualityOperation)
-        {
+        if (obj instanceof MultiEqualityOperation) {
             MultiEqualityOperation other = (MultiEqualityOperation) obj;
             return other.equalsExtractorBased(this);
         }

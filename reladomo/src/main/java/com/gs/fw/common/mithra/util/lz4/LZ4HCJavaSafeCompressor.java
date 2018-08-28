@@ -337,10 +337,7 @@ public class LZ4HCJavaSafeCompressor
         {
             return readIntBE(buf, i);
         }
-        else
-        {
-            return readIntLE(buf, i);
-        }
+        return readIntLE(buf, i);
     }
 
     class HashTable

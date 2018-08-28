@@ -131,11 +131,8 @@ public class PerPortalTemporalContainer
         {
             return businessObject.zEnrollInTransactionForRead(prevState, this.transaction, DatedPersistenceState.PERSISTED);
         }
-        else
-        {
-            businessObject.zEnrollInTransactionForWrite(container, transactionalData, this.transaction);
-            return true;
-        }
+        businessObject.zEnrollInTransactionForWrite(container, transactionalData, this.transaction);
+        return true;
     }
 
 }

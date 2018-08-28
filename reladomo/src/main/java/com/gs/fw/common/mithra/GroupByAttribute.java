@@ -158,10 +158,7 @@ public class GroupByAttribute implements Externalizable, MithraGroupByAttribute
         {
             return NULL_GROUPBY_VALUE;
         }
-        else
-        {
-            return NULL_PRIMITIVE_GROUPBY_VALUE;
-        }
+        return NULL_PRIMITIVE_GROUPBY_VALUE;
     }
 
     public void setValue(Object object, Object[] valueArray)

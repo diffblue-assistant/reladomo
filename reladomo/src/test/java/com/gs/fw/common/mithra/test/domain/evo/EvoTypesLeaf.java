@@ -41,14 +41,10 @@ public class EvoTypesLeaf extends EvoTypesLeafAbstract
         {
             return new EvoTypesLeafA(ref, attributes);
         }
-        else if (attributes.charAttribute().charValueOf(ref) == 'B')
-        {
+        if (attributes.charAttribute().charValueOf(ref) == 'B') {
             return new EvoTypesLeafB(ref, attributes);
         }
-        else
-        {
-            return new EvoTypesLeaf(ref, attributes);
-        }
+        return new EvoTypesLeaf(ref, attributes);
     }
 
     private EvoTypesLeaf(Builder builder)

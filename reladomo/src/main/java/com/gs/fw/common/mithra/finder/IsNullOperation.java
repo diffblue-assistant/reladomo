@@ -157,9 +157,7 @@ public class IsNullOperation  extends AtomicEqualityOperation
             }
             return new None(this.getAttribute());
         }
-        // == ok is fine in this case, as the strings are ultimately coming from a static reference in the finder
-        else if (op.zGetResultClassName() == this.zGetResultClassName())
-        {
+        if (op.zGetResultClassName() == this.zGetResultClassName()) {
             return new MultiEqualityOperation(this, op);
         }
         return null;

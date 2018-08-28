@@ -101,10 +101,7 @@ public class MithraInterfaceType extends MithraInterfaceTypeAbstract implements 
                 errorMessages.addAll(errors);
                 return;
             }
-            else
-            {
-                allSuperInterfaces.addAll(allSuperCurrentInterface);
-            }
+            allSuperInterfaces.addAll(allSuperCurrentInterface);
 
         }
         if (errorMessages.size() == 0)

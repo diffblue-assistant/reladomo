@@ -321,11 +321,11 @@ public class Base64
     private final static byte[] getAlphabet( int options ) {
         if ((options & URL_SAFE) == URL_SAFE) {
             return _URL_SAFE_ALPHABET;
-        } else if ((options & ORDERED) == ORDERED) {
-            return _ORDERED_ALPHABET;
-        } else {
-            return _STANDARD_ALPHABET;
         }
+        if ((options & ORDERED) == ORDERED) {
+            return _ORDERED_ALPHABET;
+        }
+        return _STANDARD_ALPHABET;
     }	// end getAlphabet
 
 
@@ -339,11 +339,11 @@ public class Base64
     private final static byte[] getDecodabet( int options ) {
         if( (options & URL_SAFE) == URL_SAFE) {
             return _URL_SAFE_DECODABET;
-        } else if ((options & ORDERED) == ORDERED) {
-            return _ORDERED_DECODABET;
-        } else {
-            return _STANDARD_DECODABET;
         }
+        if ((options & ORDERED) == ORDERED) {
+            return _ORDERED_DECODABET;
+        }
+        return _STANDARD_DECODABET;
     }	// end getAlphabet
 
 
@@ -841,63 +841,35 @@ public class Base64
 
             return baos.toByteArray();
         }   // end if: compress
-
-        // Else, don't compress. Better not to use streams at all then.
-        else {
-            boolean breakLines = (options & DO_BREAK_LINES) != 0;
-
-            //int    len43   = len * 4 / 3;
-            //byte[] outBuff = new byte[   ( len43 )                      // Main 4:3
-            //                           + ( (len % 3) > 0 ? 4 : 0 )      // Account for padding
-            //                           + (breakLines ? ( len43 / MAX_LINE_LENGTH ) : 0) ]; // New lines
-            // Try to determine more precisely how big the array needs to be.
-            // If we get it right, we don't have to do an array copy, and
-            // we save a bunch of memory.
-            int encLen = ( len / 3 ) * 4 + ( len % 3 > 0 ? 4 : 0 ); // Bytes needed for actual encoding
-            if( breakLines ){
-                encLen += encLen / MAX_LINE_LENGTH; // Plus extra newline characters
+        boolean breakLines = (options & DO_BREAK_LINES) != 0;
+        int encLen = (len / 3) * 4 + (len % 3 > 0 ? 4 : 0);
+        if (breakLines) {
+            encLen += encLen / MAX_LINE_LENGTH;
+        }
+        byte[] outBuff = new byte[encLen];
+        int d = 0;
+        int e = 0;
+        int len2 = len - 2;
+        int lineLength = 0;
+        for (; d < len2; d += 3, e += 4) {
+            encode3to4(source, d + off, 3, outBuff, e, options);
+            lineLength += 4;
+            if (breakLines && lineLength >= MAX_LINE_LENGTH) {
+                outBuff[e + 4] = NEW_LINE;
+                e++;
+                lineLength = 0;
             }
-            byte[] outBuff = new byte[ encLen ];
-
-
-            int d = 0;
-            int e = 0;
-            int len2 = len - 2;
-            int lineLength = 0;
-            for( ; d < len2; d+=3, e+=4 ) {
-                encode3to4( source, d+off, 3, outBuff, e, options );
-
-                lineLength += 4;
-                if( breakLines && lineLength >= MAX_LINE_LENGTH )
-                {
-                    outBuff[e+4] = NEW_LINE;
-                    e++;
-                    lineLength = 0;
-                }   // end if: end of line
-            }   // en dfor: each piece of array
-
-            if( d < len ) {
-                encode3to4( source, d+off, len - d, outBuff, e, options );
-                e += 4;
-            }   // end if: some padding needed
-
-
-            // Only resize array if we didn't guess it right.
-            if( e <= outBuff.length - 1 ){
-                // If breaking lines and the last byte falls right at
-                // the line length (76 bytes per line), there will be
-                // one extra byte, and the array will need to be resized.
-                // Not too bad of an estimate on array size, I'd say.
-                byte[] finalOut = new byte[e];
-                System.arraycopy(outBuff,0, finalOut,0,e);
-                //System.err.println("Having to resize array from " + outBuff.length + " to " + e );
-                return finalOut;
-            } else {
-                //System.err.println("No need to resize array.");
-                return outBuff;
-            }
-
-        }   // end else: don't compress
+        }
+        if (d < len) {
+            encode3to4(source, d + off, len - d, outBuff, e, options);
+            e += 4;
+        }
+        if (e <= outBuff.length - 1) {
+            byte[] finalOut = new byte[e];
+            System.arraycopy(outBuff, 0, finalOut, 0, e);
+            return finalOut;
+        }
+        return outBuff;
 
     }   // end encodeBytesToBytes
 
@@ -970,41 +942,20 @@ public class Base64
             destination[ destOffset ] = (byte)( outBuff >>> 16 );
             return 1;
         }
-
-        // Example: DkL=
-        else if( source[ srcOffset + 3 ] == EQUALS_SIGN ) {
-            // Two ways to do the same thing. Don't know which way I like best.
-          //int outBuff =   ( ( DECODABET[ source[ srcOffset     ] ] << 24 ) >>>  6 )
-          //              | ( ( DECODABET[ source[ srcOffset + 1 ] ] << 24 ) >>> 12 )
-          //              | ( ( DECODABET[ source[ srcOffset + 2 ] ] << 24 ) >>> 18 );
-            int outBuff =   ( ( DECODABET[ source[ srcOffset     ] ] & 0xFF ) << 18 )
-                          | ( ( DECODABET[ source[ srcOffset + 1 ] ] & 0xFF ) << 12 )
-                          | ( ( DECODABET[ source[ srcOffset + 2 ] ] & 0xFF ) <<  6 );
-
-            destination[ destOffset     ] = (byte)( outBuff >>> 16 );
-            destination[ destOffset + 1 ] = (byte)( outBuff >>>  8 );
+        if (source[srcOffset + 3] == EQUALS_SIGN) {
+            int outBuff = ((DECODABET[source[srcOffset]] & 0xFF) << 18)
+                    | ((DECODABET[source[srcOffset + 1]] & 0xFF) << 12)
+                    | ((DECODABET[source[srcOffset + 2]] & 0xFF) << 6);
+            destination[destOffset] = (byte) (outBuff >>> 16);
+            destination[destOffset + 1] = (byte) (outBuff >>> 8);
             return 2;
         }
-
-        // Example: DkLE
-        else {
-            // Two ways to do the same thing. Don't know which way I like best.
-          //int outBuff =   ( ( DECODABET[ source[ srcOffset     ] ] << 24 ) >>>  6 )
-          //              | ( ( DECODABET[ source[ srcOffset + 1 ] ] << 24 ) >>> 12 )
-          //              | ( ( DECODABET[ source[ srcOffset + 2 ] ] << 24 ) >>> 18 )
-          //              | ( ( DECODABET[ source[ srcOffset + 3 ] ] << 24 ) >>> 24 );
-            int outBuff =   ( ( DECODABET[ source[ srcOffset     ] ] & 0xFF ) << 18 )
-                          | ( ( DECODABET[ source[ srcOffset + 1 ] ] & 0xFF ) << 12 )
-                          | ( ( DECODABET[ source[ srcOffset + 2 ] ] & 0xFF ) <<  6)
-                          | ( ( DECODABET[ source[ srcOffset + 3 ] ] & 0xFF )      );
-
-
-            destination[ destOffset     ] = (byte)( outBuff >> 16 );
-            destination[ destOffset + 1 ] = (byte)( outBuff >>  8 );
-            destination[ destOffset + 2 ] = (byte)( outBuff       );
-
-            return 3;
-        }
+        int outBuff = ((DECODABET[source[srcOffset]] & 0xFF) << 18) | ((DECODABET[source[srcOffset + 1]] & 0xFF) << 12)
+                | ((DECODABET[source[srcOffset + 2]] & 0xFF) << 6) | ((DECODABET[source[srcOffset + 3]] & 0xFF));
+        destination[destOffset] = (byte) (outBuff >> 16);
+        destination[destOffset + 1] = (byte) (outBuff >> 8);
+        destination[destOffset + 2] = (byte) (outBuff);
+        return 3;
     }   // end decodeToBytes
 
 
@@ -1068,10 +1019,11 @@ public class Base64
 
         if( len == 0 ){
             return new byte[0];
-        }else if( len < 4 ){
+        }
+        if (len < 4) {
             throw new IllegalArgumentException(
-            "Base64-encoded string must have at least four characters, but length specified was " + len );
-        }   // end if
+                    "Base64-encoded string must have at least four characters, but length specified was " + len);
+        }
 
         byte[] DECODABET = getDecodabet( options );
 
@@ -1271,9 +1223,8 @@ public class Base64
                         Class c = Class.forName(streamClass.getName(), false, loader);
                         if( c == null ){
                             return super.resolveClass(streamClass);
-                        } else {
-                            return c;   // Class loader knows of this class.
-                        }   // end else: not null
+                        }
+                        return c;
                     }   // end resolveClass
                 };  // end ois
             }   // end else: no custom class loader
@@ -1685,26 +1636,14 @@ public class Base64
                     lineLength = 0;
                     return '\n';
                 }   // end if
-                else {
-                    lineLength++;   // This isn't important when decoding
-                                    // but throwing an extra "if" seems
-                                    // just as wasteful.
-
-                    int b = buffer[ position++ ];
-
-                    if( position >= bufferLength ) {
-                        position = -1;
-                    }   // end if: end
-
-                    return b & 0xFF; // This is how you "cast" a byte that's
-                                     // intended to be unsigned.
-                }   // end else
+                lineLength++;
+                int b = buffer[position++];
+                if (position >= bufferLength) {
+                    position = -1;
+                }
+                return b & 0xFF;
             }   // end if: position >= 0
-
-            // Else error
-            else {
-                throw new java.io.IOException( "Error in Base64 code reading stream." );
-            }   // end else
+            throw new java.io.IOException("Error in Base64 code reading stream.");
         }   // end read
 
 

@@ -106,7 +106,7 @@ public class IntegerInOperation extends InOperation implements SqlParameterSette
         {
             populateCopiedArray();
             if (isSelectedObject) return Integer.valueOf(copiedArray[sourceNumber]);
-            else return Integer.valueOf(copiedArray[0]);
+            return Integer.valueOf(copiedArray[0]);
         }
         throw new MithraBusinessException("cannot have multiple in operations for source keys");
     }

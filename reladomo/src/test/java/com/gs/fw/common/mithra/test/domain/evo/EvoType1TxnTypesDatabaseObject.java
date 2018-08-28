@@ -28,13 +28,9 @@ public class EvoType1TxnTypesDatabaseObject extends EvoType1TxnTypesDatabaseObje
         {
             return new EvoType1TxnTypesA();
         }
-        else if (typesData.getPkCharAttribute() == EvoType1TxnTypes.TYPE_B)
-        {
+        if (typesData.getPkCharAttribute() == EvoType1TxnTypes.TYPE_B) {
             return new EvoType1TxnTypesB();
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }

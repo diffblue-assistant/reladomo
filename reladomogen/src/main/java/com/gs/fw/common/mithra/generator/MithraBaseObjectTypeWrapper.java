@@ -238,10 +238,7 @@ public abstract class MithraBaseObjectTypeWrapper implements CommonWrapper
         {
             return nullBitsHolder.getName() + " = (" + nullBitsHolder.getType() + ")((int)" + nullBitsHolder.getName() + " | "+ mask + ")";
         }
-        else
-        {
-            return nullBitsHolder.getName() + " = (" + nullBitsHolder.getName() + " | " + mask + ")";
-        }
+        return nullBitsHolder.getName() + " = (" + nullBitsHolder.getName() + " | " + mask + ")";
     }
 
     public String getNotNullSetterExpressionForIndex(int index)
@@ -253,10 +250,7 @@ public abstract class MithraBaseObjectTypeWrapper implements CommonWrapper
         {
             return nullBitsHolder.getName() + " = (" + nullBitsHolder.getType() + ")((int)" + nullBitsHolder.getName() + " & " + mask + ")";
         }
-        else
-        {
-            return nullBitsHolder.getName() + " = " + nullBitsHolder.getName() + " & " + mask;
-        }
+        return nullBitsHolder.getName() + " = " + nullBitsHolder.getName() + " & " + mask;
     }
 
     protected String getNullBitMask(int index)

@@ -475,20 +475,14 @@ public abstract class ReladomoClassMetaData
         {
             return relatedFinder.getPrimaryKeyAttributes();
         }
-        else
-        {
-            Extractor[] primKeyAttr = relatedFinder.getPrimaryKeyAttributes();
-            AsOfAttribute[] asOfKeyAttr = relatedFinder.getAsOfAttributes();
-
-            Extractor[] fullKey = new Extractor[primKeyAttr.length + asOfKeyAttr.length];
-            System.arraycopy(primKeyAttr, 0, fullKey, 0, primKeyAttr.length);
-
-            for (int i = 0; i < asOfKeyAttr.length; i++)
-            {
-                fullKey[i + primKeyAttr.length] = asOfKeyAttr[i].getFromAttribute();
-            }
-            return fullKey;
+        Extractor[] primKeyAttr = relatedFinder.getPrimaryKeyAttributes();
+        AsOfAttribute[] asOfKeyAttr = relatedFinder.getAsOfAttributes();
+        Extractor[] fullKey = new Extractor[primKeyAttr.length + asOfKeyAttr.length];
+        System.arraycopy(primKeyAttr, 0, fullKey, 0, primKeyAttr.length);
+        for (int i = 0; i < asOfKeyAttr.length; i++) {
+            fullKey[i + primKeyAttr.length] = asOfKeyAttr[i].getFromAttribute();
         }
+        return fullKey;
     }
 
     private class RelationshipSetterLookup implements Function<String, Method>
