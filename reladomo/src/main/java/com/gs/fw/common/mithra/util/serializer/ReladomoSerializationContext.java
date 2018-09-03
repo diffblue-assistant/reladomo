@@ -29,6 +29,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class ReladomoSerializationContext
 {
@@ -51,6 +52,7 @@ public class ReladomoSerializationContext
 
     public ReladomoSerializationContext(SerializationConfig serializationConfig, SerialWriter writer)
     {
+        Objects.requireNonNull(serializationConfig);
         this.serializationConfig = serializationConfig;
         this.currentNode = this.serializationConfig.getRootNode();
         this.writer = writer;
